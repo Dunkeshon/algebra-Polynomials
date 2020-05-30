@@ -377,7 +377,9 @@ std::vector<int> Polynom::findRoots() {
     for (size_t i(0); i < this->p; i++) {
         root.head->key = i;
         while ((temp % (divider + root)).isZero()) {
+            if(i)
             res.push_back(this->p-i);
+            else res.push_back(i);
             temp = temp / (divider + root);
             if (res.size() == this->power) break;
         }
