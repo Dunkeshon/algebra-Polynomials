@@ -144,7 +144,7 @@ public:
      *
      * The returned polynomial (gcd) is monic (i.e. the leading coefficient is equal to 1).
      */
-    Polynom& gcd(Polynom& a, Polynom& b);
+    Polynom gcd(Polynom& a, Polynom& b);
 
     //!find A^(-1) in field B(p^m)
     void gcdExtended(Polynom& A, Polynom& B);
@@ -166,7 +166,7 @@ public:
      *
      * The returned polynomial (gcd) is monic (i.e. the leading coefficient is equal to 1).
      */
-    friend Polynom& GCD(Polynom a, Polynom b);
+    friend Polynom GCD(Polynom a, Polynom b);
 
     friend Polynom& derivative(Polynom& pol1);
     friend Polynom& operator *(Polynom& p1, Polynom& p2);

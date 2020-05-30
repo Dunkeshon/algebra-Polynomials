@@ -550,7 +550,7 @@ void Polynom::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
 }
 
 
-Polynom& Polynom::gcd(Polynom& a, Polynom& b) {
+Polynom Polynom::gcd(Polynom& a, Polynom& b) {
     if (b.isZero()) {
         a.makeMonic();
         return a;
@@ -592,7 +592,7 @@ Polynom& Polynom::operator=(Polynom& other)
 }
 
 
-Polynom& GCD(Polynom a, Polynom b) {
+Polynom GCD(Polynom a, Polynom b) {
     Polynom::handleException(a, b);
 
     if (a.power < b.power) {
