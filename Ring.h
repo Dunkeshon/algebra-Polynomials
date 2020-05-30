@@ -13,6 +13,7 @@ protected:
 	Polynom Q;//could be irreducible
 	//p could be prime or not
 public:
+	Ring();
 	//+
 	//-
 	//*

@@ -96,6 +96,7 @@ int Polynom::modMultiply(int a, int b) {
     return (a * b) % p;
 }
 
+Polynom::Polynom(){}
 
 Polynom::Polynom(int _p) {
     head = nullptr;
@@ -746,3 +747,4 @@ Polynom& inverse(Polynom& pol, Polynom& field) {
     result->p = pol.p;
     return *result;
 }
+

@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Taisiia on 07.03.2020.
 //
 /*!
@@ -68,7 +68,7 @@ private:
     void cutZeroes();
     //!Copy polynom
     void copy(const Polynom& pol);
-    bool isPrime(int number);
+    
 
     void addingPolinoms(Polynom& pol1, Polynom& pol2);
     void differencePolinom(Polynom& pol1, Polynom& pol2);
@@ -80,10 +80,11 @@ protected:
     //!Compare the polynomial with f(x) = 0
     bool isZero();
     static void handleException(Polynom& p1, Polynom& p2);
-
+    bool isPrime(int number);
 public:
 
     //!empty constructor
+    Polynom();
     Polynom(int _p);
 
     //!constructor that take power of polinom and vector of coefficients of this polinom
