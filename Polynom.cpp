@@ -551,6 +551,7 @@ void Polynom::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
 
 Polynom Polynom::gcd(Polynom& a, Polynom& b) {
     if (b.isZero()) {
+        a.makeMonic();
         return a;
     }
     return gcd(b, a % b);
