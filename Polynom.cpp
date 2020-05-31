@@ -494,8 +494,11 @@ int Polynom::irrPolynomOrder()
 //    if (this->evaluate(0) == 0)
 //        return -1;
 //
+//    if (this->isIrreducible())
+//        return this->irrPolynomOrder();
+//
 //    // Yaroslav should to do function (derivativeToIrrPolynoms)
-//    std::vector<Polynom> irrPolymons = derivativeToIrrPolynoms(this);
+//    std::vector<Polynom> irrPolymons = this->derivativeToIrrPolynoms();
 //    std::vector<int> ords(irrPolymons.size());
 //    for (auto irrPol : irrPolymons) {
 //        ords.push_back(irrPol.irrPolynomOrder());
