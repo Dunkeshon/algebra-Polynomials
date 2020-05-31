@@ -156,6 +156,7 @@ Polynom::Polynom(int _p, std::string keys)
     for (int i = 0; i < keys.length(); i++) {
         char current = keys[i];
         if (isOperator(current)) {
+            if (coefficient == 0) coefficient = 1;
             if (wasPower && currentPower != currentOutputPower)
                 while (currentOutputPower != currentPower) {
                     if (currentOutputPower == 0) head = makeItem(0);
