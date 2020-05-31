@@ -51,7 +51,11 @@ private:
     static void appendItem(PElement* head, PElement* el);
     //!Set the coefficient coef. on position pos equal to the value key
     void set(int pos, int key);
-
+    std::vector<int> getCoefficientVector(int n);
+    static int getRank(std::vector<std::vector<int>>& matrix);
+    static void swap(std::vector<std::vector<int>>& matrix, int row1, int row2, int col);
+    static std::vector<std::vector<int>> transpose(std::vector<std::vector<int>>& matrix);
+    
 
 public:
     void clear();
@@ -167,6 +171,9 @@ public:
      * The returned polynomial (gcd) is monic (i.e. the leading coefficient is equal to 1).
      */
     friend Polynom GCD(Polynom a, Polynom b);
+
+    //returns factors of the polynomials using Berlekamp's algorithm
+    friend std::vector<Polynom> getFactors(Polynom p);
 
     friend Polynom& derivative(Polynom& pol1);
     friend Polynom& operator *(Polynom& p1, Polynom& p2);
