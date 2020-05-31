@@ -177,7 +177,7 @@ TEST(Derivative, test2)
 	EXPECT_TRUE(derivative(g) == Polynom(5, 1, { 3,2 }));
 }
 
-TEST(Derivative, test3)//FAILED
+TEST(Derivative, test3)
 {
 	Polynom k(5, 5, { 3,0,2,0,0,3 });
 	EXPECT_TRUE(derivative(k) == Polynom(5, 1, { 0,4 }));
@@ -226,6 +226,50 @@ TEST(FindRoots, test1)
 	Polynom root1(5, 2, { 1,2,1 });
 	std::vector<int> rootvec1 = root1.findRoots();
 	std::vector<int> roots{ 4,4 };
+	for (int i = 0; i < rootvec1.size(); i++)
+		EXPECT_EQ(rootvec1[i], roots[i]);
+}
+
+TEST(FindRoots, test2)
+{
+	Polynom root1(5, 2, { 1,3,1 });
+	std::vector<int> rootvec1 = root1.findRoots();
+	std::vector<int> roots{ 1,1 };
+	for (int i = 0; i < rootvec1.size(); i++)
+		EXPECT_EQ(rootvec1[i], roots[i]);
+}
+
+TEST(FindRoots, test3)
+{
+	Polynom root1(5, 4, { 1,0,0,0,2 });
+	std::vector<int> rootvec1 = root1.findRoots();
+	EXPECT_EQ(rootvec1.size(), 0);
+
+}
+
+TEST(FindRoots, test4)
+{
+	Polynom root1(5, 3, { 0,2,3,1 });
+	std::vector<int> rootvec1 = root1.findRoots();
+	std::vector<int> roots{ 0,4,3 };
+	for (int i = 0; i < rootvec1.size(); i++)
+		EXPECT_EQ(rootvec1[i], roots[i]);
+}
+
+TEST(FindRoots, test5)
+{
+	Polynom root1(5, 3, { 2,3,3,1 });
+	std::vector<int> rootvec1 = root1.findRoots();
+	std::vector<int> roots{ 3 };
+	for (int i = 0; i < rootvec1.size(); i++)
+		EXPECT_EQ(rootvec1[i], roots[i]);
+}
+
+TEST(FindRoots, test6)
+{
+	Polynom root1(5, 3, { 2,3,4,1 });
+	std::vector<int> rootvec1 = root1.findRoots();
+	std::vector<int> roots{ 1 };
 	for (int i = 0; i < rootvec1.size(); i++)
 		EXPECT_EQ(rootvec1[i], roots[i]);
 }
