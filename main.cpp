@@ -42,6 +42,11 @@ int main() {
     Polynom rs = f - f;
     cout << "\nf(x) - f(x) = " << rs;
 
+  /*  Polynom bm = g * (f * ((f * g / g - f + f) / f) - g + g) / g;
+    cout << bm;
+    cout << (bm + g - g) % f;
+    cout << (bm + g - g) / f;*/
+
     Polynom d = f * g;
     cout << "f(x) * g(x) = " << d;
 
@@ -120,21 +125,17 @@ int main() {
     Polynom irred(3, 6, { 1, 0, 0, 1, 1, 0, 1 });
     Polynom irred2(3, 2, { 1, 0, 1 });
     Polynom irred3(3, 5, { 1, 0, 1, 1, 1, 3 });
-    // Polynom<4> red(2, { 1, 2, 1 });
-    // Polynom<4> red2(6, { 1, 1, 3, 0, 3, 0, 1 });
 
     cout << "\n\n\n";
 
     cout << "3) irred(x) = " << irred;
     cout << "4) irred2(x) = " << irred2;
     cout << "5) irred3(x) = " << irred3;
-    // cout << "6) red(x) = " << red;
     cout << "pol1 Order: " << pol1.irrPolynomOrder() << "\n";
     cout << "pol2 Order: " << pol2.irrPolynomOrder() << "\n";
     cout << "irred Order: " << irred.irrPolynomOrder() << "\n";
     cout << "irred2 Order: " << irred2.irrPolynomOrder() << "\n";
     cout << "irred3 Order: " << irred3.irrPolynomOrder() << "\n";
-    // cout << "red Order: " << red.irrPolynomOrder() << "\n";
 
    
 
@@ -221,7 +222,7 @@ int main() {
     cout << "---------------------------------FIELD--------------------------------------------------\n\n";
     cout << "----------------------------Circular polynom----------------------------\n";
     
-    Field fi(5);
+    Field fi(5,30);
     cout << "n = 6: ";
     cout << fi.buildCircularPolynom(6) << endl;
     cout << "n = 12: ";
@@ -229,29 +230,33 @@ int main() {
     cout << "n = 29: ";
     cout << fi.buildCircularPolynom(29) << endl;
    
-    cout << "--------------------------------Inverse----------------------------------\n";
+    cout << "--------------------------------Inverse----------------------------------\n\n";
 
     Polynom field(2, 2, { 1,1,1});
 
-    Field fi1(field,2);
+    Field fi1(field,2,2);
     Polynom x(2, 1, { 0,1 });
     cout << "x = " << x;
     cout << "field = " << field;
     Polynom inv = fi1.inverse(x);
     cout << "inverse(x, field) = " << inv;
 
+    cout << endl;
+
     Polynom field1(3, 3, { 1,2,0,1 });
 
-    Field fi2(field1, 3);
+    Field fi2(field1, 3,3);
     Polynom x1(3, 2, { 2,2,1 });
     cout << "x = " << x1;
     cout << "field = " << field1;
     Polynom inv1 = fi2.inverse(x1);
     cout << "inverse(x, field) = " << inv1;
 
+    cout << endl;
+
     Polynom field2(5, 4, { 4,4,4,4,1 });
 
-    Field fi3(field2, 5);
+    Field fi3(field2, 5,4);
     Polynom x2(5, 3, { 0,2,2,1 });
     cout << "x = " << x2;
     cout << "field = " << field2;

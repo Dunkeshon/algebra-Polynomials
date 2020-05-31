@@ -5,14 +5,17 @@
 
 Field::Field() {};
 
-Field::Field(int p_) {
+Field::Field(int p_, int q_) {
     this->p = p_;
+    this->q = q_;
 };
 
-Field::Field(Polynom& _Q, int p_) {
+Field::Field(Polynom& _Q, int p_, int q_) {
     Q = _Q;
     this->p = p_;
+    this->q = q_;
 }
+
 
 int Field::mobius(int n)
 {
@@ -87,7 +90,6 @@ Polynom& Field::inverse(Polynom& pol) {
     Polynom::handleException(pol, Q);
     Polynom X(p), Y(p);
     Polynom* res = new Polynom(p);
-    Polynom gcd_ = res->gcdExtended(pol, Q, X, Y);
-    res->makeMonic();
+    Polynom gcd_ = res->gcdExtended(pol, Q, X, Y, Q);
     return *res;
 }

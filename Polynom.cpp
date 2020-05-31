@@ -205,7 +205,7 @@ void Polynom::clear() {
 }
 
 
-void Polynom::set(int pos, int key) {
+void Polynom::set(int pos, int key_) {
     auto* tmp = this->head;
     if (pos <= this->power) {
         int counter = 0;
@@ -215,9 +215,9 @@ void Polynom::set(int pos, int key) {
             counter++;
         }
         if (this->power == 0)
-            this->head = makeItem(key);
+            this->head = makeItem(key_);
         else
-            tmp->key = key;
+            tmp->key = key_;
     }
     else {
         int counter = 0;
@@ -231,7 +231,7 @@ void Polynom::set(int pos, int key) {
         for (int j(counter); j < pos; j++) {
             appendItem(this->head, makeItem(0));
         }
-        appendItem(this->head, makeItem(key));
+        appendItem(this->head, makeItem(key_));
         this->power = pos;
     }
     makeMod();
@@ -337,7 +337,7 @@ void Polynom::handleException(Polynom& p1, Polynom& p2)
 bool Polynom::isIrreducible() {
     Polynom tmp(p), odd(p, 1, { 0, 1 }), gcd_(p);
     Polynom one(this->p, 0, { 1 });
-    makeMonic();
+  
     int power_;
     for (size_t i(1); i <= this->power / 2; i++) {
         tmp = one;
@@ -348,7 +348,7 @@ bool Polynom::isIrreducible() {
         else {
             gcd_ = gcd((*this), tmp - odd);
         }
-        if (gcd_ != one) return false;
+        if (gcd_.power!=0) return false;
         tmp.clear();
 
     }
@@ -460,7 +460,7 @@ int Polynom::gcd(int a, int b) {
 
 
 void Polynom::addingPolinoms(Polynom& pol1, Polynom& pol2) {
-    power = (pol1.power > pol2.power) ? pol1.power : pol2.power;
+    this->power = (pol1.power > pol2.power) ? pol1.power : pol2.power;
     p = pol1.p;
     head = makeItem(pol1.head->key + pol2.head->key);
 
@@ -509,9 +509,8 @@ void Polynom::differencePolinom(Polynom& pol1, Polynom& pol2) {
 
 void Polynom::multiplicatePolinom(Polynom& pol1, Polynom& pol2) {
     if (pol1.isZero() || pol2.isZero()) {
-        this->power = 0;
-        this->head = makeItem(0);
-        return;
+        *this = Polynom(p, 0, { 0 });
+        return; 
     }
     p = pol1.p;
     int pow = pol1.power + pol2.power;
@@ -528,7 +527,7 @@ void Polynom::multiplicatePolinom(Polynom& pol1, Polynom& pol2) {
 
 void Polynom::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
     Polynom A_copy(p); A_copy = A;
-    Q.clear(); R.clear();
+    Q = Polynom(p, 0, { 0 }); R = Polynom(p, 0, { 0 });
     while (A_copy.power >= B.power) {
         int k = A_copy.power - B.power;
         Polynom B_copy(p); B_copy = B;
@@ -552,25 +551,23 @@ void Polynom::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
 
 Polynom& Polynom::gcd(Polynom& a, Polynom& b) {
     if (b.isZero()) {
-        a.makeMonic();
         return a;
     }
     return gcd(b, a % b);
 }
 
 
-Polynom& Polynom::gcdExtended(Polynom& A, Polynom& B, Polynom& X, Polynom& Y) {
+Polynom& Polynom::gcdExtended(Polynom& A, Polynom& B, Polynom& X, Polynom& Y,Polynom& Q) {
     if (A.isZero()) {
         X = Polynom(p, 0, {0});
         Y = Polynom(p, 0, {1});
         return B;
    }
-    Polynom X1, Y1;
-    Polynom Gcd_ = gcdExtended(B%A,A,X1,Y1);
-    X = Y1 - (B / A) * X1;
+    Polynom X1(p), Y1(p);
+    Polynom Gcd_ = gcdExtended(B%A,A,X1,Y1,Q);
+    X = Y1 - ((B / A) * X1)%Q;
     Y = X1;
     *this = X;
-    Gcd_.makeMonic();
     return Gcd_;
 }
 
@@ -651,6 +648,7 @@ Polynom& operator*(Polynom& p1, Polynom& p2) {
     result->Polynom::multiplicatePolinom(p1, p2);
     result->Polynom::cutZeroes();
     result->Polynom::makeMod();
+    result->p = p1.p;
     return *result;
 }
 
@@ -658,7 +656,7 @@ Polynom& operator*(Polynom& p1, Polynom& p2) {
 Polynom& operator+(Polynom& p1, Polynom& p2) {
     Polynom::handleException(p1, p2);
 
-    auto* result = new Polynom(p1.p);
+    Polynom* result = new Polynom(p1.p);
     result->Polynom::addingPolinoms(p1, p2);
     result->Polynom::cutZeroes();
     result->Polynom::makeMod();
@@ -669,7 +667,6 @@ Polynom& operator+(Polynom& p1, Polynom& p2) {
 
 Polynom& operator-(Polynom& p1, Polynom& p2) {
     Polynom::handleException(p1, p2);
-
     Polynom* result = new Polynom(p1.p);
     result->Polynom::differencePolinom(p1, p2);
     result->Polynom::cutZeroes();
@@ -687,7 +684,6 @@ Polynom& operator/(Polynom& p1, Polynom& p2) {
     if (p2.isZero()) { cout << "Can't divide by 0!\n"; return Polynom(field); }
     Polynom* Q = new Polynom(field), * R = new Polynom(field);
     if (p2.power == 0) {
-        p1.valuate(p2.head->key);
         Q->copy(p1);
     }
     else
@@ -695,15 +691,14 @@ Polynom& operator/(Polynom& p1, Polynom& p2) {
     return *Q;
 }
 
-Polynom& operator%(Polynom& p1, Polynom& p2) {
+Polynom& operator%(Polynom& p1, Polynom& p2) {//using for mod
     Polynom::handleException(p1, p2);
 
     int field = p1.p;
-    if (p1.power < p2.power) { cout << "Can`t divide! The degree of dividend is always greater than divisor!\n\n"; return Polynom(field); }
+    if (p1.power < p2.power) {return p1; }
     if (p2.isZero()) { cout << "Can't divide by 0!\n"; return Polynom(field); }
     Polynom* Q = new Polynom(field), * R = new Polynom(field);
     if (p2.power == 0) {
-        p1.valuate(p2.head->key);
         Q->copy(p1);
     }
     else

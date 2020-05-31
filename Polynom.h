@@ -146,7 +146,7 @@ public:
     Polynom& gcd(Polynom& a, Polynom& b);
 
     //!find X = A^(-1) in field B(p^q)
-    Polynom& gcdExtended(Polynom& A, Polynom& B, Polynom& X, Polynom& Y);
+    Polynom& gcdExtended(Polynom& A, Polynom& B, Polynom& X, Polynom& Y, Polynom & Q);
 
     /** Copy assignment operator.
      * The copy assignment operator added here to make a deep copy
