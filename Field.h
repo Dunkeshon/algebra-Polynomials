@@ -11,11 +11,26 @@ private:
 public:
 	Field();
 	Field(int p_, int q_);
-	Field(Polynom &Q, int p_,int q_);
+	Field(Polynom &Q);
 	Polynom buildCircularPolynom(int n);
 	//!Algorithm for Inversion in field GF(p^m) based on Extended Euclid’s Algorithm
 	Polynom& inverse(Polynom& pol);
-	// /
-	// %
-	// gcd
+
+	Polynom add(Polynom& p1, Polynom& p2);
+	Polynom subtr(Polynom& p1, Polynom& p2);
+	Polynom mult(Polynom& p1, Polynom& p2);
+	Polynom quot(Polynom& p1, Polynom& p2);
+	Polynom rem(Polynom& p1, Polynom& p2);
+
+	Polynom gcd(Polynom& p1, Polynom& p2);
+
+	Polynom derivate(Polynom& p);
+	Polynom monic(Polynom& p);
+	int eval(Polynom p,int x);
+
+	std::vector<int> roots(Polynom& p);
+	int rootsNumber(Polynom& p);
+
+	bool isIrreduc(Polynom& p);
+	int irrPolOrder(Polynom& p);
 };

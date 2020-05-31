@@ -10,10 +10,10 @@ Field::Field(int p_, int q_) {
     this->q = q_;
 };
 
-Field::Field(Polynom& _Q, int p_, int q_) {
+Field::Field(Polynom& _Q) {
     Q = _Q;
-    this->p = p_;
-    this->q = q_;
+    this->p = _Q.p;
+    this->q = _Q.power;
 }
 
 
@@ -92,4 +92,78 @@ Polynom& Field::inverse(Polynom& pol) {
     Polynom* res = new Polynom(p);
     Polynom gcd_ = res->gcdExtended(pol, Q, X, Y, Q);
     return *res;
+}
+
+Polynom Field::add(Polynom& p1, Polynom& p2) {
+    Polynom res = p1 + p2;
+    res = res % Q;
+    return res;
+}
+
+Polynom Field::subtr(Polynom& p1, Polynom& p2) {
+    Polynom res = p1 - p2;
+    res = res % Q;
+    return res;
+}
+
+Polynom Field::mult(Polynom& p1, Polynom& p2) {
+    Polynom res = p1 * p2;
+    res = res % Q;
+    return res;
+}
+
+
+Polynom Field::quot(Polynom& p1, Polynom& p2) {
+    Polynom res = p1 / p2;
+    res = res % Q;
+    return res;
+}
+
+
+Polynom Field::rem(Polynom& p1, Polynom& p2) {
+    Polynom res = p1 % p2;
+    res = res % Q;
+    return res;
+}
+
+
+Polynom Field::gcd(Polynom& p1, Polynom& p2) {
+    Polynom res = GCD(p1,p2);
+    res = res % Q;
+    return res;
+}
+
+Polynom Field::derivate(Polynom& p) {
+    Polynom res = derivative(p);
+    res = res % Q;
+    return res;
+}
+
+Polynom Field::monic(Polynom& p) {
+    Polynom res; p.makeMonic();
+    res = p;
+    res = res % Q;
+    return res;
+}
+
+int Field::eval(Polynom p, int x) {
+
+    return p.evaluate(x);
+}
+
+std::vector<int> Field::roots(Polynom& p) {
+    return p.findRoots();
+}
+
+int Field::rootsNumber(Polynom& p) {
+
+    return p.findRootNumber();
+}
+
+bool Field::isIrreduc(Polynom& p) {
+    return p.isIrreducible();
+}
+
+int Field::irrPolOrder(Polynom& p) {
+    return p.irrPolynomOrder();
 }

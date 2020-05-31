@@ -237,7 +237,7 @@ int main() {
 
     Polynom field(2, 2, { 1,1,1});
 
-    Field fi1(field,2,2);
+    Field fi1(field);
     Polynom x(2, 1, { 0,1 });
     cout << "x = " << x;
     cout << "field = " << field;
@@ -248,7 +248,7 @@ int main() {
 
     Polynom field1(3, 3, { 1,2,0,1 });
 
-    Field fi2(field1, 3,3);
+    Field fi2(field1);
     Polynom x1(3, 2, { 2,2,1 });
     cout << "x = " << x1;
     cout << "field = " << field1;
@@ -259,13 +259,25 @@ int main() {
 
     Polynom field2(5, 4, { 4,4,4,4,1 });
 
-    Field fi3(field2, 5,4);
+    Field fi3(field2);
     Polynom x2(5, 3, { 0,2,2,1 });
     cout << "x = " << x2;
     cout << "field = " << field2;
     Polynom inv2 = fi3.inverse(x2);
     cout << "inverse(x, field) = " << inv2;
 
-    cout << "------------------------------------------------------------------------\n";
+    cout << "---------------testing------------------testing-----------testing-----------testing-----testing-------------------testing--------------\n";
+
+    Polynom Q(5, 4, { 4,4,4,4,1 });
+    Field fld(Q);
+
+
+    Polynom d1(5, 1, { 0,2 }), d2(5, 0, {1});
+
+    cout << fld.add(d1,d2);
+    cout << fld.mult(d1,d2);
+    cout << fld.gcd(d1,d2);
+    cout << fld.inverse(d1);
+
     return 0;
 }

@@ -53,7 +53,7 @@ private:
     void set(int pos, int key);
 
 
-protected:
+public:
     void clear();
     int getLastCoefficient();
     int getCoefficient(int pos);
@@ -86,8 +86,6 @@ protected:
     bool isPrime(int number);
     bool isOperator(char token);
     bool isPower(char token);
-
-public:
 
     //!empty constructor
     Polynom();
