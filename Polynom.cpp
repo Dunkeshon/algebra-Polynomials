@@ -676,6 +676,7 @@ Polynom& derivative(Polynom& pol1)
         power++;
     }
     result->Polynom::makeMod();
+    result->Polynom::cutZeroes();
     return *result;
 }
 
