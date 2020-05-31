@@ -1,17 +1,19 @@
 #pragma once
 #include "Ring.h"
-#include "Polynom.h"
 
 
 class Field :public Ring {
 private:
 	int mobius(int n);
-	//Q is reducible
-	//p is prime
+	Polynom Q;//Q is reducible
+	int p;//p is prime
 public:
 	Field();
-	Field(int p);
-	Polynom buildCircularPolynom(int n, int p);
+	Field(int p_);
+	Field(Polynom &Q, int p_);
+	Polynom buildCircularPolynom(int n);
+	//!Algorithm for Inversion in field GF(p^m) based on Extended Euclid’s Algorithm
+	Polynom& inverse(Polynom& pol);
 	// /
 	// %
 	// gcd

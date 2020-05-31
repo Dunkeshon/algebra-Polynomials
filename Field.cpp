@@ -1,7 +1,18 @@
+#include <utility>
+#include <iostream>
 #include "Field.h"
 
+
 Field::Field() {};
-Field::Field(int p) {};
+
+Field::Field(int p_) {
+    this->p = p_;
+};
+
+Field::Field(Polynom& _Q, int p_) {
+    Q = _Q;
+    this->p = p_;
+}
 
 int Field::mobius(int n)
 {
@@ -20,10 +31,10 @@ int Field::mobius(int n)
     return (m % 2 != 0) ? -1 : 1;
 }
 
-Polynom Field::buildCircularPolynom(int n, int p)
+Polynom Field::buildCircularPolynom(int n)
 {
     Polynom one(p, 0, { 1 }); //1
-    std::vector<int> dividers; //��������
+    std::vector<int> dividers;
     std::vector<Polynom> polynoms1;
     std::vector<Polynom> polynoms2;
     for (int i = 1; i <= n; i++)
@@ -72,3 +83,11 @@ Polynom Field::buildCircularPolynom(int n, int p)
     return circular;
 }
 
+Polynom& Field::inverse(Polynom& pol) {
+    Polynom::handleException(pol, Q);
+    Polynom X(p), Y(p);
+    Polynom* res = new Polynom(p);
+    Polynom gcd_ = res->gcdExtended(pol, Q, X, Y);
+    res->makeMonic();
+    return *res;
+}

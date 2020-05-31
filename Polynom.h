@@ -33,11 +33,7 @@ class Polynom;
 
 class Polynom {
 private:
-    //!polynomial degree (maximum degree that a variable can have)
-    int power;
-    //!polynomial field
-    int p;
-    //!Structure that shows every term of every object of class "Polynom"
+
     struct PElement {
         //!coefficient of terms of polinom
         int key;
@@ -49,13 +45,16 @@ private:
     //!Pointer to the first term of every object of class "Polynom"
     PElement* head = nullptr;
     //Clear PElement list
-
+     //!Making term of structure "PElement" (element of polinom) using the value of coefficient
+    static PElement* makeItem(int val);
+    //!Adding term to the end of the polinom
+    static void appendItem(PElement* head, PElement* el);
     //!Set the coefficient coef. on position pos equal to the value key
     void set(int pos, int key);
 
+
+protected:
     void clear();
-
-
     int getLastCoefficient();
     int getCoefficient(int pos);
     int modInverse(int x);
@@ -74,7 +73,11 @@ private:
     void differencePolinom(Polynom& pol1, Polynom& pol2);
     void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
 
-protected:
+    //!polynomial degree (maximum degree that a variable can have)
+    int power;
+    //!polynomial field
+    int p;
+    //!Structure that shows every term of every object of class "Polynom"
     //!A polynomial whose leading coefficientis 1 is called monic
     bool isMonic();
     //!Compare the polynomial with f(x) = 0
@@ -106,10 +109,6 @@ public:
     int getPower() const;
     void setPower(int _power);
 
-    //!Making term of structure "PElement" (element of polinom) using the value of coefficient
-    static PElement* makeItem(int val);
-    //!Adding term to the end of the polinom
-    static void appendItem(PElement* head, PElement* el);
     //!Each coefficient is shifting upwards
     void shift(int n);
     // Valuation of the polynom
@@ -146,17 +145,14 @@ public:
      */
     Polynom& gcd(Polynom& a, Polynom& b);
 
-    //!find A^(-1) in field B(p^m)
-    void gcdExtended(Polynom& A, Polynom& B);
+    //!find X = A^(-1) in field B(p^q)
+    Polynom& gcdExtended(Polynom& A, Polynom& B, Polynom& X, Polynom& Y);
 
     /** Copy assignment operator.
      * The copy assignment operator added here to make a deep copy
      * when the "=" is used to assign one instance to another.
      */
     Polynom& operator=(Polynom& other);
-
-    //!Algorithm for Inversion in field GF(p^m) based on Extended Euclid’s Algorithm
-    friend Polynom& inverse(Polynom& pol, Polynom& field);
 
     /** Polynomial greatest common divisor.
      * Calculate and return a polynomial which is the greatest common divisor of two polynomials.

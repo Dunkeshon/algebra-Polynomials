@@ -543,11 +543,9 @@ void Polynom::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
         }
         Polynom temp = A_copy - B_copy;
         A_copy = temp;
-        A_copy.cutZeroes();
         Q.set(k, modDivision(a_lead, b_lead));
     }
     Polynom temp = Q * B;
-    temp.cutZeroes();
     R = A - temp;
 }
 
@@ -561,27 +559,19 @@ Polynom& Polynom::gcd(Polynom& a, Polynom& b) {
 }
 
 
-void Polynom::gcdExtended(Polynom& A, Polynom& B) {
-    Polynom S(p), R(p), V(p, 0, { 0 }), U(p, 0, { 1 });//U is inverse of A mod B(p^m)
-    Polynom Rshift(p), Ushift(p), temp(p);
-
-    S = B; R = A;
-
-    while (R.power) {
-        int s = S.power - R.power;
-        if (s < 0) {
-            temp = S; S = R; R = temp;
-            temp = V; V = U; U = temp;
-            s *= -1;
-        }
-        Rshift = R; Ushift = U;
-        Rshift.shift(s); Ushift.shift(s);
-        S = S - Rshift;
-        V = V - Ushift;
-    }
-    U.cutZeroes();
-    U.makeMonic();
-    (*this) = U;
+Polynom& Polynom::gcdExtended(Polynom& A, Polynom& B, Polynom& X, Polynom& Y) {
+    if (A.isZero()) {
+        X = Polynom(p, 0, {0});
+        Y = Polynom(p, 0, {1});
+        return B;
+   }
+    Polynom X1, Y1;
+    Polynom Gcd_ = gcdExtended(B%A,A,X1,Y1);
+    X = Y1 - (B / A) * X1;
+    Y = X1;
+    *this = X;
+    Gcd_.makeMonic();
+    return Gcd_;
 }
 
 
@@ -672,6 +662,7 @@ Polynom& operator+(Polynom& p1, Polynom& p2) {
     result->Polynom::addingPolinoms(p1, p2);
     result->Polynom::cutZeroes();
     result->Polynom::makeMod();
+    result->p = p1.p;
     return *result;
 }
 
@@ -683,6 +674,7 @@ Polynom& operator-(Polynom& p1, Polynom& p2) {
     result->Polynom::differencePolinom(p1, p2);
     result->Polynom::cutZeroes();
     result->Polynom::makeMod();
+    result->p = p1.p;
     return *result;
 }
 
@@ -738,15 +730,5 @@ bool operator!=(Polynom& p1, Polynom& p2) {
     Polynom::handleException(p1, p2);
 
     return !(p1 == p2);
-}
-
-
-Polynom& inverse(Polynom& pol, Polynom& field) {
-    Polynom::handleException(pol, field);
-
-    Polynom* result = new Polynom(pol.p);
-    result->Polynom::gcdExtended(pol, field);
-    result->p = pol.p;
-    return *result;
 }
 
