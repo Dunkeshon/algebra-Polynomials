@@ -167,3 +167,33 @@ bool Field::isIrreduc(Polynom& p) {
 int Field::irrPolOrder(Polynom& p) {
     return p.irrPolynomOrder();
 }
+
+std::vector<Polynom> Field::generateIrrpols(int _p, int _q) {
+    if (_p == 2) {
+        switch (_q) {
+        case 1:
+            return std::vector<Polynom> { Polynom(2, 1, { 0,1 }), Polynom(2, 1, { 1,1 }) };
+
+        case 2:
+            return std::vector<Polynom>{Polynom(2, 2, { 1,1,1 })};
+        case 3: 
+            return std::vector<Polynom>{Polynom(2, 3, { 1,1,0,1 }), Polynom(2, 3, { 1,0,1,1 })};
+        case 4: 
+            return std::vector<Polynom>{Polynom(2, 4, { 1,1,0,0,1 }), Polynom(2, 4, { 1,0,0,1,1 }),
+                Polynom(2, 4, { 1,1,1,1,1 })};
+        case 5:
+            return std::vector<Polynom>{Polynom(2, 5, { 1,0,1,0,0,1 }), Polynom(2, 5, { 1,0,0,1,0,1 }),
+                Polynom(2, 5, { 1,1,1,1,0,1 }), Polynom(2, 5, { 1,1,1,0,1,1 }), Polynom(2, 5, { 1,1,0,1,1,1 }),
+                Polynom(2, 5, { 1,0,1,1,1,1 })};
+        case 6:
+            return std::vector<Polynom>{ Polynom(2, 6, { 1,1,0,0,0,0,1 }), Polynom(2, 6, { 1,0,0,1,0,0,1 }),
+                Polynom(2, 6, { 1,1,1,0,1,0,1 }), Polynom(2, 6, { 1,1,0,1,1,0,1 }), Polynom(2, 6, { 1,0,0,0,0,1,1 }),
+                Polynom(2, 6, { 1,1,1,0,0,1,1 }), Polynom(2, 6, { 1,0,1,1,0,1,1 }), Polynom(2, 6, { 1,1,0,0,1,1,1 }),
+                Polynom(2, 6, { 1,0,1,0,1,1,1 })};
+
+
+        }
+
+        
+    }
+}

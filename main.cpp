@@ -288,5 +288,10 @@ int main() {
     Polynom res2 = Q2 % Q3;
     cout << res2;
 
+    cout << "---------------testing------------------testing-----------testing-----------testing-----testing-------------------testing--------------\n";
+    std::vector<Polynom> resvec = fld.generateIrrpols(2,4);
+    for (int i(0); i < resvec.size();i++) {
+        cout << resvec[i];
+    }
     return 0;
 }
