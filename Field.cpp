@@ -17,6 +17,62 @@ Field::Field(Polynom& _Q) {
 }
 
 
+////WIP ahead
+//std::vector<int> factorizeInt(int x) {//single use but is not relatable to the func it's used in,
+//                                      //seen used somewhere else, probably needs to be replaced there 
+//    std::vector<int> factors;
+//
+//    for (int i = 2; i <= sqrt(x); i++) {
+//        while (x % i == 0) {
+//            factors.push_back(i);
+//            x /= i;
+//        }
+//    }
+//
+//    if (x != 1) {
+//        factors.push_back(x);
+//    }
+//
+//    return factors;
+//}
+//std::vector<Polynom> Field::findIrreduciblesOfPower(int n) {//n for never gonna give you up(represents requested power)
+//    std::vector<Polynom> result;
+//    std::vector<int>potentialPolConstructors = factorizeInt(pow(this->p, n) - 1);
+//    for (auto& factor : potentialPolConstructors)
+//    {
+//        bool isSmallestPow = true;	//for black voodoo fuckery, dunno why this part shall be in algo, but i've got multiple proofs it shall
+//        for (int i = 1;i < n; i++)
+//        {
+//            if (factor % (pow(this->p, i) - 1) == 0) {
+//                isSmallestPow = false;
+//                break;
+//            }
+//
+//        }
+//        if (isSmallestPow) {	//could potentially duplicate polynoms in some cases
+//            Polynom probablyIrreducible = k.buildCircularPolinom(factor, q ^ n);
+//            if (probablyIrreducible.isIrreducible()) {
+//                result.push_back(probablyIrreducible);
+//            }
+//            else {
+//                //here shall be the Yaroslav's func call. please replace ??? with it
+//                std::vector<Polynom> multipliers = probablyIrreducable. ? ? ? ;		//Whoops, if u r here then it's actually reducable
+//                for each (auto multiplier in multipliers)
+//                {
+//                    if (multiplier.getPower() == n) {
+//                        result.push_back(multiplier);
+//                    }
+//                }
+//            }
+//        }// that's all, folks!
+//    }
+//}
+//
+//
+//
+
+
+
 int Field::mobius(int n)
 {
     if (n == 1)
@@ -190,7 +246,10 @@ std::vector<Polynom> Field::generateIrrpols(int _p, int _q) {
                 Polynom(2, 6, { 1,1,1,0,1,0,1 }), Polynom(2, 6, { 1,1,0,1,1,0,1 }), Polynom(2, 6, { 1,0,0,0,0,1,1 }),
                 Polynom(2, 6, { 1,1,1,0,0,1,1 }), Polynom(2, 6, { 1,0,1,1,0,1,1 }), Polynom(2, 6, { 1,1,0,0,1,1,1 }),
                 Polynom(2, 6, { 1,0,1,0,1,1,1 })};
-
+        case 7:
+            return std::vector<Polynom>{Polynom(2, 7, { 1,1,0,0,0,0,0,1 }), Polynom(2, 7, { 1,0,0,1,0,0,0,1 })  };
+        default:
+            return std::vector<Polynom> {Polynom(7, 0, {1})};
 
         }
 

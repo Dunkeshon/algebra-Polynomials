@@ -34,4 +34,6 @@ public:
 
 	bool isIrreduc(Polynom& p);
 	int irrPolOrder(Polynom& p);
+
+	std::vector<Polynom> findIrreduciblesOfPower(int n);
 };
