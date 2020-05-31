@@ -279,5 +279,14 @@ int main() {
     cout << fld.gcd(d1,d2);
     cout << fld.inverse(d1);
 
+
+    cout << "\n\ntest %\n";
+    Polynom Q2(2, "1+x^3+x^4+x^6+x^8");
+    cout << Q2;
+    Polynom Q3(2, "x^2");
+    cout << Q3;
+    Polynom res2 = Q2 % Q3;
+    cout << res2;
+
     return 0;
 }
