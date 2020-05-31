@@ -237,11 +237,11 @@ void Polynom::appendItem(Polynom::PElement* head, Polynom::PElement* el) {
 
 
 void Polynom::shift(int n) {
-    if (n == 0) return;
+    if (n == 0) 
+        return;
     PElement* new_head = makeItem(0);
-    for (int i(1); i < n; i++) {
+    for (int i=1; i < n; i++) 
         appendItem(new_head, makeItem(0));
-    }
     appendItem(new_head, this->head);
     setHead(new_head);
     this->power += n;
@@ -593,17 +593,22 @@ void Polynom::multiplicatePolinom(Polynom& pol1, Polynom& pol2) {
 
 
 void Polynom::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
-    Polynom A_copy(p); A_copy = A;
-    Q = Polynom(p, 0, { 0 }); R = Polynom(p, 0, { 0 });
-    while (A_copy.power >= B.power) {
+    Polynom A_copy(p);
+    A_copy = A;
+    Q = Polynom(p, 0, { 0 });
+    R = Polynom(p, 0, { 0 });
+    while (A_copy.power >= B.power) 
+    {
         int k = A_copy.power - B.power;
-        Polynom B_copy(p); B_copy = B;
+        Polynom B_copy(p); 
+        B_copy = B;
         if (k)
             B_copy.shift(k);
         int a_lead = A_copy.getLastCoefficient();
         int b_lead = B_copy.getLastCoefficient();
 
-        for (size_t j(0); j <= B_copy.power; j++) {
+        for (int j=0; j <= B_copy.power; j++) 
+        {
             int set_value = modMultiply(B_copy.getCoefficient(j), modDivision(a_lead, b_lead));
             B_copy.set(j, set_value);
         }
