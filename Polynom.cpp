@@ -132,6 +132,59 @@ Polynom::Polynom(int _p, int _power, std::vector<int> keys) {
     cutZeroes();
 }
 
+
+Polynom::Polynom(int _p, std::string keys)
+{
+    try {
+        if (_p < 0 || !isPrime(_p))
+            throw std::invalid_argument("Module p should be prime and more than zero\n");
+    }
+    catch (std::exception & e)
+    {
+        std::cout << "Caught " << e.what() << endl;
+        exit(0);
+    }
+
+    p = _p;
+    int coefficient = 0;
+    bool isCoefficient = true;
+    bool wasPower = false;
+    int currentPower = 0;
+    int currentOutputPower = 0;
+    keys += "+";
+
+    for (int i = 0; i < keys.length(); i++) {
+        char current = keys[i];
+        if (isOperator(current)) {
+            if (wasPower && currentPower != currentOutputPower)
+                while (currentOutputPower != currentPower) {
+                    if (currentOutputPower == 0) head = makeItem(0);
+                    else appendItem(head, makeItem(0));
+                    currentOutputPower++;
+                }
+            if (currentOutputPower == 0) head = makeItem(coefficient);
+            else appendItem(head, makeItem(coefficient));
+            currentPower = 0;
+            coefficient = 0;
+            currentOutputPower++;
+            wasPower = false;
+            isCoefficient = true;
+        }
+        else if (isPower(current)) {
+            isCoefficient = false;
+        } else if (!isalpha(current)) { //number
+            if (isCoefficient) coefficient = coefficient * 10 + (current - '0');
+            else {
+                currentPower = currentPower * 10 + (current - '0');
+                wasPower = true;
+            }
+        } 
+    }
+    this->power = currentOutputPower - 1;
+    makeMod();
+    cutZeroes();
+}
+
 Polynom::Polynom(const Polynom& other)
 {
     this->copy(other);
@@ -262,6 +315,16 @@ bool Polynom::isPrime(int number)
             return false;
     }
     return true;
+}
+
+bool Polynom::isOperator(char token)
+{
+    return token == '+' || token == '-' || token == '*' || token == '/';
+}
+
+bool Polynom::isPower(char token)
+{
+    return token == '^';
 }
 
 

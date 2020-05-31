@@ -6,6 +6,9 @@ using std::cin;
 using std::endl;
 
 int main() {
+    //check string
+    Polynom z(5, "23+5x^2+6x^4+12x^12+5x^15");
+    cout << "x) z(x) = " << z << "Power: " << z.getPower() << "\n\n";
 
     Polynom f(5, 2, { 1,2,1 });
     Polynom g(5, 2, { 1,3,1 });

@@ -84,6 +84,9 @@ protected:
     bool isZero();
     static void handleException(Polynom& p1, Polynom& p2);
     bool isPrime(int number);
+    bool isOperator(char token);
+    bool isPower(char token);
+
 public:
 
     //!empty constructor
@@ -92,6 +95,9 @@ public:
 
     //!constructor that take power of polinom and vector of coefficients of this polinom
     explicit Polynom(int _p, int _power, std::vector<int> keys);
+    //!constructor to parse input as a string)
+    //!the input should be in the increasing order, see sample input in main
+    Polynom(int _p, std::string keys);
 
     /** Copy constructor.
      * The copy constructor added here to make a deep copy
