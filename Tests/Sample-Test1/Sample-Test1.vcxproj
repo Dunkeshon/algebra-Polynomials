@@ -34,11 +34,15 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClInclude Include="..\..\Field.h" />
     <ClInclude Include="..\..\Polynom.h" />
+    <ClInclude Include="..\..\Ring.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Field.cpp" />
     <ClCompile Include="..\..\Polynom.cpp" />
+    <ClCompile Include="..\..\Ring.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
