@@ -718,7 +718,7 @@ Polynom Polynom::gcd(Polynom a, Polynom b) {
 }
 
 
-Polynom& Polynom::gcdExtended(Polynom A, Polynom B, Polynom X, Polynom Y,Polynom Q) {
+Polynom Polynom::gcdExtended(Polynom A, Polynom B, Polynom& X, Polynom& Y,Polynom& Q) {
     if (A.isZero()) {
         X = Polynom(p, 0, {0});
         Y = Polynom(p, 0, {1});
