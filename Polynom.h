@@ -38,7 +38,7 @@ private:
         //!coefficient of terms of polinom
         int key;
         //!pointer to next term
-        PElement* next;
+        PElement* next{ nullptr };
     };
     //!Mod of polynom
     void makeMod();
