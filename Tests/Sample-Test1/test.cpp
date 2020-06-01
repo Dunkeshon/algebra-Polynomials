@@ -273,3 +273,48 @@
 //	for (int i = 0; i < rootvec1.size(); i++)
 //		EXPECT_EQ(rootvec1[i], roots[i]);
 //}
+
+TEST(QuatRem, test1)
+{
+	Polynom A(5, 5, { 3,2,4,1,3,1 });
+	Polynom B(5, 2, { 4,0,1 });
+	Polynom* quot = new Polynom(5);
+	Polynom* rem = new Polynom(5);
+	A.quot_rem(A, B, *quot, *rem);
+	EXPECT_TRUE(*quot == Polynom(5, 3, { 2,2,3,1 }));
+	EXPECT_TRUE(*rem == Polynom(5, 1, { 0,4 }));
+}
+
+TEST(QuatRem, test2)
+{
+	Polynom A(3, 4, { 0,0,2,1,1 });
+	Polynom B(3, 1, { 1,2});
+	Polynom* quot = new Polynom(3);
+	Polynom* rem = new Polynom(3);
+	A.quot_rem(A, B, *quot, *rem);
+	EXPECT_TRUE(*quot == Polynom(3, 3, { 2,2,1,2}));
+	EXPECT_TRUE(*rem == Polynom(3, 0, { 1 }));
+}
+
+TEST(QuatRem, test3)
+{
+	Polynom A(3, 4, { 0,0,2,1,1 });
+	Polynom B(3, 4, { 0,0,2,1,1 });
+	Polynom* quot = new Polynom(3);
+	Polynom* rem = new Polynom(3);
+	A.quot_rem(A, B, *quot, *rem);
+	EXPECT_TRUE(*quot == Polynom(3, 0, { 1 }));
+	EXPECT_TRUE(*rem == Polynom(3, 0, { 0 }));
+}
+
+TEST(QuatRem, test4)
+{
+	Polynom A(5, 4, { 0,0,0,0,4 });
+	Polynom B(5, 2, { 0,0,2 });
+	Polynom* quot = new Polynom(5);
+	Polynom* rem = new Polynom(5);
+	A.quot_rem(A, B, *quot, *rem);
+	EXPECT_TRUE(*quot == Polynom(5, 2, { 0,0,2 }));
+	EXPECT_TRUE(*rem == Polynom(5, 0, { 0 }));
+}
+

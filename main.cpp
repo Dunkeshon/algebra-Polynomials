@@ -289,29 +289,5 @@ int main() {
     for (int i(0); i < resvec.size();i++) {
         cout << resvec[i];
     }
-
-
-    cout << "\n\nTest Factors (Berlekamp's algorithm)\n";
-    Polynom polynom(2, "1+x^3+x^4+x^6+x^8");
-    std::vector<Polynom> factors = getFactors(polynom);
-    cout << "Result factors: \n";
-    for (auto& factor : factors)
-        cout << factor;
-
-    cout << "---------------testing------------------testing-----------testing-----------testing-----testing-------------------testing--------------\n";
-    Polynom A1(5, 5, { 3,2,4,1,3,1 });
-    Polynom B1(5, 2, { 4,0,1 });
-    Polynom* quot = new Polynom(5);
-    Polynom* rem = new Polynom(5);
-    A1.quot_rem(A1, B1, *quot, *rem);
-    cout << *quot;
-    cout << *rem;
-    Polynom A2(3, 4, { 0,0,2,1,1 });
-    Polynom B2(3, 1, { 1,2 });
-    quot = new Polynom(5);
-   rem = new Polynom(5);
-    A2.quot_rem(A2, B2, *quot, *rem);
-    cout << *quot;
-    cout << *rem;
     return 0;
 }
