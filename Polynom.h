@@ -131,7 +131,7 @@ public:
     //returns -1 if Polynom is reducible or f(0) = 0
     int irrPolynomOrder();
 
-    //!Calculate order of derivative polynom
+    //!Calculates the order of the arbitrary polynomial by its decomposition to irreducibles
     int arbitraryPolynomOrder(std::vector<std::pair<Polynom, int>> polDecomposition);
 
     //!LCM of given vector numbers
