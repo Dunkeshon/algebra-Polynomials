@@ -271,8 +271,7 @@ void Polynom::set(int pos, int key_) {
         }
         if (this->power == 0)
             this->head = makeItem(key_);
-        else
-            tmp->key = key_;
+        else if (tmp) tmp->key = key_;
     }
     else {
         int counter = 0;
@@ -370,11 +369,15 @@ std::vector<std::vector<int>> Polynom::transpose(std::vector<std::vector<int>>& 
 }
 
 void Polynom::copy(const Polynom& pol) {
+    
     this->p = pol.p;
     clear();
     auto* tmp = pol.head;
-    this->head = makeItem(tmp->key);
-    tmp = tmp->next;
+    if (tmp) {
+        this->head = makeItem(tmp->key);
+        tmp = tmp->next;
+    }
+    else this->head = NULL;
     while (tmp) {
         appendItem(this->head, makeItem(tmp->key));
         tmp = tmp->next;
@@ -730,7 +733,7 @@ Polynom& Polynom::gcdExtended(Polynom& A, Polynom& B, Polynom& X, Polynom& Y,Pol
 }
 
 
-Polynom& Polynom::operator=(Polynom& other)
+Polynom Polynom::operator=(Polynom& other)
 {
     if (this != &other) {
         this->copy(other);
@@ -819,25 +822,25 @@ std::vector<Polynom> getFactors(Polynom p)
 }
 
 
-Polynom& derivative(Polynom& pol1)
+Polynom derivative(Polynom& pol1)
 {
-    auto* result = new Polynom(pol1.p);
+    Polynom result(pol1.p);
     auto temp = pol1.head;
-    result->power = pol1.power - 1;
+    result.power = pol1.power - 1;
 
     int power = 0;
 
     while (temp) {
         if (power != 0) {
-            if (result->head != nullptr) Polynom::appendItem(result->head, Polynom::makeItem(temp->key * power));
-            else result->head = Polynom::makeItem(temp->key * power);
+            if (result.head != nullptr) Polynom::appendItem(result.head, Polynom::makeItem(temp->key * power));
+            else result.head = Polynom::makeItem(temp->key * power);
         }
         temp = temp->next;
         power++;
     }
-    result->Polynom::makeMod();
-    result->Polynom::cutZeroes();
-    return *result;
+    result.Polynom::makeMod();
+    result.Polynom::cutZeroes();
+    return result;
 }
 
 
@@ -870,48 +873,48 @@ std::ostream& operator<<(std::ostream& stream, Polynom& polynomial)
 }
 
 
-Polynom& operator*(Polynom& p1, Polynom& p2) {
+Polynom operator*(Polynom& p1, Polynom& p2) {
     Polynom::handleException(p1, p2);
 
-    auto* result = new Polynom(p1.p);
-    result->Polynom::multiplicatePolinom(p1, p2);
-    result->Polynom::cutZeroes();
-    result->Polynom::makeMod();
-    result->p = p1.p;
-    return *result;
+    Polynom result(p1.p);
+    result.Polynom::multiplicatePolinom(p1, p2);
+    result.Polynom::cutZeroes();
+    result.Polynom::makeMod();
+    result.p = p1.p;
+    return result;
 }
 
 
-Polynom& operator+(Polynom& p1, Polynom& p2) {
+Polynom operator+(Polynom& p1, Polynom& p2) {
     Polynom::handleException(p1, p2);
 
-    Polynom* result = new Polynom(p1.p);
-    result->Polynom::addingPolinoms(p1, p2);
-    result->Polynom::cutZeroes();
-    result->Polynom::makeMod();
-    result->p = p1.p;
-    return *result;
+    Polynom result(p1.p);
+    result.Polynom::addingPolinoms(p1, p2);
+    result.Polynom::cutZeroes();
+    result.Polynom::makeMod();
+    result.p = p1.p;
+    return result;
 }
 
 
-Polynom& operator-(Polynom& p1, Polynom& p2) {
+Polynom operator-(Polynom& p1, Polynom& p2) {
     Polynom::handleException(p1, p2);
-    Polynom* result = new Polynom(p1.p);
-    result->Polynom::differencePolinom(p1, p2);
-    result->Polynom::cutZeroes();
-    result->Polynom::makeMod();
-    result->p = p1.p;
-    return *result;
+    Polynom result(p1.p);
+    result.Polynom::differencePolinom(p1, p2);
+    result.Polynom::cutZeroes();
+    result.Polynom::makeMod();
+    result.p = p1.p;
+    return result;
 }
 
 
-Polynom& operator/(Polynom& p1, Polynom& p2) {
+Polynom operator/(Polynom& p1, Polynom& p2) {
     Polynom::handleException(p1, p2);
 
     int field = p1.p;
     if (p1.power < p2.power) { cout << "Can`t divide! The degree of dividend is always greater than divisor!\n\n"; return Polynom(field); }
     if (p2.isZero()) { cout << "Can't divide by 0!\n"; return Polynom(field); }
-    Polynom* Q = new Polynom(field), * R = new Polynom(field);
+    Polynom* Q = new Polynom(field), *R = new Polynom(field);
     if (p2.power == 0) {
         Q->copy(p1);
     }
@@ -920,7 +923,7 @@ Polynom& operator/(Polynom& p1, Polynom& p2) {
     return *Q;
 }
 
-Polynom& operator%(Polynom& p1, Polynom& p2) {//using for mod
+Polynom operator%(Polynom& p1, Polynom& p2) {//using for mod
     Polynom::handleException(p1, p2);
 
     int field = p1.p;
