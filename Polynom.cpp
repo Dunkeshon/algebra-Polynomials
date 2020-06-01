@@ -260,12 +260,8 @@ void Polynom::shift(int n) {
 
 
 void Polynom::clear() {
-    auto* current = this->head;
-    while (current) {
-        this->head = this->head->next;
-        free(current);
-        current = this->head;
-    }
+    deleteListNode(this->head);
+    this->head = nullptr;
     this->power = 0;
 }
 
