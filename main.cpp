@@ -59,6 +59,11 @@ int main() {
     Polynom der2 = derivative(g);
     cout << "g(x)' = " << der2;
 
+    Polynom k(5, 5, { 3,0,2,0,0,3 });
+    Polynom kd(5, 1, { 0,4 });
+    Polynom kdd = derivative(k);
+    cout << bool(kd == derivative(k));
+
     cout << "\nf == h " << bool(f == h) << endl;
     cout << "h(x) = " << h;
     h.shift(5);
@@ -266,7 +271,7 @@ int main() {
     Polynom inv2 = fi3.inverse(x2);
     cout << "inverse(x, field) = " << inv2;
 
-    cout << "---------------testing------------------testing-----------testing-----------testing-----testing-------------------testing--------------\n";
+    cout << "---------------testing------------testing--------------\n";
 
     Polynom Q(5, 4, { 4,4,4,4,1 });
     Field fld(Q);
@@ -279,15 +284,6 @@ int main() {
     cout << fld.gcd(d1,d2);
     cout << fld.inverse(d1);
 
-
-    cout << "\n\ntest %\n";
-    Polynom Q2(2, "1+x^3+x^4+x^6+x^8");
-    cout << Q2;
-    Polynom Q3(2, "x^2");
-    cout << Q3;
-    Polynom res2 = Q2 % Q3;
-    cout << res2;
-
     cout << "---------------testing------------------testing-----------testing-----------testing-----testing-------------------testing--------------\n";
     std::vector<Polynom> resvec = fld.generateIrrpols(2,4);
     for (int i(0); i < resvec.size();i++) {
@@ -295,23 +291,11 @@ int main() {
     }
 
 
-    cout << "---------------testing------------------testing-----------testing-----------testing-----testing-------------------testing--------------\n";
-    Polynom A1(5, 5, { 3,2,4,1,3,1 });
-    Polynom B1(5, 2, { 4,0,1 });
-
-  Polynom* quot= new Polynom(5);
-  Polynom* rem = new Polynom(5);
-  A1.quot_rem(A1, B1, *quot, *rem);
-  cout << *quot;
-  cout << *rem;
-
-  Polynom A2(3, 4, { 0,0,2,1,1 });
-  Polynom B2(3, 1, { 1,2 });
-  quot = new Polynom(3);
-   rem = new Polynom(3);
-  A2.quot_rem(A2, B2, *quot, *rem);
-  cout << *quot;
-  cout << *rem;
-
+    cout << "\n\nTest Factors (Berlekamp's algorithm)\n";
+    Polynom polynom(2, "1+x^3+x^4+x^6+x^8");
+    std::vector<Polynom> factors = getFactors(polynom);
+    cout << "Result factors: \n";
+    for (auto& factor : factors)
+        cout << factor;
     return 0;
 }

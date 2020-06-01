@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <utility>
+#include <algorithm>
 #include <stdlib.h>
 #include "cmath"
 #include "Polynom.h"
@@ -291,6 +292,82 @@ void Polynom::set(int pos, int key_) {
     makeMod();
 }
 
+std::vector<int> Polynom::getCoefficientVector(int n)
+{
+    std::vector<int> vec;
+    vec.resize(n);
+    int i = 0;
+    while (head) {
+        vec[i] = head->key;
+        head = head->next;
+        i++;
+    }
+    return vec;
+}
+
+int Polynom::getRank(std::vector<std::vector<int>>& matrix)
+{
+    int rank = matrix.size();
+
+    for (int row = 0; row < rank; row++)
+    {
+        if (matrix[row][row])
+        {
+            for (int col = 0; col < matrix.size(); col++)
+            {
+                if (col != row)
+                {
+                    int mult = matrix[col][row] / matrix[row][row];
+                    for (int i = 0; i < rank; i++)
+                        matrix[col][i] -= mult * matrix[row][i];
+                }
+            }
+        }
+        else
+        {
+            bool reduce = true;
+            for (int i = row + 1; i < matrix.size(); i++)
+            {
+                if (matrix[i][row])
+                {
+                    swap(matrix, row, i, rank);
+                    reduce = false;
+                    break;
+                }
+            }
+            if (reduce)
+            {
+                rank--;
+                for (int i = 0; i < matrix.size(); i++)
+                    matrix[i][row] = matrix[i][rank];
+            }
+
+            row--;
+        }
+    }
+    return rank;
+}
+
+void Polynom::swap(std::vector<std::vector<int>>& matrix, int row1, int row2, int col)
+{
+
+    for (int i = 0; i < col; i++)
+    {
+        int temp = matrix[row1][i];
+        matrix[row1][i] = matrix[row2][i];
+        matrix[row2][i] = temp;
+    }
+}
+
+std::vector<std::vector<int>> Polynom::transpose(std::vector<std::vector<int>>& matrix)
+{
+    std::vector<std::vector<int>> transposed;
+    transposed.resize(matrix.size());
+    for (int i = 0; i < matrix.size(); i++) transposed[i].resize(matrix.size());
+    for (int i = 0; i < matrix.size(); i++)
+        for (int j = 0; j < matrix.size(); j++) transposed[i][j] = matrix[j][i];
+    return transposed;
+}
 
 void Polynom::copy(const Polynom& pol) {
     this->p = pol.p;
@@ -661,6 +738,76 @@ Polynom GCD(Polynom a, Polynom b) {
         std::swap(a, b);
     }
     return a.gcd(a, b);
+}
+
+int mod(int x, int y) {
+    if (x >= 0) return x % y;
+    else if (x < 0) {
+        while (x < (-y)) {
+            x = x + y;
+        }
+        return (y - (-x));
+    }
+}
+
+
+std::vector<Polynom> getFactors(Polynom p)
+{
+    std::vector<Polynom> result;
+
+    if (GCD(p, derivative(p)) == Polynom(p.p, "1")) {
+        int maxPower = p.getPower();
+        std::vector<std::vector<int>> coefficientMatrix;
+        coefficientMatrix.resize(maxPower);
+
+        int iq = 0;
+        for (int i = 0; i < maxPower; i++) {
+            iq = i * p.p;
+            std::string m = "x^" + std::to_string(iq);
+            Polynom mon(p.p, m);
+            Polynom res = mon % p;
+            coefficientMatrix[i] = res.getCoefficientVector(maxPower);
+        }
+
+        for (int i = 0; i < maxPower; i++) {
+            coefficientMatrix[i][i] = mod(coefficientMatrix[i][i] - 1, p.p);
+        }
+
+        //we transpose matrix to do all actions with columns rather than rows
+        std::vector<std::vector<int>> transposed = Polynom::transpose(coefficientMatrix);
+
+        int rank = Polynom::getRank(transposed) - 1;
+
+        int k = transposed.size() - rank;
+
+        if (k == 1) { //polynomial is irreducible
+            result.push_back(p);
+            return result;
+        }
+
+        coefficientMatrix = Polynom::transpose(transposed);
+
+        std::vector<std::vector<int>> basis;
+        for (int i = 0; i < coefficientMatrix.size(); i++) {
+            for (int j = 0; j < coefficientMatrix.size(); j++)
+                if (coefficientMatrix[i][j] != 0) {
+                    basis.push_back(coefficientMatrix[i]);
+                    break;
+                }
+        }
+
+        for (auto b : basis) {
+            for (int i = 0; i < p.p; i++) {
+                Polynom res = GCD(p, Polynom(p.p, b.size() - 1, b) - Polynom(p.p, std::to_string(i)));
+                if (res != Polynom(p.p, "1")) result.push_back(res);
+            }
+        }
+
+    }
+
+    //deleteDuplicates(result);
+   
+    return result;
 }
 
 
