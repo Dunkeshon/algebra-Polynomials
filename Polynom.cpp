@@ -709,7 +709,7 @@ void Polynom::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
 }
 
 
-Polynom Polynom::gcd(Polynom& a, Polynom& b) {
+Polynom Polynom::gcd(Polynom a, Polynom b) {
     if (b.isZero()) {
         a.makeMonic();
         return a;
@@ -718,7 +718,7 @@ Polynom Polynom::gcd(Polynom& a, Polynom& b) {
 }
 
 
-Polynom& Polynom::gcdExtended(Polynom& A, Polynom& B, Polynom& X, Polynom& Y,Polynom& Q) {
+Polynom& Polynom::gcdExtended(Polynom A, Polynom B, Polynom X, Polynom Y,Polynom Q) {
     if (A.isZero()) {
         X = Polynom(p, 0, {0});
         Y = Polynom(p, 0, {1});
@@ -733,7 +733,7 @@ Polynom& Polynom::gcdExtended(Polynom& A, Polynom& B, Polynom& X, Polynom& Y,Pol
 }
 
 
-Polynom Polynom::operator=(Polynom& other)
+Polynom& Polynom::operator=(Polynom other)
 {
     if (this != &other) {
         this->copy(other);
@@ -873,7 +873,7 @@ std::ostream& operator<<(std::ostream& stream, Polynom& polynomial)
 }
 
 
-Polynom operator*(Polynom& p1, Polynom& p2) {
+Polynom operator*(Polynom p1, Polynom p2) {
     Polynom::handleException(p1, p2);
 
     Polynom result(p1.p);
@@ -885,7 +885,7 @@ Polynom operator*(Polynom& p1, Polynom& p2) {
 }
 
 
-Polynom operator+(Polynom& p1, Polynom& p2) {
+Polynom operator+(Polynom p1, Polynom p2) {
     Polynom::handleException(p1, p2);
 
     Polynom result(p1.p);
@@ -897,7 +897,7 @@ Polynom operator+(Polynom& p1, Polynom& p2) {
 }
 
 
-Polynom operator-(Polynom& p1, Polynom& p2) {
+Polynom operator-(Polynom p1, Polynom p2) {
     Polynom::handleException(p1, p2);
     Polynom result(p1.p);
     result.Polynom::differencePolinom(p1, p2);
@@ -908,7 +908,7 @@ Polynom operator-(Polynom& p1, Polynom& p2) {
 }
 
 
-Polynom operator/(Polynom& p1, Polynom& p2) {
+Polynom operator/(Polynom p1, Polynom p2) {
     Polynom::handleException(p1, p2);
 
     int field = p1.p;
@@ -923,7 +923,7 @@ Polynom operator/(Polynom& p1, Polynom& p2) {
     return *Q;
 }
 
-Polynom operator%(Polynom& p1, Polynom& p2) {//using for mod
+Polynom operator%(Polynom p1, Polynom p2) {//using for mod
     Polynom::handleException(p1, p2);
 
     int field = p1.p;
@@ -939,7 +939,7 @@ Polynom operator%(Polynom& p1, Polynom& p2) {//using for mod
 }
 
 
-bool operator==(Polynom& p1, Polynom& p2) {
+bool operator==(Polynom p1, Polynom p2) {
     Polynom::handleException(p1, p2);
 
     if (p1.power != p2.power || p1.p != p2.p) return false;
@@ -953,7 +953,7 @@ bool operator==(Polynom& p1, Polynom& p2) {
 }
 
 
-bool operator!=(Polynom& p1, Polynom& p2) {
+bool operator!=(Polynom p1, Polynom p2) {
     Polynom::handleException(p1, p2);
 
     return !(p1 == p2);
