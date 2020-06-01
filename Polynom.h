@@ -151,16 +151,16 @@ public:
      *
      * The returned polynomial (gcd) is monic (i.e. the leading coefficient is equal to 1).
      */
-    Polynom gcd(Polynom& a, Polynom& b);
+    Polynom gcd(Polynom a, Polynom b);
 
     //!find X = A^(-1) in field B(p^q)
-    Polynom& gcdExtended(Polynom& A, Polynom& B, Polynom& X, Polynom& Y, Polynom & Q);
+    Polynom& gcdExtended(Polynom A, Polynom B, Polynom X, Polynom Y, Polynom Q);
 
     /** Copy assignment operator.
      * The copy assignment operator added here to make a deep copy
      * when the "=" is used to assign one instance to another.
      */
-    Polynom operator=(Polynom& other);
+    Polynom& operator=(Polynom other);
 
     /** Polynomial greatest common divisor.
      * Calculate and return a polynomial which is the greatest common divisor of two polynomials.
@@ -176,18 +176,18 @@ public:
     friend std::vector<Polynom> getFactors(Polynom p);
 
     friend Polynom derivative(Polynom& pol1);
-    friend Polynom operator *(Polynom& p1, Polynom& p2);
-    friend Polynom operator -(Polynom& p1, Polynom& p2);
-    friend Polynom operator +(Polynom& p1, Polynom& p2);
-    friend Polynom operator /(Polynom& p1, Polynom& p2);
-    friend Polynom operator %(Polynom& p1, Polynom& p2);
+    friend Polynom operator *(Polynom p1, Polynom p2);
+    friend Polynom operator -(Polynom p1, Polynom p2);
+    friend Polynom operator +(Polynom p1, Polynom p2);
+    friend Polynom operator /(Polynom p1, Polynom p2);
+    friend Polynom operator %(Polynom p1, Polynom p2);
 
     //!output polynomial
     friend std::ostream& operator <<(std::ostream& stream, Polynom& polynomial);
 
     //!equality operators
-    friend bool operator ==(Polynom& p1, Polynom& p2);
-    friend bool  operator !=(Polynom& p1, Polynom& p2);
+    friend bool operator ==(Polynom p1, Polynom p2);
+    friend bool  operator !=(Polynom p1, Polynom p2);
 };
 
 #endif //POLINOMS_POLYNOM_H
