@@ -44,6 +44,9 @@ private:
     void makeMod();
     //!Pointer to the first term of every object of class "Polynom"
     PElement* head = nullptr;
+
+    void deleteListNode(PElement* node);
+
     //Clear PElement list
      //!Making term of structure "PElement" (element of polinom) using the value of coefficient
     static PElement* makeItem(int val);

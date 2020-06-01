@@ -205,6 +205,16 @@ void Polynom::makeMod() {
     }
 }
 
+void Polynom::deleteListNode(PElement* node)
+{
+    if (!node) {
+        return;
+    }
+
+    deleteListNode(node->next);
+    delete node;
+}
+
 
 int Polynom::findPower() {
     int flag = 0, counter = 0;
@@ -410,7 +420,7 @@ bool Polynom::isPower(char token)
 
 
 Polynom::~Polynom() {
-
+    deleteListNode(this->head);
 }
 
 
