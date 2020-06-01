@@ -160,6 +160,31 @@ int main() {
     cout << "mod 2\n";
     cout << first << second;
     cout << first + second;
+
+    cout << "-----------------------------Order of arbitrary polynomial----------------------\n";
+
+    //https://planetcalc.com/8332/ here u can do polynomial factorization modulo p
+
+    Polynom order1(2, "1+x^2+x^3+x^9+x^10");
+    // GF(2): f(x) = 1 + x^2 + x^3 + x^9 + x^10 = (x^2 + x + 1)^3 * (x^4 + x + 1)
+    std::vector<std::pair<Polynom, int>> irrPols1 = { {Polynom(2, 2, { 1, 1, 1 }), 3}, {Polynom(2, 4, { 1, 1, 0, 0, 1 }), 1} };
+    cout << "Order of arbitrary polynomial 1+x^2+x^3+x^9+x^10 in field GF(2) = "
+        << order1.arbitraryPolynomOrder(irrPols1) << endl << endl;;
+
+    Polynom order2(2, "1+x+x^2+x^4");
+    // GF(2): f(x) = 1 + x + x^2 + x^4 = (x + 1) * (x^3 + x^2 + 1)
+    std::vector<std::pair<Polynom, int>> irrPols2 = { {Polynom(2, 1, { 1, 1 }), 1}, {Polynom(2, 3, { 1, 0, 1, 1 }), 1} };
+    //cout << Polynom(2, 1, { 1, 1 }).irrPolynomOrder() << endl;
+    //cout << Polynom(2, 3, { 1, 0, 1, 1 }).irrPolynomOrder() << endl;
+    cout << "Order of arbitrary polynomial 1+x+x^2+x^4 in field GF(2) = "
+        << order2.arbitraryPolynomOrder(irrPols2) << endl << endl;
+
+    Polynom order3(7, "5+3x+4x^2+4x^3+x^5");
+    // GF(7): f(x) = 1 + x + x^2 + x^4 = (x + 5)^2 * (x + 2) * (x^2 + 2x + 5)
+    std::vector<std::pair<Polynom, int>> irrPols3 = { {Polynom(7, 1, { 1, 5 }), 2}, {Polynom(7, 1, { 1, 2 }), 1}, {Polynom(7, 2, { 5, 2, 1}), 1} };
+    cout << "Order of arbitrary polynomial 5+3x+4x^2+4x^3+ x^5 in field GF(7) = "
+        << order3.arbitraryPolynomOrder(irrPols3) << endl << endl;
+
     cout << "------------------------------------FindRoots----------------------------\n";
 
     Polynom root1(5, 2, {1,2,1});

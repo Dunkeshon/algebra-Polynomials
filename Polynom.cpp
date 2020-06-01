@@ -568,21 +568,29 @@ int Polynom::irrPolynomOrder()
 }
 
 
-//int Polynom::derivativePolynomOrder() {    
-//    if (this->evaluate(0) == 0)
-//        return -1;
-//
-//    if (this->isIrreducible())
-//        return this->irrPolynomOrder();
-//
-//    // Yaroslav should to do function (derivativeToIrrPolynoms)
-//    std::vector<Polynom> irrPolymons = this->derivativeToIrrPolynoms();
-//    std::vector<int> ords(irrPolymons.size());
-//    for (auto irrPol : irrPolymons) {
-//        ords.push_back(irrPol.irrPolynomOrder());
-//    }
-//    return LCM(ords);
-//}
+int Polynom::arbitraryPolynomOrder(std::vector<std::pair<Polynom, int>> polDecomposition) {
+    if (this->evaluate(0) == 0)
+        return -1;
+
+    if (this->isIrreducible())
+        return this->irrPolynomOrder();
+
+    int max = 0;
+    // Yaroslav should to do function (getFactors)
+    //std::vector<std::pair<Polynom, int>> polDecomposition = getFactors(Polynom(*this));
+    std::vector<int> ords;
+    for (auto irrPol : polDecomposition) {
+        ords.push_back((irrPol.first).irrPolynomOrder());
+        if (irrPol.second > max) max = irrPol.second;
+    }
+
+    int t = 0;
+    for (; std::pow(this->p, t) < max; t++);
+
+    int koef = std::pow(this->p, t);
+
+    return koef * LCM(ords);
+}
 
 
 int Polynom::LCM(std::vector<int> ords) {

@@ -132,7 +132,7 @@ public:
     int irrPolynomOrder();
 
     //!Calculate order of derivative polynom
-    int derivativePolynomOrder();
+    int arbitraryPolynomOrder(std::vector<std::pair<Polynom, int>> polDecomposition);
 
     //!LCM of given vector numbers
     int LCM(std::vector<int> numbers);
