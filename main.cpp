@@ -314,5 +314,14 @@ int main() {
     for (int i(0); i < resvec.size();i++) {
         cout << resvec[i];
     }
+    cout << "---------------------------------RING--------------------------------------------------------\n\n";//for Linder :)
+    Ring rng;
+
+    Polynom rng1(3, 2, { 0,1,2 }), rng2(3, 1, {1,1});
+    cout << rng1 << rng2 << endl;
+    cout << rng.add(rng1,rng2);
+    cout << rng.mult(rng1, rng2);
+    cout << rng.subtr(rng1, rng2);
+
     return 0;
 }
