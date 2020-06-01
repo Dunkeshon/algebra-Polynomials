@@ -205,6 +205,16 @@ void Polynom::makeMod() {
     }
 }
 
+void Polynom::deleteListNode(PElement* node)
+{
+    if (!node) {
+        return;
+    }
+
+    deleteListNode(node->next);
+    delete node;
+}
+
 
 int Polynom::findPower() {
     int flag = 0, counter = 0;
@@ -250,12 +260,8 @@ void Polynom::shift(int n) {
 
 
 void Polynom::clear() {
-    auto* current = this->head;
-    while (current) {
-        this->head = this->head->next;
-        free(current);
-        current = this->head;
-    }
+    deleteListNode(this->head);
+    this->head = nullptr;
     this->power = 0;
 }
 
@@ -410,7 +416,7 @@ bool Polynom::isPower(char token)
 
 
 Polynom::~Polynom() {
-
+    deleteListNode(this->head);
 }
 
 
@@ -718,7 +724,7 @@ Polynom Polynom::gcd(Polynom a, Polynom b) {
 }
 
 
-Polynom& Polynom::gcdExtended(Polynom A, Polynom B, Polynom X, Polynom Y,Polynom Q) {
+Polynom Polynom::gcdExtended(Polynom A, Polynom B, Polynom& X, Polynom& Y,Polynom& Q) {
     if (A.isZero()) {
         X = Polynom(p, 0, {0});
         Y = Polynom(p, 0, {1});
