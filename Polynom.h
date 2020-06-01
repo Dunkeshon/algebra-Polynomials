@@ -59,7 +59,7 @@ private:
     static void swap(std::vector<std::vector<int>>& matrix, int row1, int row2, int col);
     static std::vector<std::vector<int>> transpose(std::vector<std::vector<int>>& matrix);
     
-
+ friend class UiController;
 public:
     void clear();
     int getLastCoefficient();

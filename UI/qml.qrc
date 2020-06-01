@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>SwipeViewItem.qml</file>
+        <file>WorkSpaceView.qml</file>
     </qresource>
 </RCC>
