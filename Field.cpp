@@ -306,12 +306,23 @@ std::vector<Polynom> Field::generateIrrpols(int _p, int _q) {
                 Polynom(2, 6, { 1,1,1,0,0,1,1 }), Polynom(2, 6, { 1,0,1,1,0,1,1 }), Polynom(2, 6, { 1,1,0,0,1,1,1 }),
                 Polynom(2, 6, { 1,0,1,0,1,1,1 })};
         case 7:
-            return std::vector<Polynom>{Polynom(2, 7, { 1,1,0,0,0,0,0,1 }), Polynom(2, 7, { 1,0,0,1,0,0,0,1 })  };
+            return std::vector<Polynom>{Polynom(2, 7, { 1,1,0,0,0,0,0,1 }), Polynom(2, 7, { 1,0,0,1,0,0,0,1 }),
+                Polynom(2, 7, { 1,1,1,1,0,0,0,1 }), Polynom(2, 7, { 1,0,0,0,1,0,0,1 }), Polynom(2, 7, { 1,0,1,1,1,0,0,1 })};
+        case 8: 
+            return std::vector<Polynom>{Polynom(2, 8, {1,1,0,1,1,0,0,0,1}), Polynom(2, 8, {1,0,1,1,1,0,0,0,1}),
+                Polynom(2, 8, { 1,1,0,1,0,1,0,0,1 }), Polynom(2, 8, { 1,1,0,1,1,1,1,0,1}) };
+        case 9:
+            return std::vector<Polynom> {Polynom(2, 9, {1,1,0,0,0,0,0,0,0,1}), Polynom(2, 9, { 1,0,0,0,1,0,0,0,0,1}),
+                Polynom(2, 9, {1,1,1,0,1,0,0,0,0,1}), Polynom(2, 9, {1,1,0,1,1,0,0,0,0,1})};
         default:
-            return std::vector<Polynom> {Polynom(7, 0, {1})};
+            return std::vector<Polynom> {Polynom(2, 0, {1})};
 
+        }  
+    }
+    else if (_p == 3) {
+        switch (_q) {
+        case 1: 
+            return std::vector<Polynom> { Polynom(3, 1, { 0,1 }), Polynom(3, 1, { 1,1 }), Polynom(3, 1, { 2,1 }) };
         }
-
-        
     }
 }
