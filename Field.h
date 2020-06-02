@@ -5,9 +5,8 @@
 class Field :public Ring {
 private:
 	int mobius(int n);
-    Polynom Q;//Q is reducible polynom of degree q
-    //  p is prime p is PUBLIC IN POLYNOM
-    int q; //extension
+	Polynom Q;//Q is reducible polynom of degree q
+	int q;//extension
 public:
 	Field();
 	Field(int p_, int q_);
