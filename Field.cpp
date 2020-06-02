@@ -3,6 +3,19 @@
 #include "Field.h"
 
 
+void Field::handleException(Polynom& p1)
+{
+    try {
+        if (p1.getPower() >= Q.getPower())
+            throw std::invalid_argument("Power of the polynom must be less than q\n");
+    }
+    catch (std::exception & e)
+    {
+        std::cout << "Caught " << e.what() << std::endl;
+        exit(0);
+    }
+}
+
 Field::Field() {};
 
 Field::Field(int p_, int q_) {
@@ -164,7 +177,7 @@ Polynom Field::buildCircularPolynom(int n)
     {
         circular2 = circular2 * polynoms2[k];
     }
-    Polynom circular = circular1/circular2;
+    Polynom circular = circular1 / circular2;
     return circular;
 }
 
@@ -177,18 +190,24 @@ Polynom& Field::inverse(Polynom& pol) {
 }
 
 Polynom Field::add(Polynom& p1, Polynom& p2) {
+    handleException(p1);
+    handleException(p2);
     Polynom res = p1 + p2;
     res = res % Q;
     return res;
 }
 
 Polynom Field::subtr(Polynom& p1, Polynom& p2) {
+    handleException(p1);
+    handleException(p2);
     Polynom res = p1 - p2;
     res = res % Q;
     return res;
 }
 
 Polynom Field::mult(Polynom& p1, Polynom& p2) {
+    handleException(p1);
+    handleException(p2);
     Polynom res = p1 * p2;
     res = res % Q;
     return res;
@@ -196,6 +215,8 @@ Polynom Field::mult(Polynom& p1, Polynom& p2) {
 
 
 Polynom Field::quot(Polynom& p1, Polynom& p2) {
+    handleException(p1);
+    handleException(p2);
     Polynom res = p1 / p2;
     res = res % Q;
     return res;
@@ -203,6 +224,8 @@ Polynom Field::quot(Polynom& p1, Polynom& p2) {
 
 
 Polynom Field::rem(Polynom& p1, Polynom& p2) {
+    handleException(p1);
+    handleException(p2);
     Polynom res = p1 % p2;
     res = res % Q;
     return res;
@@ -210,18 +233,22 @@ Polynom Field::rem(Polynom& p1, Polynom& p2) {
 
 
 Polynom Field::gcd(Polynom& p1, Polynom& p2) {
+    handleException(p1);
+    handleException(p2);
     Polynom res = GCD(p1,p2);
     res = res % Q;
     return res;
 }
 
 Polynom Field::derivate(Polynom& _p) {
+    handleException(_p);
     Polynom res = derivative(_p);
     res = res % Q;
     return res;
 }
 
 Polynom Field::monic(Polynom& _p) {
+    handleException(_p);
     Polynom res; _p.makeMonic();
     res = p;
     res = res % Q;
@@ -229,25 +256,28 @@ Polynom Field::monic(Polynom& _p) {
 }
 
 int Field::eval(Polynom _p, int x) {
-
+    handleException(_p);
     _p = _p % Q;
     return _p.evaluate(x);
 }
 
 std::vector<int> Field::roots(Polynom& _p) {
+    handleException(_p);
     return _p.findRoots();
 }
 
 int Field::rootsNumber(Polynom& _p) {
-
+    handleException(_p);
     return _p.findRootNumber();
 }
 
 bool Field::isIrreduc(Polynom& _p) {
+    handleException(_p);
     return _p.isIrreducible();
 }
 
 int Field::irrPolOrder(Polynom& _p) {
+    handleException(_p);
     return _p.irrPolynomOrder();
 }
 

@@ -7,6 +7,7 @@ private:
 	int mobius(int n);
 	Polynom Q;//Q is reducible polynom of degree q
 	int q;//extension
+	void handleException(Polynom& p1);
 public:
 	Field();
 	Field(int p_, int q_);
