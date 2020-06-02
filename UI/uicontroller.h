@@ -34,9 +34,8 @@ class UiController : public QObject
 
     QString m_result;
 
-    vector<Polynom> irreduciblesList ;
-    vector<Polynom> historyList ;
 
+    vector<Polynom> irreduciblesList ;
     Field mainPolynomial ;
     Polynom firstOperandPol;
     Polynom secondOperandPol;
@@ -45,103 +44,90 @@ class UiController : public QObject
     QString parseToQString(Polynom& polynomial){
         QString newString;
         if (polynomial.Polynom::isZero()) {
-                newString.push_back("0");
-                return newString ;
-            }
-            Polynom::PElement* tmp = polynomial.Polynom::head;
-            int i = 0;
-            bool isFirst = true;
-            while (tmp != nullptr) {
-                if (tmp->key == 0) {
-                    tmp = tmp->next;
-                    i++;
-                    continue;
-                }
-                if (!isFirst) newString.push_back("+");
-                else isFirst = false;
-                if (tmp->key != 1 || i == 0)
-                    newString.push_back(QString::number(tmp->key)) ;
-                if (i != 0) newString.push_back("x^"+QString::number(i));
+            newString.push_back("0");
+            return newString ;
+        }
+        Polynom::PElement* tmp = polynomial.Polynom::head;
+        int i = 0;
+        bool isFirst = true;
+        while (tmp != nullptr) {
+            if (tmp->key == 0) {
                 tmp = tmp->next;
                 i++;
+                continue;
             }
-            return newString;
+            if (!isFirst) newString.push_back("+");
+            else isFirst = false;
+            if (tmp->key != 1 || i == 0)
+                newString.push_back(QString::number(tmp->key)) ;
+            if (i != 0) newString.push_back("x^"+QString::number(i));
+            tmp = tmp->next;
+            i++;
+        }
+        return newString;
     }
 
 public:
     explicit UiController(QObject *parent = nullptr);
-    // для каждого QProperty создать свой эквивалент класса POLYNOMIALS
 
 
 
 
 
 
-QStringList irreducibleStrings() const;
-QStringList historyStrings() const;
+    //  getters do not touch
+
+    QStringList irreducibleStrings() const;
+
+    QStringList historyStrings() const;
 
 
-QString mainPolynomialString() const;
+    QString mainPolynomialString() const;
 
-QString firstOperandString() const;
+    QString firstOperandString() const;
 
-QString secondOperandString() const;
+    QString secondOperandString() const;
 
-QString result() const;
+    QString result() const;
 
 public slots:
-void setIrreducibleStrings(QStringList irreducibleStrings);
 
-void clearHistory(){
-    m_historyStrings.clear();
-    historyList.clear();
-    emit historyStringsChanged(m_historyStrings);
-}
-// end operation and save to history
-void updateHistory(){
+    // functions to call from js
 
-    historyList.push_back(firstOperandPol);
-    historyList.push_back(secondOperandPol);
-    historyList.push_back(resultPol);
+    // clear history
+    void clearHistory(){
+        m_historyStrings.clear();
+        emit historyStringsChanged(m_historyStrings);
+    }
+    // end operation and save to history
+    // @param newItem - Qstring in form of ax^2+3 + ax^2-2 = ax^2 + 1 or gcd(...) = (...)
+    void updateHistory(QString newItem){
+        m_historyStrings<<newItem ;
+        emit historyStringsChanged(m_historyStrings);
+    }
 
+    //  end operation and just clear field for the next operation
+    void clearInputFields(){
+        firstOperandPol.clear();
+        secondOperandPol.clear();
+        resultPol.clear();
+        m_firstOperandString = "";
+        m_secondOperandString = "";
+        m_result = "";
+        emit firstOperandStringChanged(m_firstOperandString);
+        emit secondOperandStringChanged(m_secondOperandString);
+        emit resultChanged(m_result);
+    }
+    // p = 2   1<=q<8
+    void findIrreducibles(int p, int q){
+        // for ui test
+        //    QStringList newList{"1+ax+bx^2+cx^3","1+ax+bx^2+cx^3+dx^4","1+ax+bx^2+cx^3","1+ax+bx^2+cx^3"
+        //                           ,"1+ax+bx^2+cx^3","1+ax+bx^2+cx^3+dx^4","1+ax+bx^2+cx^3","1+ax+bx^2+cx^3"
+        //                           ,"1+ax+bx^2+cx^3","1+ax+bx^2+cx^3+dx^4","1+ax+bx^2+cx^3","1+ax+bx^2+cx^3"};
 
-
-    firstOperandPol.clear();
-    secondOperandPol.clear();
-    resultPol.clear();
-
-    m_historyStrings<<m_firstOperandString<<m_secondOperandString<<m_result ;
-    emit historyStringsChanged(m_historyStrings);
-         m_firstOperandString = "";
-         m_secondOperandString = "";
-         m_result = "";
-         emit firstOperandStringChanged(m_firstOperandString);
-         emit secondOperandStringChanged(m_secondOperandString);
-         emit resultChanged(m_result);
-}
-
-//  end operation and just clear field for the next operation
-void clearFields(){
-    firstOperandPol.clear();
-    secondOperandPol.clear();
-    resultPol.clear();
-    m_firstOperandString = "";
-    m_secondOperandString = "";
-    m_result = "";
-    emit firstOperandStringChanged(m_firstOperandString);
-    emit secondOperandStringChanged(m_secondOperandString);
-    emit resultChanged(m_result);
-}
-// p = 2   1<=q<8
-void findIrreducibles(int p, int q){
-    // for ui test
-//    QStringList newList{"1+ax+bx^2+cx^3","1+ax+bx^2+cx^3+dx^4","1+ax+bx^2+cx^3","1+ax+bx^2+cx^3"
-//                           ,"1+ax+bx^2+cx^3","1+ax+bx^2+cx^3+dx^4","1+ax+bx^2+cx^3","1+ax+bx^2+cx^3"
-//                           ,"1+ax+bx^2+cx^3","1+ax+bx^2+cx^3+dx^4","1+ax+bx^2+cx^3","1+ax+bx^2+cx^3"};
-
-//    setIrreducibleStrings(newList);
-    // Realisation:
-    /*
+        //    setIrreducibleStrings(newList);
+        // Realisation:
+        /*
      Vector<Polynomials> IrreduciblePolynomials = mainPolynomial.12Var()
      QStringList newList();
     for(const auto &i:IrreduciblePolynomials)
@@ -150,119 +136,124 @@ void findIrreducibles(int p, int q){
     }
      setIrreducibleStrings(newList);
     */
-
-    QStringList newList;
-    irreduciblesList = Field::generateIrrpols(p,q);
-    for( auto & i : irreduciblesList){
-       newList << parseToQString(i);
+        QStringList newList;
+        irreduciblesList = Field::generateIrrpols(p,q);
+        for( auto & i : irreduciblesList){
+            newList << parseToQString(i);
+        }
     }
-}
 
-void selectMainPolynom(int index){
+    void selectMainPolynom(int index){
+        mainPolynomial = irreduciblesList[index];
+        // if contains errors use by index from irreducible list
+        m_mainPolynomialString = parseToQString(mainPolynomial); // just check for bugs
 
-    mainPolynomial = irreduciblesList[index];
+        emit mainPolynomialStringChanged(m_mainPolynomialString);
+    }
 
-    m_mainPolynomialString = parseToQString(mainPolynomial);
-    emit mainPolynomialStringChanged(m_mainPolynomialString);
-}
-
-
-
-void setHistoryStrings(QStringList historyStrings);
-
-
-//input to do
-
+    //create 2 polynomials from both input fields
+    // use in calculate button
+    void inputPolynomials(QString firstPolString,QString secondPolString = ""){
+        m_firstOperandString = firstPolString;
+        m_secondOperandString = secondPolString;
+        firstOperandPol = Polynom(mainPolynomial.power,firstPolString.toStdString());
+        firstOperandPol = Polynom(mainPolynomial.power,secondPolString.toStdString());
+    }
 
 
+    void plus(){
+        resultPol=mainPolynomial.add(firstOperandPol,secondOperandPol);
+        m_result = parseToQString(resultPol);
+        emit resultChanged(m_result);
+    }
+    void minus(){
+        resultPol=mainPolynomial.subtr(firstOperandPol,secondOperandPol);
+        m_result = parseToQString(resultPol);
+        emit resultChanged(m_result);
+    }
+    void mult(){
+        resultPol=mainPolynomial.mult(firstOperandPol,secondOperandPol);
+        m_result = parseToQString(resultPol);
+        emit resultChanged(m_result);
+    }
+    void division(){
+        resultPol=mainPolynomial.quot(firstOperandPol,secondOperandPol);
+        m_result = parseToQString(resultPol);
+        emit resultChanged(m_result);
+    }
+    void divMod(){
+        resultPol=mainPolynomial.rem(firstOperandPol,secondOperandPol);
+        m_result = parseToQString(resultPol);
+        emit resultChanged(m_result);
+    }
+    void derivate(){
+        resultPol=mainPolynomial.derivate(firstOperandPol);
+        m_result = parseToQString(resultPol);
+        emit resultChanged(m_result);
+    }
+    void monic(){
+        resultPol=mainPolynomial.monic(firstOperandPol);
+        m_result = parseToQString(resultPol);
+        emit resultChanged(m_result);
+    }
+    void evaluate(int point){
 
-void plus(){
-     resultPol=mainPolynomial.add(firstOperandPol,secondOperandPol);
-     m_result = parseToQString(resultPol);
-     emit resultChanged(m_result);
-}
-void minus(){
-     resultPol=mainPolynomial.subtr(firstOperandPol,secondOperandPol);
-     m_result = parseToQString(resultPol);
-     emit resultChanged(m_result);
-}
-void mult(){
-     resultPol=mainPolynomial.mult(firstOperandPol,secondOperandPol);
-     m_result = parseToQString(resultPol);
-     emit resultChanged(m_result);
-}
-void division(){
-     resultPol=mainPolynomial.quot(firstOperandPol,secondOperandPol);
-     m_result = parseToQString(resultPol);
-     emit resultChanged(m_result);
-}
-void divMod(){
-     resultPol=mainPolynomial.rem(firstOperandPol,secondOperandPol);
-     m_result = parseToQString(resultPol);
-     emit resultChanged(m_result);
-}
-void derivate(){
-     resultPol=mainPolynomial.derivate(firstOperandPol);
-     m_result = parseToQString(resultPol);
-     emit resultChanged(m_result);
-}
-void monic(){
-     resultPol=mainPolynomial.monic(firstOperandPol);
-     m_result = parseToQString(resultPol);
-     emit resultChanged(m_result);
-}
-void evaluate(int point){
-
-     m_result = QString::number( mainPolynomial.eval(firstOperandPol,point));
-     emit resultChanged(m_result);
-}
-void rootsNumber(){
-    m_result = QString::number( mainPolynomial.rootsNumber(firstOperandPol));
-    emit resultChanged(m_result);
-}
-void inverse(){
-    resultPol=mainPolynomial.inverse(firstOperandPol);
-    m_result = parseToQString(resultPol);
-    emit resultChanged(m_result);
-}
-void gcd(){
-    resultPol=mainPolynomial.gcd(firstOperandPol,secondOperandPol);
-    m_result = parseToQString(resultPol);
-    emit resultChanged(m_result);
-}
-void buildCircularPolynom(int n){
-    resultPol=mainPolynomial.buildCircularPolynom(n);
-    m_result = parseToQString(resultPol);
-    emit resultChanged(m_result);
-}
-void isIrreduc(){
-    if(mainPolynomial.isIrreduc(firstOperandPol))
-        m_result="True";
-    else
-        m_result="false";
-    emit resultChanged(m_result);
-}
-void irrPolOrder(){
+        m_result = QString::number( mainPolynomial.eval(firstOperandPol,point));
+        emit resultChanged(m_result);
+    }
+    void rootsNumber(){
+        m_result = QString::number( mainPolynomial.rootsNumber(firstOperandPol));
+        emit resultChanged(m_result);
+    }
+    void inverse(){
+        resultPol=mainPolynomial.inverse(firstOperandPol);
+        m_result = parseToQString(resultPol);
+        emit resultChanged(m_result);
+    }
+    void gcd(){
+        resultPol=mainPolynomial.gcd(firstOperandPol,secondOperandPol);
+        m_result = parseToQString(resultPol);
+        emit resultChanged(m_result);
+    }
+    void buildCircularPolynom(int n){
+        resultPol=mainPolynomial.buildCircularPolynom(n);
+        m_result = parseToQString(resultPol);
+        emit resultChanged(m_result);
+    }
+    void isIrreduc(){
+        if(mainPolynomial.isIrreduc(firstOperandPol))
+            m_result="True";
+        else
+            m_result="false";
+        emit resultChanged(m_result);
+    }
+    void irrPolOrder(){
         m_result = QString::number(mainPolynomial.irrPolOrder(firstOperandPol));
         emit resultChanged(m_result);
-}
+    }
 
 
-void setMainPolynomialString(QString mainPolynomialString);
+    //  setters do not touch
+    void setHistoryStrings(QStringList historyStrings);
 
-void setFirstOperandString(QString firstOperandString);
+    void setIrreducibleStrings(QStringList irreducibleStrings);
 
-void setSecondOperandString(QString secondOperandString);
+    void setMainPolynomialString(QString mainPolynomialString);
 
-void setResult(QString result);
+    void setFirstOperandString(QString firstOperandString);
+
+    void setSecondOperandString(QString secondOperandString);
+
+    void setResult(QString result);
 
 signals:
-void irreducibleStringsChanged(QStringList irreducibleStrings);
-void historyStringsChanged(QStringList historyStrings);
-void mainPolynomialStringChanged(QString mainPolynomialString);
-void firstOperandStringChanged(QString firstOperandString);
-void secondOperandStringChanged(QString secondOperandString);
-void resultChanged(QString result);
+    //  signals do not touch
+    void irreducibleStringsChanged(QStringList irreducibleStrings);
+    void historyStringsChanged(QStringList historyStrings);
+    void mainPolynomialStringChanged(QString mainPolynomialString);
+    void firstOperandStringChanged(QString firstOperandString);
+    void secondOperandStringChanged(QString secondOperandString);
+    void resultChanged(QString result);
 };
 
 #endif // UICONTROLLER_H
