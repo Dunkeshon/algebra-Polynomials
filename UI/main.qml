@@ -6,10 +6,12 @@ Window {
     id:mainw
     property bool isEmptyWorkspace: true
     visible: true
-
+//    width: screen.width
+//    height: screen.height
     minimumWidth: 950
     minimumHeight: 475
-
+ //   visibility: "FullScreen"
+ //   flags: Qt.MaximizeUsingFullscreenGeometryHint|Qt.WindowMinMaxButtonsHint| Qt.WindowCloseButtonHint | Qt.WindowSystemMenuHint
     title: qsTr("Hello World")
     Item{
         id:topPanel
@@ -39,8 +41,8 @@ Window {
                 anchors.left: fieldDescription.right
                 anchors.leftMargin: 10
                 focus: true
-                font.pixelSize: 20
-                width: 90
+                font.pixelSize: 18
+                width: 85
                 selectByMouse: true
                 placeholderText: "просте"
                 validator: IntValidator{bottom: 0; top: 999;}
@@ -67,8 +69,8 @@ Window {
                 anchors.left: fieldExtensionDescription.right
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: 10
-                font.pixelSize: 20
-                width: 90
+                font.pixelSize: 18
+                width: 85
                 selectByMouse: true
                 validator: IntValidator{bottom: 0; top: 999;}
                 background: Rectangle{
@@ -101,7 +103,7 @@ Window {
                         swipeView.currentIndex=1
                         group1.enabled=false
                         changeInputParamsButton.paramsChoosen = true
-                        changeInputParamsButton.enabled=false
+
                     }
                 }
                 else{
@@ -111,8 +113,11 @@ Window {
                     workSpace.visible = false;
                     //CLEAR MAIN POLYNOM IN C++
                     UiController.clearMainPolynomial();
+                    UiController.clearIrreducibles();
                     //clear history
                     UiController.clearHistory();
+                    changeInputParamsButton.paramsChoosen = false
+
                     //UiController.historyStrings.clear(); //FIND FINCTION THAT CLEAR THIS FUCKING SHIT
                 }
             }
@@ -229,8 +234,6 @@ Window {
                 }
                 onCurrentIndexChanged: {
                     console.log("current index is:" + currentIndex)
-
-
                 }
             }
             Button{
@@ -370,9 +373,9 @@ Window {
                         workSpace.visible=true
                         workSpace.enabled=false;
 
-                    //    swipeView.currentIndex = 4
 
-                        // instruction: select operation
+                        UiController.clearInputFields();
+
                         // show list of tasks
 
                         //test for ui
@@ -439,21 +442,22 @@ Window {
                 }
             }
         }
-        Item {
-            id: waiting
-            visible: swipeView.currentIndex==3?true:false
-            Rectangle{
-                anchors.fill: parent
-                Text {
-                    id: waitingForInstructionsText
-                    anchors.centerIn: parent
-                    font.pixelSize: 36
-                    text: qsTr("Чекаємо подальших інструкцій")
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
-            }
-        }
+//        Item {
+//            id: waiting
+//            visible: swipeView.currentIndex==3?true:false
+//            Rectangle{
+//                anchors.fill: parent
+//                Text {
+//                    id: waitingForInstructionsText
+//                    anchors.centerIn: parent
+//                    font.pixelSize: 36
+//                    text: qsTr("Чекаємо подальших інструкцій")
+//                    horizontalAlignment: Text.AlignHCenter
+//                    verticalAlignment: Text.AlignVCenter
+//                }
+//            }
+//        }
+//
     }
 
     Rectangle{

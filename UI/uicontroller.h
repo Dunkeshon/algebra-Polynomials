@@ -71,11 +71,6 @@ class UiController : public QObject
 public:
     explicit UiController(QObject *parent = nullptr);
 
-
-
-
-
-
     //  getters do not touch
 
     QStringList irreducibleStrings() const;
@@ -95,6 +90,10 @@ public slots:
 
     // functions to call from js
 
+    void clearIrreducibles(){
+        m_irreducibleStrings.clear();
+        irreduciblesList.clear();
+    }
     // chech if is prime
     bool isPrime(int number){
         return Polynom::isPrime(number);
@@ -158,21 +157,20 @@ public slots:
     void selectMainPolynom(int index){
 
         Polynom newMainPolynom = irreduciblesList[index];
+
         mainPolynomial.setPolynomAsField(newMainPolynom); // p =2
-        m_mainPolynomialString = m_irreducibleStrings[index];
+
+        m_mainPolynomialString = m_irreducibleStrings[index]; // right
         emit mainPolynomialStringChanged(m_mainPolynomialString);
     }
-
     //create 2 polynomials from both input fields
     // use in calculate button
     void inputPolynomials(QString firstPolString,QString secondPolString = ""){
         m_firstOperandString = firstPolString;
         m_secondOperandString = secondPolString;
-        firstOperandPol = Polynom(mainPolynomial.power,firstPolString.toStdString());
-        firstOperandPol = Polynom(mainPolynomial.power,secondPolString.toStdString());
+        firstOperandPol = Polynom(mainPolynomial.p,firstPolString.toStdString());
+        secondOperandPol = Polynom(mainPolynomial.p,secondPolString.toStdString());
     }
-
-
     void plus(){
         resultPol=mainPolynomial.add(firstOperandPol,secondOperandPol);
         m_result = parseToQString(&resultPol);
