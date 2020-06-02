@@ -38,6 +38,15 @@ int Polynom::getCoefficient(int pos) {
     return temp->key;
 }
 
+int mod(int x, int y) {
+    if (x >= 0) return x % y;
+    else if (x < 0) {
+        while (x < (-y)) {
+            x = x + y;
+        }
+        return (y - (-x));
+    }
+}
 
 void Polynom::cutZeroes() {
     int flag = this->findPower();
@@ -310,7 +319,8 @@ std::vector<int> Polynom::getCoefficientVector(int n)
     return vec;
 }
 
-int Polynom::getRank(std::vector<std::vector<int>>& matrix)
+
+int Polynom::getRank(std::vector<std::vector<int>>& matrix, Polynom p)
 {
     int rank = matrix.size();
 
@@ -322,9 +332,9 @@ int Polynom::getRank(std::vector<std::vector<int>>& matrix)
             {
                 if (col != row)
                 {
-                    int mult = matrix[col][row] / matrix[row][row];
+                    int mult = p.modDivision(matrix[col][row], matrix[row][row]);
                     for (int i = 0; i < rank; i++)
-                        matrix[col][i] -= mult * matrix[row][i];
+                        matrix[col][i] = mod(matrix[col][i]-p.modMultiply(mult, matrix[row][i]), p.p);
                 }
             }
         }
@@ -757,16 +767,6 @@ Polynom GCD(Polynom a, Polynom b) {
     return a.gcd(a, b);
 }
 
-int mod(int x, int y) {
-    if (x >= 0) return x % y;
-    else if (x < 0) {
-        while (x < (-y)) {
-            x = x + y;
-        }
-        return (y - (-x));
-    }
-}
-
 
 bool Polynom::isZeroRow(std::vector<int>& row,int i) {
 
@@ -821,14 +821,16 @@ std::vector<Polynom> getFactors(Polynom p)
             Polynom res = mon % p;
             coefficientMatrix[i] = res.getCoefficientVector(maxPower);
         }
+        //substract Identity matrix from the initial coefficient matrix
         for (int i = 0; i < maxPower; i++) {
             coefficientMatrix[i][i] = mod(coefficientMatrix[i][i] - 1, p.p);
         }
 
-       // p.displayMatrix(coefficientMatrix);
         //we transpose matrix to do all actions with columns rather than rows
         std::vector<std::vector<int>> transposed = Polynom::transpose(coefficientMatrix);
-        int rank = Polynom::getRank(transposed);
+        int rank = Polynom::getRank(transposed, p);
+        Polynom::displayMatrix(transposed);
+        cout << "rank  = " << rank << endl;
         int k = transposed.size() - rank;
 
         if (k == 1) { //polynomial is irreducible
@@ -837,7 +839,7 @@ std::vector<Polynom> getFactors(Polynom p)
         }
         coefficientMatrix = Polynom::transpose(transposed);
 
-        //cout << "rank  = " << rank << endl;
+       
         std::vector<std::vector<int>> basis;
         for (int i = 0; i < coefficientMatrix.size(); i++) {
             for (int j = 0; j < coefficientMatrix.size(); j++)

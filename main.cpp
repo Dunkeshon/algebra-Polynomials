@@ -324,7 +324,8 @@ int main() {
     cout << rng.subtr(rng1, rng2);
 
     cout << "------------------------------Berlekamp--------------------------------------\n";
-    Polynom berlkmp(2, 4, {1,0,1,1,1});
+    Polynom berlkmp(2, "1+x^3+x^4+x^6+x^8");
+    cout << "Berlekamp's test for polynomial: " << berlkmp;
     std::vector<Polynom> berl = getFactors(berlkmp);
      for (Polynom item: berl) {
          cout << item;
