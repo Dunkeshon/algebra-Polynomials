@@ -863,7 +863,6 @@ std::vector<Polynom> getFactors(Polynom p)
     return result;
 }
 
-
 void Polynom::displayMatrix(std::vector<std::vector<int>>& matrix) {
     for (int i(0); i < matrix.size(); i++) {
         for (int j(0); j < matrix.size(); j++)

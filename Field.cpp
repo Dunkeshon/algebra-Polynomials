@@ -1,5 +1,6 @@
 #include <utility>
 #include <iostream>
+#include <list>
 #include <cmath>
 #include "Field.h"
 
@@ -111,6 +112,101 @@ std::vector<Polynom> Field::genIrrPolynomials(int p, int q){
 //
 //
 
+int Field::phi(int n) {
+    int result = n;
+    for (int i = 2; i * i <= n; ++i)
+        if (n % i == 0) {
+            while (n % i == 0)
+                n /= i;
+            result -= result / i;
+        }
+    if (n > 1)
+        result -= result / n;
+    return result;
+}
+
+
+Polynom Field::find_Ri(int q, int n, int i, int j) {
+    while ((int)pow((double)q, (double)j) % (n / Polynom::gcd(n, i)) == 1) {
+        j++;
+    }
+    int stepin = (int)pow((double)q, (double)j);
+    std::string temp = "";
+    for (int k = 0; k < stepin; k++) {
+        if ((int)pow((double)q, (double)k) * i == k)
+            temp += "1";
+        else
+            temp += "0";
+    }
+    Polynom result(q, temp);
+    return result;
+}
+
+
+std::vector<Polynom> Field::factorise_Ri(int q, int n) {
+    if (n <= q) {
+        Polynom CyclePol = buildCircularPolynom(n);
+        std::vector<Polynom> result;
+        result.push_back(CyclePol);
+        return result;
+    }
+    if (Polynom::gcd(n, q) == 1) {
+
+        std::vector<Polynom> result;
+        int d = 1;//degree
+        while ((int)pow((double)q, (double)d) % n == 1) {
+            d++;
+        }
+        Polynom cyclicPol;
+
+        size_t factorsCount = phi(n) / d;
+        size_t factorPower = d;
+        if (factorsCount == 1) {
+            Polynom CyclePol = buildCircularPolynom(n);
+            result.push_back(CyclePol);
+            return result;
+        }
+        size_t i = 1;
+
+        Polynom CyclePol = buildCircularPolynom(n);
+        std::list<Polynom> temp_pol;
+        temp_pol.push_back(CyclePol);
+        while (result.size() < factorsCount) {
+            long long j = 1;
+
+            Polynom pol_Ri = find_Ri(q, n, i, j);
+            bool factorized = false;
+            j = 0;
+            while (j < q) {
+                Polynom gcdRi = gcd(temp_pol.front(), CyclePol);
+                if (j == 0 && gcdRi == temp_pol.front()) {
+                    factorized = false;
+                    break;
+                }
+
+                long long gcdPower = gcdRi.getPower();
+                if (gcdPower == d) {
+                    factorized = true;
+                    gcdRi.makeMonic();
+                    result.push_back(gcdRi);
+                }
+                else if (gcdPower % d == 0) {
+                    factorized = true;
+                    temp_pol.push_back(gcdRi);
+                }
+
+                pol_Ri = pol_Ri + Polynom(q, "1");
+                j++;
+            }
+            if (factorized) {
+                temp_pol.pop_front();
+            }
+            i++;
+
+        }
+        return result;
+    }
+}
 
 
 int Field::mobius(int n)

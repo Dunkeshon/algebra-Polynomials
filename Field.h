@@ -38,4 +38,9 @@ public:
 
 	std::vector<Polynom> findIrreduciblesOfPower(int n);
 	std::vector<Polynom> genIrrPolynomials(int p,int q);
+
+
+	int phi(int n);
+	Polynom find_Ri(int q, int n, int i, int j);
+	std::vector<Polynom> factorise_Ri(int q, int n);
 };
