@@ -264,6 +264,7 @@ int main() {
     cout << fi.buildCircularPolynom(12) << endl;
     cout << "n = 29: ";
     cout << fi.buildCircularPolynom(29) << endl;
+
    
     cout << "--------------------------------Inverse----------------------------------\n\n";
 
@@ -297,6 +298,14 @@ int main() {
     cout << "field = " << field2;
     Polynom inv2 = fi3.inverse(x2);
     cout << "inverse(x, field) = " << inv2;
+    cout << "------------------------------12 task-begin-------------------------------------\n";
+    Polynom F(5, 5, {1,0,1,0,0,1});
+    Field Fb(F);
+    std::vector<Polynom>task = Fb.genIrrPolynomials(5, 3);
+
+    for (Polynom it : task) cout << it;
+
+    cout << "------------------------------12 task-end-------------------------------------\n";
 
     cout << "---------------testing------------testing--------------\n";
 
@@ -332,6 +341,7 @@ int main() {
      for (Polynom item: berl) {
          cout << item;
     }
+
 
     return 0;
 }

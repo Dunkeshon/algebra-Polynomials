@@ -830,8 +830,8 @@ std::vector<Polynom> getFactors(Polynom p)
         //we transpose matrix to do all actions with columns rather than rows
         std::vector<std::vector<int>> transposed = Polynom::transpose(coefficientMatrix);
         int rank = Polynom::getRank(transposed, p);
-        Polynom::displayMatrix(transposed);
-        cout << "rank  = " << rank << endl;
+        //Polynom::displayMatrix(transposed);
+        //cout << "rank  = " << rank << endl;
         int k = transposed.size() - rank;
 
         if (k == 1) { //polynomial is irreducible
@@ -860,11 +860,6 @@ std::vector<Polynom> getFactors(Polynom p)
         Polynom::deleteDuplicates(result,p);
 
     }
-    else {
-        cout << "GCD != 1" << endl;
-        //TODO
-    }
-
     return result;
 }
 

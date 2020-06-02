@@ -36,4 +36,5 @@ public:
 	int irrPolOrder(Polynom& p);
 
 	std::vector<Polynom> findIrreduciblesOfPower(int n);
+	std::vector<Polynom> genIrrPolynomials(int p,int q);
 };
