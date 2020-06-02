@@ -194,39 +194,39 @@ Polynom Field::gcd(Polynom& p1, Polynom& p2) {
     return res;
 }
 
-Polynom Field::derivate(Polynom& p) {
-    Polynom res = derivative(p);
+Polynom Field::derivate(Polynom& _p) {
+    Polynom res = derivative(_p);
     res = res % Q;
     return res;
 }
 
-Polynom Field::monic(Polynom& p) {
-    Polynom res; p.makeMonic();
+Polynom Field::monic(Polynom& _p) {
+    Polynom res; _p.makeMonic();
     res = p;
     res = res % Q;
     return res;
 }
 
-int Field::eval(Polynom p, int x) {
+int Field::eval(Polynom _p, int x) {
 
-    return p.evaluate(x);
+    return _p.evaluate(x);
 }
 
-std::vector<int> Field::roots(Polynom& p) {
-    return p.findRoots();
+std::vector<int> Field::roots(Polynom& _p) {
+    return _p.findRoots();
 }
 
-int Field::rootsNumber(Polynom& p) {
+int Field::rootsNumber(Polynom& _p) {
 
-    return p.findRootNumber();
+    return _p.findRootNumber();
 }
 
-bool Field::isIrreduc(Polynom& p) {
-    return p.isIrreducible();
+bool Field::isIrreduc(Polynom& _p) {
+    return _p.isIrreducible();
 }
 
-int Field::irrPolOrder(Polynom& p) {
-    return p.irrPolynomOrder();
+int Field::irrPolOrder(Polynom& _p) {
+    return _p.irrPolynomOrder();
 }
 
 std::vector<Polynom> Field::generateIrrpols(int _p, int _q) {
