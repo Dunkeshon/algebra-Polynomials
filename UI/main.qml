@@ -393,7 +393,6 @@ Window {
 
             ListView{
                 id:historyList
-                property var ourData
                 focus: true
                 clip: true
                 anchors.left: parent.left
@@ -401,11 +400,8 @@ Window {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 5
-                Component.onCompleted: {
-                    ourData=UiController.historyStrings
-                }
                 visible: true
-                model:ourData
+                model:UiController.historyStrings
                 delegate: Rectangle{
                     id: delegateh
                     height: 50
@@ -442,22 +438,6 @@ Window {
                 }
             }
         }
-//        Item {
-//            id: waiting
-//            visible: swipeView.currentIndex==3?true:false
-//            Rectangle{
-//                anchors.fill: parent
-//                Text {
-//                    id: waitingForInstructionsText
-//                    anchors.centerIn: parent
-//                    font.pixelSize: 36
-//                    text: qsTr("Чекаємо подальших інструкцій")
-//                    horizontalAlignment: Text.AlignHCenter
-//                    verticalAlignment: Text.AlignVCenter
-//                }
-//            }
-//        }
-//
     }
 
     Rectangle{
