@@ -37,9 +37,9 @@ Window {
                 anchors.leftMargin: 20
                 focus: true
                 font.pixelSize: 20
-                width: 90
+                width: 100
                 selectByMouse: true
-                placeholderText: "Просте число"
+                placeholderText: "Просте"
                 validator: IntValidator{bottom: 0; top: 999;}
                 background: Rectangle{
                     color: "#6f90aa"
@@ -65,7 +65,7 @@ Window {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: 10
                 font.pixelSize: 20
-                width: 90
+                width: 100
                 selectByMouse: true
                 validator: IntValidator{bottom: 0; top: 999;}
                 background: Rectangle{

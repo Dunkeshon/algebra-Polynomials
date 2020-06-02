@@ -127,7 +127,7 @@ public slots:
         emit resultChanged(m_result);
     }
     // p = 2   1<=q<8
-    void findIrreducibles(int p, int q){
+    void findIrreducibles(QString p, QString q){
         // for ui test
         //    QStringList newList{"1+ax+bx^2+cx^3","1+ax+bx^2+cx^3+dx^4","1+ax+bx^2+cx^3","1+ax+bx^2+cx^3"
         //                           ,"1+ax+bx^2+cx^3","1+ax+bx^2+cx^3+dx^4","1+ax+bx^2+cx^3","1+ax+bx^2+cx^3"
@@ -145,7 +145,9 @@ public slots:
      setIrreducibleStrings(newList);
     */
         QStringList newList;
-        irreduciblesList = Field::generateIrrpols(p,q);
+        bool ok;
+        bool ok2;
+        irreduciblesList = Field::generateIrrpols(p.toInt(&ok, 10),q.toInt(&ok2, 10));
         for( auto & i : irreduciblesList){
             newList << parseToQString(i);
         }
@@ -154,9 +156,7 @@ public slots:
 
     void selectMainPolynom(int index){
         mainPolynomial = irreduciblesList[index];
-        // if contains errors use by index from irreducible list
-        m_mainPolynomialString = parseToQString(mainPolynomial); // just check for bugs
-
+        m_mainPolynomialString = parseToQString(mainPolynomial);
         emit mainPolynomialStringChanged(m_mainPolynomialString);
     }
 
