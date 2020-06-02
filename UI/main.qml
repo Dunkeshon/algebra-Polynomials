@@ -12,7 +12,7 @@ Window {
     minimumHeight: 475
  //   visibility: "FullScreen"
  //   flags: Qt.MaximizeUsingFullscreenGeometryHint|Qt.WindowMinMaxButtonsHint| Qt.WindowCloseButtonHint | Qt.WindowSystemMenuHint
-    title: qsTr("Hello World")
+    title: qsTr("Algebra polynomials")
     Item{
         id:topPanel
         property alias  previousIndex : showHistoryButton.previousPage

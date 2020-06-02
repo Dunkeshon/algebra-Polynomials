@@ -20,7 +20,7 @@ Item {
     Text {
         id: toolTip
         font.pixelSize: 20
-        text: qsTr(" <u>Підказка: Заповніть поля для здійснення операції<br>" + operatorValue + "</u>")
+        text: qsTr(" Підказка: <u>Заповніть поля для здійснення операції<br>" + operatorValue + "<br>Поліноми вводити у порядку зростання степенів.</u>")
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.margins: 10

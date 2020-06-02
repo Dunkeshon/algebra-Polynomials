@@ -207,8 +207,9 @@ public slots:
         emit resultChanged(m_result);
     }
     void evaluate(int point){
-
-        m_result = QString::number( mainPolynomial.eval(firstOperandPol,point));
+        int valueInPoint = mainPolynomial.eval(firstOperandPol,point);
+        m_firstOperandString =parseToQString(&firstOperandPol);
+        m_result ="f(x) = "+ m_firstOperandString +" ; " +QString("f(" +QString::number(point)+")=") +  QString::number(valueInPoint)  ;
         emit resultChanged(m_result);
     }
     void rootsNumber(){
