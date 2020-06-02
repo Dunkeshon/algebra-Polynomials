@@ -14,7 +14,7 @@ public:
 	Field(Polynom &Q);
     static std::vector<Polynom> generateIrrpols(int _p, int _q);
 	Polynom buildCircularPolynom(int n);
-	//!Algorithm for Inversion in field GF(p^m) based on Extended Euclid’s Algorithm
+    //!Algorithm for Inversion in field GF(p^m) based on Extended Euclids Algorithm
 	Polynom& inverse(Polynom& pol);
 
 	Polynom add(Polynom& p1, Polynom& p2);

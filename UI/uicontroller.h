@@ -94,6 +94,14 @@ public slots:
 
     // functions to call from js
 
+    // chech if is prime
+    bool isPrime(int number){
+        return Polynom::isPrime(number);
+    }
+    void clearMainPolynomial(){
+        m_mainPolynomialString = "";
+        mainPolynomial.clear();
+    }
     // clear history
     void clearHistory(){
         m_historyStrings.clear();
@@ -124,8 +132,8 @@ public slots:
         //    QStringList newList{"1+ax+bx^2+cx^3","1+ax+bx^2+cx^3+dx^4","1+ax+bx^2+cx^3","1+ax+bx^2+cx^3"
         //                           ,"1+ax+bx^2+cx^3","1+ax+bx^2+cx^3+dx^4","1+ax+bx^2+cx^3","1+ax+bx^2+cx^3"
         //                           ,"1+ax+bx^2+cx^3","1+ax+bx^2+cx^3+dx^4","1+ax+bx^2+cx^3","1+ax+bx^2+cx^3"};
-
         //    setIrreducibleStrings(newList);
+
         // Realisation:
         /*
      Vector<Polynomials> IrreduciblePolynomials = mainPolynomial.12Var()
@@ -141,6 +149,7 @@ public slots:
         for( auto & i : irreduciblesList){
             newList << parseToQString(i);
         }
+        setIrreducibleStrings(newList);
     }
 
     void selectMainPolynom(int index){

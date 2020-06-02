@@ -92,7 +92,7 @@ public:
     //!Compare the polynomial with f(x) = 0
     bool isZero();
     static void handleException(Polynom& p1, Polynom& p2);
-    bool isPrime(int number);
+    static bool isPrime(int number);
     bool isOperator(char token);
     bool isPower(char token);
 
