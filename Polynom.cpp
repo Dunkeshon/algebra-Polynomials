@@ -20,6 +20,7 @@ using std::cin;
 using std::endl;
 
 
+
 int Polynom::getLastCoefficient()
 {
     PElement* temp = head;
@@ -839,8 +840,7 @@ std::vector<Polynom> getFactors(Polynom p)
         }
         coefficientMatrix = Polynom::transpose(transposed);
 
-       
-        std::vector<std::vector<int>> basis;
+        std::vector<std::vector<int>> basis;    
         for (int i = 0; i < coefficientMatrix.size(); i++) {
             for (int j = 0; j < coefficientMatrix.size(); j++)
                 if (coefficientMatrix[i][j] != 0) {
@@ -848,7 +848,7 @@ std::vector<Polynom> getFactors(Polynom p)
                     break;
                 }
         }
-       // p.displayMatrix(coefficientMatrix);
+       
 
         for (auto b : basis) {
             for (int i = 0; i < p.p; i++) {
