@@ -8,7 +8,7 @@ using std::endl;
 
 
 int main() {
-    //check string
+//check string
     Polynom z(5, "23+5x^2+6x^4+12x^12+5x^15");
     cout << "x) z(x) = " << z << "Power: " << z.getPower() << "\n\n";
 
@@ -47,7 +47,7 @@ int main() {
     Polynom rs = f - f;
     cout << "\nf(x) - f(x) = " << rs;
 
-  /*  Polynom bm = g * (f * ((f * g / g - f + f) / f) - g + g) / g;
+    /*  Polynom bm = g * (f * ((f * g / g - f + f) / f) - g + g) / g;
     cout << bm;
     cout << (bm + g - g) % f;
     cout << (bm + g - g) / f;*/
@@ -121,14 +121,14 @@ int main() {
     cout << "1) pol1(x) = " << pol1;
     cout << "Irreducible : ";
     if (pol1.isIrreducible())
-        cout << "Yes\n\n";
+    cout << "Yes\n\n";
     else cout << "No\n\n";
 
     Polynom pol2(5, 3, { 1,0,1,1 });
     cout << "2) pol2(x) = " << pol2;
     cout << "Irreducible : ";
     if (pol2.isIrreducible())
-        cout << "Yes\n\n";
+    cout << "Yes\n\n";
     else cout << "No\n\n";
 
 
@@ -171,7 +171,7 @@ int main() {
     // GF(2): f(x) = 1 + x^2 + x^3 + x^9 + x^10 = (x^2 + x + 1)^3 * (x^4 + x + 1)
     std::vector<std::pair<Polynom, int>> irrPols1 = { {Polynom(2, 2, { 1, 1, 1 }), 3}, {Polynom(2, 4, { 1, 1, 0, 0, 1 }), 1} };
     cout << "Order of arbitrary polynomial 1+x^2+x^3+x^9+x^10 in field GF(2) = "
-        << order1.arbitraryPolynomOrder(irrPols1) << endl << endl;;
+    << order1.arbitraryPolynomOrder(irrPols1) << endl << endl;;
 
     Polynom order2(2, "1+x+x^2+x^4");
     // GF(2): f(x) = 1 + x + x^2 + x^4 = (x + 1) * (x^3 + x^2 + 1)
@@ -179,13 +179,13 @@ int main() {
     //cout << Polynom(2, 1, { 1, 1 }).irrPolynomOrder() << endl;
     //cout << Polynom(2, 3, { 1, 0, 1, 1 }).irrPolynomOrder() << endl;
     cout << "Order of arbitrary polynomial 1+x+x^2+x^4 in field GF(2) = "
-        << order2.arbitraryPolynomOrder(irrPols2) << endl << endl;
+    << order2.arbitraryPolynomOrder(irrPols2) << endl << endl;
 
     Polynom order3(7, "5+3x+4x^2+4x^3+x^5");
     // GF(7): f(x) = 1 + x + x^2 + x^4 = (x + 5)^2 * (x + 2) * (x^2 + 2x + 5)
     std::vector<std::pair<Polynom, int>> irrPols3 = { {Polynom(7, 1, { 1, 5 }), 2}, {Polynom(7, 1, { 1, 2 }), 1}, {Polynom(7, 2, { 5, 2, 1}), 1} };
     cout << "Order of arbitrary polynomial 5+3x+4x^2+4x^3+ x^5 in field GF(7) = "
-        << order3.arbitraryPolynomOrder(irrPols3) << endl << endl;
+    << order3.arbitraryPolynomOrder(irrPols3) << endl << endl;
 
     cout << "------------------------------------FindRoots----------------------------\n";
 
@@ -195,11 +195,11 @@ int main() {
     std::vector<int> rootvec1 = root1.findRoots();
     if (rootvec1.size() == 0) cout << "No roots\n";
     else {
-        for (int i(0); i < rootvec1.size(); i++) {
-            cout << rootvec1[i] << " ";
-        }
-        cout << endl;
-        cout << root1.findRootNumber() << endl;
+    for (int i(0); i < rootvec1.size(); i++) {
+        cout << rootvec1[i] << " ";
+    }
+    cout << endl;
+    cout << root1.findRootNumber() << endl;
     }
 
     Polynom root2(5, 2, { 1,3,1 });
@@ -208,11 +208,11 @@ int main() {
     std::vector<int> rootvec2 = root2.findRoots();
     if (rootvec2.size() == 0) cout << "No roots\n";
     else {
-        for (int i(0); i < rootvec2.size(); i++) {
-            cout << rootvec2[i] << " ";
-        }
-        cout << endl;
-        cout << "Number of roots: " <<root2.findRootNumber() << endl;
+    for (int i(0); i < rootvec2.size(); i++) {
+        cout << rootvec2[i] << " ";
+    }
+    cout << endl;
+    cout << "Number of roots: " <<root2.findRootNumber() << endl;
     }
 
     Polynom root3(5, 4, { 1,0,0,0,2});
@@ -221,11 +221,11 @@ int main() {
     std::vector<int> rootvec3 = root3.findRoots();
     if (rootvec3.size() == 0) cout << "No roots\n";
     else {
-        for (int i(0); i < rootvec3.size(); i++) {
-            cout << rootvec3[i] << " ";
-        }
-        cout << endl;
-        cout << "Number of roots: " << root3.findRootNumber() << endl;
+    for (int i(0); i < rootvec3.size(); i++) {
+        cout << rootvec3[i] << " ";
+    }
+    cout << endl;
+    cout << "Number of roots: " << root3.findRootNumber() << endl;
     }
 
     Polynom root4(5, 3, { 0,2,3,1 });
@@ -234,11 +234,11 @@ int main() {
     std::vector<int> rootvec4 = root4.findRoots();
     if (rootvec4.size() == 0) cout << "No roots\n";
     else {
-        for (int i(0); i < rootvec4.size(); i++) {
-            cout << rootvec4[i] << " ";
-        }
-        cout << endl;
-        cout << "Number of roots: " << root4.findRootNumber() << endl;
+    for (int i(0); i < rootvec4.size(); i++) {
+        cout << rootvec4[i] << " ";
+    }
+    cout << endl;
+    cout << "Number of roots: " << root4.findRootNumber() << endl;
     }
 
     Polynom root5(5, 3, { 2,3,3,1 });
@@ -247,11 +247,11 @@ int main() {
     std::vector<int> rootvec5 = root5.findRoots();
     if (rootvec5.size() == 0) cout << "No roots\n";
     else {
-        for (int i(0); i < rootvec5.size(); i++) {
-            cout << rootvec5[i] << " ";
-        }
-        cout << endl;
-        cout << "Number of roots: " << root5.findRootNumber() << endl;
+    for (int i(0); i < rootvec5.size(); i++) {
+        cout << rootvec5[i] << " ";
+    }
+    cout << endl;
+    cout << "Number of roots: " << root5.findRootNumber() << endl;
     }
 
     cout << "---------------------------------FIELD--------------------------------------------------\n\n";
@@ -323,7 +323,7 @@ int main() {
     cout << "---------------testing------------------testing-----------testing-----------testing-----testing-------------------testing--------------\n";
     std::vector<Polynom> resvec = fld.generateIrrpols(2,4);
     for (int i(0); i < resvec.size();i++) {
-        cout << resvec[i];
+    cout << resvec[i];
     }
     cout << "---------------------------------RING--------------------------------------------------------\n\n";//for Linder :)
     Ring rng;
@@ -338,10 +338,17 @@ int main() {
     Polynom berlkmp(2, "1+x^3+x^4+x^6+x^8");
     cout << "Berlekamp's test for polynomial: " << berlkmp;
     std::vector<Polynom> berl = getFactors(berlkmp);
-     for (Polynom item: berl) {
-         cout << item;
+    for (Polynom item: berl) {
+        cout << item;
     }
 
+    /*cout << "------------------------------Square free factorization----";
+    Polynom sqfree(13, "1+3x+5x^2+7x^3+7x^4+5x^5+3x^6+x^7");
+    cout << sqfree;
+    std::vector<Polynom> items = getSquareFreeFactors(sqfree);
+    for (auto item : items) {
+        cout << item;
+    }*/
 
     return 0;
 }
