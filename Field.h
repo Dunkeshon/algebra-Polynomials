@@ -6,15 +6,16 @@ class Field :public Ring {
 private:
 	int mobius(int n);
 	Polynom Q;//Q is reducible polynom of degree q
-	int p;//p is prime
 	int q;//extension
+	void handleException(Polynom& p1);
 public:
 	Field();
 	Field(int p_, int q_);
 	Field(Polynom &Q);
-	std::vector<Polynom> generateIrrpols(int _p, int _q);
+    void setPolynomAsField(Polynom& _Q);
+    static std::vector<Polynom> generateIrrpols(int _p, int _q);
 	Polynom buildCircularPolynom(int n);
-	//!Algorithm for Inversion in field GF(p^m) based on Extended Euclid’s Algorithm
+    //!Algorithm for Inversion in field GF(p^m) based on Extended Euclids Algorithm
 	Polynom& inverse(Polynom& pol);
 
 	Polynom add(Polynom& p1, Polynom& p2);
@@ -36,4 +37,5 @@ public:
 	int irrPolOrder(Polynom& p);
 
 	std::vector<Polynom> findIrreduciblesOfPower(int n);
+	std::vector<Polynom> genIrrPolynomials(int p,int q);
 };

@@ -55,11 +55,13 @@ private:
     //!Set the coefficient coef. on position pos equal to the value key
     void set(int pos, int key);
     std::vector<int> getCoefficientVector(int n);
-    static int getRank(std::vector<std::vector<int>>& matrix);
+    static int getRank(std::vector<std::vector<int>>& matrix, Polynom p);
+    static void displayMatrix(std::vector<std::vector<int>>& matrix);
     static void swap(std::vector<std::vector<int>>& matrix, int row1, int row2, int col);
+    static void deleteDuplicates(std::vector<Polynom>& vec, Polynom p);
     static std::vector<std::vector<int>> transpose(std::vector<std::vector<int>>& matrix);
-    
-
+    static bool isZeroRow(std::vector<int>& row, int i);
+    friend class UiController;
 public:
     void clear();
     int getLastCoefficient();
@@ -90,7 +92,7 @@ public:
     //!Compare the polynomial with f(x) = 0
     bool isZero();
     static void handleException(Polynom& p1, Polynom& p2);
-    bool isPrime(int number);
+    static bool isPrime(int number);
     bool isOperator(char token);
     bool isPower(char token);
 
@@ -119,6 +121,7 @@ public:
     void setHead(PElement* _head);
     int getPower() const;
     void setPower(int _power);
+    std::vector<int> getCoefs();
 
     //!Each coefficient is shifting upwards
     void shift(int n);

@@ -5,6 +5,8 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+
+
 int main() {
     //check string
     Polynom z(5, "23+5x^2+6x^4+12x^12+5x^15");
@@ -262,6 +264,7 @@ int main() {
     cout << fi.buildCircularPolynom(12) << endl;
     cout << "n = 29: ";
     cout << fi.buildCircularPolynom(29) << endl;
+
    
     cout << "--------------------------------Inverse----------------------------------\n\n";
 
@@ -295,6 +298,14 @@ int main() {
     cout << "field = " << field2;
     Polynom inv2 = fi3.inverse(x2);
     cout << "inverse(x, field) = " << inv2;
+    cout << "------------------------------12 task-begin-------------------------------------\n";
+    Polynom F(5, 5, {1,0,1,0,0,1});
+    Field Fb(F);
+    std::vector<Polynom>task = Fb.genIrrPolynomials(5, 3);
+
+    for (Polynom it : task) cout << it;
+
+    cout << "------------------------------12 task-end-------------------------------------\n";
 
     cout << "---------------testing------------testing--------------\n";
 
@@ -313,6 +324,22 @@ int main() {
     std::vector<Polynom> resvec = fld.generateIrrpols(2,4);
     for (int i(0); i < resvec.size();i++) {
         cout << resvec[i];
+    }
+    cout << "---------------------------------RING--------------------------------------------------------\n\n";//for Linder :)
+    Ring rng;
+
+    Polynom rng1(3, 2, { 0,1,2 }), rng2(3, 1, {1,1});
+    cout << rng1 << rng2 << endl;
+    cout << rng.add(rng1,rng2);
+    cout << rng.mult(rng1, rng2);
+    cout << rng.subtr(rng1, rng2);
+
+    cout << "------------------------------Berlekamp--------------------------------------\n";
+    Polynom berlkmp(2, "1+x^3+x^4+x^6+x^8");
+    cout << "Berlekamp's test for polynomial: " << berlkmp;
+    std::vector<Polynom> berl = getFactors(berlkmp);
+     for (Polynom item: berl) {
+         cout << item;
     }
 
 

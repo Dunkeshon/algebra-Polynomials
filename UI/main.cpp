@@ -1,13 +1,25 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include "uicontroller.h"
+#include <vector>
+#include <string>
+
 
 int main(int argc, char *argv[])
 {
+   // qputenv("QSG_VISUALIZE","overdraw");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
     QGuiApplication app(argc, argv);
+    QCoreApplication::setOrganizationName("Opposite Direction");
+    QCoreApplication::setApplicationName("Polynomials");
+
+    UiController controller;
 
     QQmlApplicationEngine engine;
+
+    engine.rootContext()->setContextProperty(QStringLiteral("UiController"), &controller);
+
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
