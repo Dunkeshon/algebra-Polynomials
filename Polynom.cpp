@@ -768,6 +768,42 @@ int mod(int x, int y) {
 }
 
 
+bool Polynom::isZeroRow(std::vector<int>& row,int i) {
+
+    for (int i(0); i < row.size(); i++) {
+        if (row[i] != 0)
+            return false;
+    } 
+    return true;
+ }
+
+std::vector<int> Polynom::getCoefs() {
+    std::vector<int> res;
+    PElement* temp = this->head;
+    while (temp) {
+        res.push_back(temp->key);
+        temp = temp->next;
+    }
+    return res;
+}
+
+void Polynom::deleteDuplicates(std::vector<Polynom>& vec, Polynom p) {
+    for (int i(0); i < vec.size();i++) {//remove p in vec
+        if (vec[i] == p) {
+            vec.erase(vec.begin() + i);
+            i--;
+        }
+    }
+    for (int i(0); i < vec.size(); i++) {//remove duplicates
+        for(int j(0);j<vec.size();j++)
+            if (vec[i] == vec[j] && i!=j) {
+                vec.erase(vec.begin() + j);
+                j--;
+            }
+    }
+   
+}
+
 std::vector<Polynom> getFactors(Polynom p)
 {
     std::vector<Polynom> result;
@@ -785,25 +821,23 @@ std::vector<Polynom> getFactors(Polynom p)
             Polynom res = mon % p;
             coefficientMatrix[i] = res.getCoefficientVector(maxPower);
         }
-
         for (int i = 0; i < maxPower; i++) {
             coefficientMatrix[i][i] = mod(coefficientMatrix[i][i] - 1, p.p);
         }
 
+       // p.displayMatrix(coefficientMatrix);
         //we transpose matrix to do all actions with columns rather than rows
         std::vector<std::vector<int>> transposed = Polynom::transpose(coefficientMatrix);
-
-        int rank = Polynom::getRank(transposed) - 1;
-
+        int rank = Polynom::getRank(transposed);
         int k = transposed.size() - rank;
 
         if (k == 1) { //polynomial is irreducible
             result.push_back(p);
             return result;
         }
-
         coefficientMatrix = Polynom::transpose(transposed);
 
+        //cout << "rank  = " << rank << endl;
         std::vector<std::vector<int>> basis;
         for (int i = 0; i < coefficientMatrix.size(); i++) {
             for (int j = 0; j < coefficientMatrix.size(); j++)
@@ -812,6 +846,7 @@ std::vector<Polynom> getFactors(Polynom p)
                     break;
                 }
         }
+       // p.displayMatrix(coefficientMatrix);
 
         for (auto b : basis) {
             for (int i = 0; i < p.p; i++) {
@@ -820,11 +855,25 @@ std::vector<Polynom> getFactors(Polynom p)
             }
         }
 
+        Polynom::deleteDuplicates(result,p);
+
+    }
+    else {
+        cout << "GCD != 1" << endl;
+        //TODO
     }
 
-    //deleteDuplicates(result);
-   
     return result;
+}
+
+
+void Polynom::displayMatrix(std::vector<std::vector<int>>& matrix) {
+    for (int i(0); i < matrix.size(); i++) {
+        for (int j(0); j < matrix.size(); j++)
+            cout << matrix[i][j] << " ";
+        cout << endl;
+    }
+    cout << endl;
 }
 
 

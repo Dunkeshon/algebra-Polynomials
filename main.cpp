@@ -323,5 +323,12 @@ int main() {
     cout << rng.mult(rng1, rng2);
     cout << rng.subtr(rng1, rng2);
 
+    cout << "------------------------------Berlekamp--------------------------------------\n";
+    Polynom berlkmp(2, 4, {1,0,1,1,1});
+    std::vector<Polynom> berl = getFactors(berlkmp);
+     for (Polynom item: berl) {
+         cout << item;
+    }
+
     return 0;
 }
