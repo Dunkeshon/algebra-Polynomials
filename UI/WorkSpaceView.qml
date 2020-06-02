@@ -9,6 +9,10 @@ Item {
     property alias workView: swipeView
     id: info
     visible: false
+
+    Component.onCompleted: {
+
+    }
     Text {
         id: choosenPolynom
         font.pixelSize: 20
@@ -27,6 +31,12 @@ Item {
         anchors.top: choosenPolynom.bottom
         anchors.bottom: parent.bottom
         anchors.right: parent.right
+        onCurrentIndexChanged: {
+            if(currentIndex == 0)
+                return
+            swipeView.currentItem.clearAllFields()
+        }
+
         Item{
             id:blankItem
             visible: swipeView.currentIndex==0?true:false
@@ -43,26 +53,61 @@ Item {
             id: plus
             visible: swipeView.currentIndex==1?true:false
             operatorValue: "+"
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text, sf.text)
+                UiController.plus()
+                UiController.updateHistory(ff.text + " + " + sf.text + " = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: minus
             visible: swipeView.currentIndex==2?true:false
             operatorValue: "-"
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text, sf.text)
+                UiController.minus()
+                UiController.updateHistory(ff.text + " - " + sf.text + " = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: multiplicate
             visible: swipeView.currentIndex==3?true:false
             operatorValue: "*"
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text, sf.text)
+                UiController.mult()
+                UiController.updateHistory(ff.text + " * " + sf.text + " = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: difference
             visible: swipeView.currentIndex==4?true:false
             operatorValue: "/"
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text, sf.text)
+                UiController.division()
+                UiController.updateHistory(ff.text + " / " + sf.text + " = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: mod
             visible: swipeView.currentIndex==5?true:false
             operatorValue: "%"
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text, sf.text)
+                UiController.divMod()
+                UiController.updateHistory(ff.text + " % " + sf.text + " = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: derivative
@@ -71,6 +116,13 @@ Item {
             operatorUse: false
             secondOperationUse: false
             firstOperationName: "DERIVATIVE"
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text)
+                UiController.derivate()
+                UiController.updateHistory(ff.text + "' = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: makemonic
@@ -79,6 +131,13 @@ Item {
             operatorUse: false
             secondOperationUse: false
             firstOperationName: "MAKEMONIC"
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text)
+                UiController.monic()
+                UiController.updateHistory("Make Monic(" + ff.text + ") = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: evaluate
@@ -88,7 +147,13 @@ Item {
 
             secondOperationName: "EVALUATE"
             secondFieldPlaceholder: "Int"
-            polExpected: false
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text)
+                UiController.evaluate(sf.text)
+                UiController.updateHistory(ff.text + "(" + sf.text + ") = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: rootsNum
@@ -97,7 +162,13 @@ Item {
             operatorUse: false
             secondOperationUse: false
             firstOperationName: "ROOTSNUM"
-            polExpected: false
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text)
+                UiController.rootsNumber()
+                UiController.updateHistory("Roots Num(" + ff.text + ") = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: inverse
@@ -106,6 +177,13 @@ Item {
             operatorUse: false
             secondOperationUse: false
             firstOperationName: "INVERSE"
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text)
+                UiController.inverse()
+                UiController.updateHistory("Inverse(" + ff.text + ") = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: gcd
@@ -113,42 +191,66 @@ Item {
             operatorValue: "gcd"
             operatorUse: false
             firstOperationName: "GCD"
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text, sf.text)
+                UiController.gcd()
+                UiController.updateHistory("GCD(" + ff.text + "," + sf.text + ") = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: buildCircuarPolynom
             visible: swipeView.currentIndex==12?true:false
-            operatorValue: "build<br>circular polynom"
+            operatorValue: "build circular polynom"
             operatorUse: false
             secondOperationUse: false
             firstOperationName: "BUILD_CIRCULAR_POLYNOM"
             firstFieldPlaceholder: "Int"
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.buildCircularPolynom(ff.text)
+                UiController.updateHistory("BuildCircuarPolynom(" + ff.text + ") = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: isIrreducible
             visible: swipeView.currentIndex==13?true:false
-            operatorValue: "check<br>irreducible"
+            operatorValue: "check irreducible"
             operatorUse: false
             secondOperationUse: false
-            firstOperationName: "CHECK_IRREDUCIBLE"
-            polExpected: false
+            firstOperationName: "CHECK_IRR"
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text)
+                UiController.isIrreduc()
+                UiController.updateHistory("IsIrreducible(" + ff.text + ") = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: irrPolynomOrder
             visible: swipeView.currentIndex==14?true:false
-            operatorValue: "calculate<br>order of irreducible poolynom"
+            operatorValue: "calculate order of irreducible poolynom"
             operatorUse: false
             secondOperationUse: false
-            firstOperationName: "IRR_POLYNOM_ORDER"
-            polExpected: false
+            firstOperationName: "IRR_POL_ORDER"
+            calculate.onClicked: {
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text)
+                UiController.irrPolOrder()
+                UiController.updateHistory("IrrPolynomOrder(" + ff.text + ") = " + UiController.result)
+            }
         }
         SwipeViewItem {
             id: redPolynomOrder
             visible: swipeView.currentIndex==15?true:false
-            operatorValue: "calculate<br>order of reducible poolynom"
+            operatorValue: "calculate order of reducible poolynom"
             operatorUse: false
             secondOperationUse: false
-            firstOperationName: "RED_POLYNOM_ORDER"
-            polExpected: false
+            firstOperationName: "RED_POL_ORDER"
         }
     }
 

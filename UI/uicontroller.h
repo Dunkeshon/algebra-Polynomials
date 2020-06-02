@@ -20,7 +20,7 @@ class UiController : public QObject
     Q_PROPERTY(QString mainPolynomialString READ mainPolynomialString WRITE setMainPolynomialString NOTIFY mainPolynomialStringChanged)
     Q_PROPERTY(QString firstOperandString READ firstOperandString WRITE setFirstOperandString NOTIFY firstOperandStringChanged)
     Q_PROPERTY(QString secondOperandString READ secondOperandString WRITE setSecondOperandString NOTIFY secondOperandStringChanged)
-    Q_PROPERTY(QString  result READ result WRITE setResult NOTIFY resultChanged)
+    Q_PROPERTY(QString result READ result WRITE setResult NOTIFY resultChanged)
 
     QStringList m_irreducibleStrings;
 
@@ -168,8 +168,8 @@ public slots:
     void inputPolynomials(QString firstPolString,QString secondPolString = ""){
         m_firstOperandString = firstPolString;
         m_secondOperandString = secondPolString;
-        firstOperandPol = Polynom(mainPolynomial.power,firstPolString.toStdString());
-        firstOperandPol = Polynom(mainPolynomial.power,secondPolString.toStdString());
+        firstOperandPol = Polynom(mainPolynomial.p,firstPolString.toStdString());
+        secondOperandPol = Polynom(mainPolynomial.p,secondPolString.toStdString());
     }
 
 
