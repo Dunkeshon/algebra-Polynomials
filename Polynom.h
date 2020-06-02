@@ -180,6 +180,7 @@ public:
 
     //returns factors of the polynomials using Berlekamp's algorithm
     friend std::vector<Polynom> getFactors(Polynom p);
+    friend std::vector<Polynom> getSquareFreeFactors(Polynom p);
 
     friend Polynom derivative(Polynom& pol1);
     friend Polynom operator *(Polynom p1, Polynom p2);
