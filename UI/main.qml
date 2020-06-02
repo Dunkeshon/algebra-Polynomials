@@ -3,10 +3,13 @@ import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 
 Window {
+    id:mainw
     property bool isEmptyWorkspace: true
     visible: true
-    minimumWidth: 1200
-    minimumHeight: 600
+
+    minimumWidth: 950
+    minimumHeight: 475
+
     title: qsTr("Hello World")
     Item{
         id:topPanel
@@ -34,19 +37,21 @@ Window {
                 id:fieldInput
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: fieldDescription.right
-                anchors.leftMargin: 20
+                anchors.leftMargin: 10
                 focus: true
                 font.pixelSize: 20
                 width: 90
                 selectByMouse: true
+                placeholderText: "просте"
                 validator: IntValidator{bottom: 0; top: 999;}
                 background: Rectangle{
                     color: "#6f90aa"
                 }
                 onEditingFinished: {
-                    // if number is simple -> ok
-                    //else -> ""
-                    //console.log("module needs to be simple")
+                    if(!UiController.isPrime(text)){
+                        fieldInput.text = ""
+                        console.log("module needs to be simple")
+                    }
                 }
             }
             Text {
@@ -69,7 +74,6 @@ Window {
                 background: Rectangle{
                     color: "#6f90aa"
                 }
-
             }
         }
         Button{
@@ -88,17 +92,16 @@ Window {
                         //    12 var function search for irreducible polinomials
                         //    update qProperty AvaileblePolynomials
 
-                        UiController.findIrreducibles()
+                        //for now // p = 2   1<=q<8
+                        UiController.findIrreducibles(fieldInput.text,fieldExtentionInput.text)
                         console.log(UiController.irreducibleStrings)
                         availableList.ourData=UiController.irreducibleStrings
-                        availableList.visible=true;
+                       // availableList.visible=true;
                         availableList.forceActiveFocus()
                         swipeView.currentIndex=1
                         group1.enabled=false
                         changeInputParamsButton.paramsChoosen = true
                         changeInputParamsButton.enabled=false
-
-
                     }
                 }
                 else{
@@ -106,10 +109,11 @@ Window {
                     swipeView.currentIndex=0;
                     workSpace.workView.currentIndex = 0;
                     workSpace.visible = false;
-                    UiController.mainPolynomialString = "";
                     //CLEAR MAIN POLYNOM IN C++
+                    UiController.clearMainPolynomial();
+                    //clear history
+                    UiController.clearHistory();
                     //UiController.historyStrings.clear(); //FIND FINCTION THAT CLEAR THIS FUCKING SHIT
-                    //CLEAR vector of historyPolinoms POLYNOM IN C++
                 }
             }
         }
@@ -191,9 +195,7 @@ Window {
                 anchors.top: parent.top
                 anchors.bottom: confirmButton.top
                 anchors.bottomMargin: 5
-                Component.onCompleted: {
-                    ourData=UiController.testStringList
-                }
+
                 visible: true
                 model:ourData
                 delegate: Rectangle{
@@ -241,24 +243,14 @@ Window {
                 font.pixelSize: 20
                 onClicked: {
                     if (availableList.currentIndex!=-1){
-
-
-                            // save this polynomial with this index as BASIC working polynomial
-                            UiController.mainPolynomialString = UiController.irreducibleStrings[availableList.currentIndex]
-                            //CLASSIC BASIC Polynomial = irreducibles[availableList.currentIndex] in C++
-
-
-
-
-                            // show this polynomial string in the 1 lable under "start button"
-                            // instruction: select operation
-                            workSpace.visible=true
-                            workSpace.workView.currentIndex=0
-                            // show list of tasks
-                            swipeView.currentIndex=2;
-
-
-                        //ui test
+                        // save this polynomial with this index as BASIC working polynomial
+                        //CLASSIC BASIC Polynomial = irreducibles[availableList.currentIndex] in C++
+                        UiController.selectMainPolynom(availableList.currentIndex)
+                        // instruction: select operation
+                        workSpace.visible=true
+                        workSpace.workView.currentIndex=0
+                        // show list of tasks
+                        swipeView.currentIndex=2;
 
                     }
                 }
@@ -343,7 +335,6 @@ Window {
                         font.pixelSize: 20
                         renderType: Text.NativeRendering
                         text: modelData.text || "empty text"
-
                     }
                     color: ListView.isCurrentItem ? "lightblue" : "green"
                     MouseArea {
@@ -378,11 +369,11 @@ Window {
                     if (tasksView.currentIndex!=-1){
                         workSpace.visible=true
                         workSpace.enabled=false;
-                        // save this polynomial with this index as current working polynomial
-                        // show this polynomial string in the 1 lable under "start button"
+
+                    //    swipeView.currentIndex = 4
+
                         // instruction: select operation
                         // show list of tasks
-
 
                         //test for ui
                         workSpace.workView.currentIndex=tasksView.currentIndex+1;

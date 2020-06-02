@@ -123,7 +123,7 @@ void Polynom::changeField(int new_p) {
 Polynom::Polynom(int _p, int _power, std::vector<int> keys) {
 
     try {
-        if (_p < 0 || !isPrime(_p))
+        if (_p < 0 || !Polynom::isPrime(_p))
             throw std::invalid_argument("Module p should be prime and more than zero\n");
     }
     catch (std::exception & e)
@@ -146,7 +146,7 @@ Polynom::Polynom(int _p, int _power, std::vector<int> keys) {
 Polynom::Polynom(int _p, std::string keys)
 {
     try {
-        if (_p < 0 || !isPrime(_p))
+        if (_p < 0 || !Polynom::isPrime(_p))
             throw std::invalid_argument("Module p should be prime and more than zero\n");
     }
     catch (std::exception & e)
