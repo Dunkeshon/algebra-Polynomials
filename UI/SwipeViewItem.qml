@@ -108,7 +108,7 @@ Item {
         anchors.topMargin: 30
         anchors.leftMargin: 10
         font.pixelSize: 20
-        text: "Result: " + UiController.result
+        text: "Результат: " + UiController.result
     }
     Button{
         id:calculateButton
@@ -116,7 +116,7 @@ Item {
         anchors.top: resultField.bottom
         anchors.right: parent.right
         anchors.margins: 10
-        text: "Calculate"
+        text: "Розрахувати"
         font.pixelSize: 20
         width: parent.width/2-20
         height: 50

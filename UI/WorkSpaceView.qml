@@ -10,9 +10,7 @@ Item {
     id: info
     visible: false
 
-    Component.onCompleted: {
 
-    }
     Text {
         id: choosenPolynom
         font.pixelSize: 20
@@ -152,7 +150,7 @@ Item {
                     return
                 UiController.inputPolynomials(ff.text)
                 UiController.evaluate(sf.text)
-                UiController.updateHistory(ff.text + "(" + sf.text + ") = " + UiController.result)
+                UiController.updateHistory(ff.text + "(" + sf.text + ") : " + UiController.result)
             }
         }
         SwipeViewItem {
