@@ -3,10 +3,13 @@ import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 
 Window {
+    id:mainw
     property bool isEmptyWorkspace: true
     visible: true
-    minimumWidth: 1000
-    minimumHeight: 600
+
+    minimumWidth: 950
+    minimumHeight: 475
+
     title: qsTr("Hello World")
     Item{
         id:topPanel
@@ -34,12 +37,12 @@ Window {
                 id:fieldInput
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: fieldDescription.right
-                anchors.leftMargin: 20
+                anchors.leftMargin: 10
                 focus: true
                 font.pixelSize: 20
-                width: 100
+                width: 90
                 selectByMouse: true
-                placeholderText: "Просте"
+                placeholderText: "просте"
                 validator: IntValidator{bottom: 0; top: 999;}
                 background: Rectangle{
                     color: "#6f90aa"
@@ -65,7 +68,7 @@ Window {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: 10
                 font.pixelSize: 20
-                width: 100
+                width: 90
                 selectByMouse: true
                 validator: IntValidator{bottom: 0; top: 999;}
                 background: Rectangle{

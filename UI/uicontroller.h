@@ -41,6 +41,7 @@ class UiController : public QObject
     Polynom secondOperandPol;
     Polynom resultPol;
 
+    //use ONLY with Polynomials NOT FIELD
     QString parseToQString(Polynom* polynomial){
         QString newString;
         if (polynomial->Polynom::isZero()) {
@@ -158,7 +159,7 @@ public slots:
 
         Polynom newMainPolynom = irreduciblesList[index];
         mainPolynomial.setPolynomAsField(newMainPolynom); // p =2
-        m_mainPolynomialString = parseToQString(&mainPolynomial);
+        m_mainPolynomialString = m_irreducibleStrings[index];
         emit mainPolynomialStringChanged(m_mainPolynomialString);
     }
 
