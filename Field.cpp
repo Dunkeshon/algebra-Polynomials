@@ -182,6 +182,7 @@ Polynom Field::buildCircularPolynom(int n)
 }
 
 Polynom& Field::inverse(Polynom& pol) {
+    handleException(pol);
     Polynom::handleException(pol, Q);
     Polynom X(p), Y(p);
     Polynom* res = new Polynom(p);
