@@ -12,16 +12,15 @@ Item {
     property var operatorValue: ""
     property bool operatorUse: true
     property bool secondOperationUse: true
-    property bool polExpected: true
 
-    signal calculateButtonClicked()
-    signal saveButtonClicked()
-    signal changeOperationButtonClicked()
+    property alias ff: firstField
+    property alias sf: secondField
+    property alias calculate: calculateButton
 
     Text {
         id: toolTip
         font.pixelSize: 20
-        text: qsTr(" <u>Підказка: Заповніть поля для здійснення операції " + operatorValue + "</u>")
+        text: qsTr(" <u>Підказка: Заповніть поля для здійснення операції<br>" + operatorValue + "</u>")
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.margins: 10
@@ -115,53 +114,24 @@ Item {
         id:calculateButton
         anchors.left: parent.left
         anchors.top: resultField.bottom
-        anchors.right: polExpected ? undefined : parent.right
+        anchors.right: parent.right
         anchors.margins: 10
         text: "Calculate"
         font.pixelSize: 20
         width: parent.width/2-20
         height: 50
-        onClicked: {
-            if(firstField.text == "" || (secondOperationUse && secondField.text == "")) {
-                console.log("Fill all fields")
-                return
-            }
-            calculateButtonClicked()
-        }
     }
-    Button{
-        id:saveButton
-        anchors.right: parent.right
-        anchors.top: resultField.bottom
-        visible: polExpected ? true : false
-        anchors.margins: 10
-        text: "Save Result"
-        font.pixelSize: 20
-        width: parent.width/2-20
-        height: 50
-        onClicked:
-        {
-            if(UiController.result === "") {
-                console.log("No RESULT, pls PRESS CALCULATE")
-                return
-            }
-            saveButtonClicked()
-        }
 
+    function clearAllFields() {
+        firstField.text = ""
+        secondField.text = ""
+        UiController.setResult("")
     }
-    Button{
-        // New Operation with current POLYNOMIAL BUTTON
-        id:changeOperation
-        anchors.top: calculateButton.bottom
-        anchors.margins: 10
-        anchors.left: parent.left
-        anchors.right: parent.right
-        text: "Вибрати іншу операцію та продовжити"
-        font.pixelSize: 20
-        height: 50
-        onClicked: {
-            changeInputParamsButton.enabled=true;
-            changeOperationButtonClicked()
+    function checkFields() {
+        if(firstField.text == "" || (secondOperationUse && secondField.text == "")) {
+            console.log("Fill all fields!")
+            return false
         }
+        return true
     }
 }
