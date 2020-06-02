@@ -22,6 +22,27 @@ void Field::setPolynomAsField(Polynom& _Q){
 }
 
 
+std::vector<Polynom> Field::genIrrPolynomials(int p, int q){
+    std::vector<Polynom> result, temp;
+    Polynom circular;
+
+    int num = pow(p, q) - 1;
+    for (int m = 1; m <= num; ++m) {
+        if ((num % m) == 0) {
+            circular = buildCircularPolynom(m);
+            if (circular.power < q) continue;
+            temp = getFactors(circular);
+            for (auto& ir : temp) {
+                if (ir.power == q) {
+                    result.push_back(ir);
+                }
+            }
+        }
+    }
+    return result;
+}
+
+
 ////WIP ahead
 //std::vector<int> factorizeInt(int x) {//single use but is not relatable to the func it's used in,
 //                                      //seen used somewhere else, probably needs to be replaced there 
@@ -209,6 +230,7 @@ Polynom Field::monic(Polynom& _p) {
 
 int Field::eval(Polynom _p, int x) {
 
+    _p = _p % Q;
     return _p.evaluate(x);
 }
 
