@@ -370,7 +370,7 @@ Window {
                         workSpace.visible=true
                         workSpace.enabled=false;
 
-                        tasksView.currentIndex = 4
+                    //    swipeView.currentIndex = 4
 
                         // instruction: select operation
                         // show list of tasks
