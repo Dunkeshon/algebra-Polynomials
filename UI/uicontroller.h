@@ -41,13 +41,13 @@ class UiController : public QObject
     Polynom secondOperandPol;
     Polynom resultPol;
 
-    QString parseToQString(Polynom& polynomial){
+    QString parseToQString(Polynom* polynomial){
         QString newString;
-        if (polynomial.Polynom::isZero()) {
+        if (polynomial->Polynom::isZero()) {
             newString.push_back("0");
             return newString ;
         }
-        Polynom::PElement* tmp = polynomial.Polynom::head;
+        Polynom::PElement* tmp = polynomial->Polynom::head;
         int i = 0;
         bool isFirst = true;
         while (tmp != nullptr) {
@@ -149,14 +149,16 @@ public slots:
         bool ok2;
         irreduciblesList = Field::generateIrrpols(p.toInt(&ok, 10),q.toInt(&ok2, 10));
         for( auto & i : irreduciblesList){
-            newList << parseToQString(i);
+            newList << parseToQString(&i);
         }
         setIrreducibleStrings(newList);
     }
 
     void selectMainPolynom(int index){
-        mainPolynomial = irreduciblesList[index];
-        m_mainPolynomialString = parseToQString(mainPolynomial);
+
+        Polynom newMainPolynom = irreduciblesList[index];
+        mainPolynomial.setPolynomAsField(newMainPolynom); // p =2
+        m_mainPolynomialString = parseToQString(&mainPolynomial);
         emit mainPolynomialStringChanged(m_mainPolynomialString);
     }
 
@@ -172,37 +174,37 @@ public slots:
 
     void plus(){
         resultPol=mainPolynomial.add(firstOperandPol,secondOperandPol);
-        m_result = parseToQString(resultPol);
+        m_result = parseToQString(&resultPol);
         emit resultChanged(m_result);
     }
     void minus(){
         resultPol=mainPolynomial.subtr(firstOperandPol,secondOperandPol);
-        m_result = parseToQString(resultPol);
+        m_result = parseToQString(&resultPol);
         emit resultChanged(m_result);
     }
     void mult(){
         resultPol=mainPolynomial.mult(firstOperandPol,secondOperandPol);
-        m_result = parseToQString(resultPol);
+        m_result = parseToQString(&resultPol);
         emit resultChanged(m_result);
     }
     void division(){
         resultPol=mainPolynomial.quot(firstOperandPol,secondOperandPol);
-        m_result = parseToQString(resultPol);
+        m_result = parseToQString(&resultPol);
         emit resultChanged(m_result);
     }
     void divMod(){
         resultPol=mainPolynomial.rem(firstOperandPol,secondOperandPol);
-        m_result = parseToQString(resultPol);
+        m_result = parseToQString(&resultPol);
         emit resultChanged(m_result);
     }
     void derivate(){
         resultPol=mainPolynomial.derivate(firstOperandPol);
-        m_result = parseToQString(resultPol);
+        m_result = parseToQString(&resultPol);
         emit resultChanged(m_result);
     }
     void monic(){
         resultPol=mainPolynomial.monic(firstOperandPol);
-        m_result = parseToQString(resultPol);
+        m_result = parseToQString(&resultPol);
         emit resultChanged(m_result);
     }
     void evaluate(int point){
@@ -216,17 +218,17 @@ public slots:
     }
     void inverse(){
         resultPol=mainPolynomial.inverse(firstOperandPol);
-        m_result = parseToQString(resultPol);
+        m_result = parseToQString(&resultPol);
         emit resultChanged(m_result);
     }
     void gcd(){
         resultPol=mainPolynomial.gcd(firstOperandPol,secondOperandPol);
-        m_result = parseToQString(resultPol);
+        m_result = parseToQString(&resultPol);
         emit resultChanged(m_result);
     }
     void buildCircularPolynom(int n){
         resultPol=mainPolynomial.buildCircularPolynom(n);
-        m_result = parseToQString(resultPol);
+        m_result = parseToQString(&resultPol);
         emit resultChanged(m_result);
     }
     void isIrreduc(){

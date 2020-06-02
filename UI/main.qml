@@ -5,7 +5,7 @@ import QtQuick.Controls 2.12
 Window {
     property bool isEmptyWorkspace: true
     visible: true
-    minimumWidth: 1200
+    minimumWidth: 1000
     minimumHeight: 600
     title: qsTr("Hello World")
     Item{
@@ -71,7 +71,6 @@ Window {
                 background: Rectangle{
                     color: "#6f90aa"
                 }
-
             }
         }
         Button{
@@ -193,9 +192,7 @@ Window {
                 anchors.top: parent.top
                 anchors.bottom: confirmButton.top
                 anchors.bottomMargin: 5
-                Component.onCompleted: {
-                    ourData=UiController.testStringList
-                }
+
                 visible: true
                 model:ourData
                 delegate: Rectangle{
@@ -335,7 +332,6 @@ Window {
                         font.pixelSize: 20
                         renderType: Text.NativeRendering
                         text: modelData.text || "empty text"
-
                     }
                     color: ListView.isCurrentItem ? "lightblue" : "green"
                     MouseArea {

@@ -15,6 +15,11 @@ Field::Field(Polynom& _Q) {
     this->p = _Q.p;
     this->q = _Q.power;
 }
+void Field::setPolynomAsField(Polynom& _Q){
+    Q = _Q;
+    this->p = _Q.p;
+    this->q = _Q.power;
+}
 
 
 ////WIP ahead
