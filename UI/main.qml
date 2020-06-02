@@ -6,12 +6,12 @@ Window {
     id:mainw
     property bool isEmptyWorkspace: true
     visible: true
-//    width: screen.width
-//    height: screen.height
+    //    width: screen.width
+    //    height: screen.height
     minimumWidth: 950
     minimumHeight: 475
- //   visibility: "FullScreen"
- //   flags: Qt.MaximizeUsingFullscreenGeometryHint|Qt.WindowMinMaxButtonsHint| Qt.WindowCloseButtonHint | Qt.WindowSystemMenuHint
+    //   visibility: "FullScreen"
+    //   flags: Qt.MaximizeUsingFullscreenGeometryHint|Qt.WindowMinMaxButtonsHint| Qt.WindowCloseButtonHint | Qt.WindowSystemMenuHint
     title: qsTr("Algebra polynomials")
     Item{
         id:topPanel
@@ -29,6 +29,7 @@ Window {
             height: parent.height
             Text {
                 id: fieldDescription
+                color: "#0A0908"
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: 10
@@ -37,6 +38,7 @@ Window {
             }
             TextField{
                 id:fieldInput
+                color: "#0A0908"
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: fieldDescription.right
                 anchors.leftMargin: 10
@@ -47,7 +49,7 @@ Window {
                 placeholderText: "просте"
                 validator: IntValidator{bottom: 0; top: 999;}
                 background: Rectangle{
-                    color: "#6f90aa"
+                    color: "#ece9ec"//"#bcd2eb"
                 }
                 onEditingFinished: {
                     if(!UiController.isPrime(text)){
@@ -58,6 +60,7 @@ Window {
             }
             Text {
                 id: fieldExtensionDescription
+                color: "#0A0908"
                 anchors.left: fieldInput.right
                 anchors.leftMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
@@ -66,6 +69,7 @@ Window {
             }
             TextField{
                 id:fieldExtentionInput
+                color: "#0A0908"
                 anchors.left: fieldExtensionDescription.right
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.leftMargin: 10
@@ -74,7 +78,7 @@ Window {
                 selectByMouse: true
                 validator: IntValidator{bottom: 0; top: 999;}
                 background: Rectangle{
-                    color: "#6f90aa"
+                    color: "#ece9ec"
                 }
             }
         }
@@ -85,7 +89,14 @@ Window {
             anchors.margins: 10
             anchors.verticalCenter: parent.verticalCenter
             enabled: true
-            text: paramsChoosen?"Змінити вхідні параметри":"Вибрати незвідний многочлен"
+            text:
+            {
+                var curtext = paramsChoosen?"Змінити вхідні параметри":"Вибрати незвідний многочлен"
+                return "<font color='#ffffff'>" + curtext + "</font>"
+            }
+
+
+
             font.pixelSize: 20
             onClicked: {
                 if(!changeInputParamsButton.paramsChoosen){
@@ -98,7 +109,7 @@ Window {
                         UiController.findIrreducibles(fieldInput.text,fieldExtentionInput.text)
                         console.log(UiController.irreducibleStrings)
                         availableList.ourData=UiController.irreducibleStrings
-                       // availableList.visible=true;
+                        // availableList.visible=true;
                         availableList.forceActiveFocus()
                         swipeView.currentIndex=1
                         group1.enabled=false
@@ -121,6 +132,9 @@ Window {
                     //UiController.historyStrings.clear(); //FIND FINCTION THAT CLEAR THIS FUCKING SHIT
                 }
             }
+            background: Rectangle{
+                color: changeInputParamsButton.pressed? "#145499":"#1d68b8"
+            }
         }
         Button{
             property var previousPage : 0
@@ -130,7 +144,11 @@ Window {
             anchors.right: parent.right
             anchors.rightMargin: 10
             font.pixelSize: 20
-            text: storyActive? "Назад" : "Історія"
+            text:
+            {
+                var curtext = storyActive? "Назад" : "Історія"
+                return "<font color='#ffffff'>" + curtext + "</font>"
+            }
             onClicked: {
                 if(!storyActive){
                     //show historyPage
@@ -138,20 +156,23 @@ Window {
                     storyActive=true
                 }
                 else{
-                     swipeView.currentIndex = previousPage
-                     storyActive=false
+                    swipeView.currentIndex = previousPage
+                    storyActive=false
                 }
+            }
+            background: Rectangle{
+                color: showHistoryButton.pressed? "#145499":"#1d68b8"
             }
         }
 
     }
     Rectangle{
         id:topPanelSeparator
-        height: 2
+        height: 3
         z:1
         width: parent.width
         anchors.top: topPanel.bottom
-        color: "black"
+        color: "#184677"
     }
 
 
@@ -174,10 +195,11 @@ Window {
             id: blank
             visible: swipeView.currentIndex==0?true:false
             Rectangle{
-                color: "yellow"
+
                 anchors.fill: parent
                 Text {
                     id: guide
+                    color: "#0A0908"
                     anchors.centerIn: parent
 
                     font.pixelSize: 36
@@ -205,17 +227,26 @@ Window {
                 model:ourData
                 delegate: Rectangle{
                     id: delegate
+
                     height: 50
                     width: parent.width
-                    border.width: 2
-                    border.color: "black"
+                    Rectangle{
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 3
+                        color:"#184677"
+                    }
+
+
                     Text {
                         anchors.centerIn: parent
+                        color: "#0A0908"
                         font.pixelSize: 20
                         renderType: Text.NativeRendering
                         text: modelData || "empty text"
+
                     }
-                    color: ListView.isCurrentItem ? "lightblue" : "green"
+                    color: ListView.isCurrentItem ? "#99C0EB" : "#CCE0F5"
                     MouseArea {
                         anchors.fill: parent
                         //onClicked: delegate.ListView.view.currentIndex = model.index // if only selection is wanted
@@ -242,7 +273,11 @@ Window {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 5
                 anchors.horizontalCenter: availableList.horizontalCenter
-                text: qsTr("confirm")
+                text: "<font color='#ffffff'> Вибрати </font>"
+
+
+
+
                 font.pixelSize: 20
                 onClicked: {
                     if (availableList.currentIndex!=-1){
@@ -256,6 +291,9 @@ Window {
                         swipeView.currentIndex=2;
 
                     }
+                }
+                background: Rectangle{
+                    color: confirmButton.pressed? "#145499":"#1d68b8"
                 }
             }
         }
@@ -328,18 +366,24 @@ Window {
                 visible: true
                 model:dataModel
                 delegate: Rectangle{
-                    border.width: 2
-                    border.color: "black"
+                    Rectangle{
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 3
+                        color:"#184677"
+                    }
+
                     id: taskDelegate
                     height: 50
                     width: parent.width
                     TextArea {
                         anchors.centerIn: parent
+                        color: "#0A0908"
                         font.pixelSize: 20
                         renderType: Text.NativeRendering
                         text: modelData.text || "empty text"
                     }
-                    color: ListView.isCurrentItem ? "lightblue" : "green"
+                    color: ListView.isCurrentItem ? "#99C0EB" : "#CCE0F5"
                     MouseArea {
                         anchors.fill: parent
                         //onClicked: delegate.ListView.view.currentIndex = model.index // if only selection is wanted
@@ -366,7 +410,7 @@ Window {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 5
                 anchors.horizontalCenter: tasksView.horizontalCenter
-                text: qsTr("confirm")
+                text: "<font color='#ffffff'> Вибрати </font>"
                 font.pixelSize: 20
                 onClicked: {
                     if (tasksView.currentIndex!=-1){
@@ -383,6 +427,9 @@ Window {
                         workSpace.enabled=true
 
                     }
+                }
+                background: Rectangle{
+                    color: selectButton.pressed? "#145499":"#1d68b8"
                 }
             }
         }
@@ -406,15 +453,20 @@ Window {
                     id: delegateh
                     height: 50
                     width: parent.width
-                    border.width: 2
-                    border.color: "black"
+                    Rectangle{
+                        anchors.bottom: parent.bottom
+                        width: parent.width
+                        height: 3
+                        color:"#184677"
+                    }
                     Text {
                         anchors.centerIn: parent
+                        color: "#0A0908"
                         font.pixelSize: 20
                         renderType: Text.NativeRendering
                         text: modelData || "empty text"
                     }
-                    color: ListView.isCurrentItem ? "lightblue" : "green"
+                    color: ListView.isCurrentItem ? "#99C0EB" : "#CCE0F5"
                     MouseArea {
                         anchors.fill: parent
                         //onClicked: delegate.ListView.view.currentIndex = model.index // if only selection is wanted
@@ -444,10 +496,10 @@ Window {
         id:separator
         anchors.right: swipeView.left
         anchors.bottom: parent.bottom
-        width: 2
+        width: 3
         height: parent.height - topPanel.height
-        color: "black"
-        z:1
+        color: "#184677"
+        z:2
     }
     WorkSpaceView{
         id:workSpace

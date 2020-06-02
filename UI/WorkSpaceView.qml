@@ -13,6 +13,7 @@ Item {
 
     Text {
         id: choosenPolynom
+        color: "#0A0908"
         font.pixelSize: 20
         text: qsTr("Вибраний многочлен : " + UiController.mainPolynomialString )
         anchors.top: parent.top
