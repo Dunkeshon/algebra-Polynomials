@@ -10,11 +10,10 @@ Item {
     id: info
     visible: false
 
-    Component.onCompleted: {
 
-    }
     Text {
         id: choosenPolynom
+        color: "#0A0908"
         font.pixelSize: 20
         text: qsTr("Вибраний многочлен : " + UiController.mainPolynomialString )
         anchors.top: parent.top
@@ -152,7 +151,7 @@ Item {
                     return
                 UiController.inputPolynomials(ff.text)
                 UiController.evaluate(sf.text)
-                UiController.updateHistory(ff.text + "(" + sf.text + ") = " + UiController.result)
+                UiController.updateHistory(ff.text + "(" + sf.text + ") : " + UiController.result)
             }
         }
         SwipeViewItem {

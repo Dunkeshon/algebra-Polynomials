@@ -19,6 +19,7 @@ Item {
 
     Text {
         id: toolTip
+        color: "#0A0908"
         font.pixelSize: 20
         text: qsTr(" Підказка: <u>Заповніть поля для здійснення операції<br>" + operatorValue + "<br>Поліноми вводити у порядку зростання степенів.</u>")
         anchors.top: parent.top
@@ -28,6 +29,7 @@ Item {
 
     Text {
         id: firstoperation
+        color: "#0A0908"
         text: firstOperationName
         anchors.top: toolTip.bottom
         anchors.left: parent.left
@@ -38,6 +40,7 @@ Item {
 
     TextField {
         id: firstField
+        color: "#0A0908"
         width:  {
             if(firstFieldPlaceholder == "Polynom")
                 return 300
@@ -51,11 +54,15 @@ Item {
                 return 0;
             return 10;
         }
+        background: Rectangle{
+            color: "#ece9ec"
+        }
         font.pixelSize: 20
     }
 
     Text {
         id: operator
+        color: "#0A0908"
         anchors.top: firstoperation.bottom
         anchors.left: parent.left
         anchors.topMargin: 10
@@ -66,6 +73,7 @@ Item {
     }
     Text {
         id: secondoperation
+        color: "#0A0908"
         text: secondOperationName
         anchors.top: operatorUse ? operator.bottom : firstoperation.bottom
         visible: secondOperationUse ? true : false
@@ -76,6 +84,10 @@ Item {
     }
     TextField {
         id: secondField
+        background: Rectangle{
+            color: "#ece9ec"
+        }
+        color: "#0A0908"
         width:  {
             if(secondFieldPlaceholder == "Polynom")
                 return 300
@@ -103,12 +115,13 @@ Item {
     }
     Text {
         id: resultField
+        color: "#0A0908"
         anchors.top: secondOperationUse ? secondoperation.bottom : firstoperation.bottom
         anchors.left: parent.left
         anchors.topMargin: 30
         anchors.leftMargin: 10
         font.pixelSize: 20
-        text: "Result: " + UiController.result
+        text: "Результат: " + UiController.result
     }
     Button{
         id:calculateButton
@@ -116,10 +129,13 @@ Item {
         anchors.top: resultField.bottom
         anchors.right: parent.right
         anchors.margins: 10
-        text: "Calculate"
+        text: "<font color='#ffffff'> Розрахувати </font>"
         font.pixelSize: 20
         width: parent.width/2-20
         height: 50
+        background: Rectangle{
+            color: calculateButton.pressed? "#145499":"#1d68b8"
+        }
     }
 
     function clearAllFields() {

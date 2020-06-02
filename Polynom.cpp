@@ -863,6 +863,40 @@ std::vector<Polynom> getFactors(Polynom p)
     return result;
 }
 
+
+std::vector<Polynom> getSquareFreeFactors(Polynom p)
+{
+    std::vector<Polynom> result;
+    p.makeMonic();
+    int m = 1;
+    Polynom c(p.p, "1");
+    do {
+        c = GCD(p, derivative(p));
+        Polynom w = p / c;
+        int i = 1;
+        while (w == Polynom(p.p, "1")) {
+            Polynom y = GCD(w, c);
+            Polynom q = w / y;
+            if (q != Polynom(p.p, "1")) {
+                for (int j = 0; j < i*m; j++) result.push_back(q);
+            }
+            w = y;
+            c = c / y;
+            i++;
+        }
+        if (c != Polynom(p.p, "1"))
+        {
+            Polynom power(p.p, "1");
+            for (int i = 0; i < p.modDivision(1, p.p); i++)
+                power = power * c;
+            p = power;
+            m = m * p.p;
+        }
+    } while (c != Polynom(p.p, "1"));
+
+    return result;
+}
+
 void Polynom::displayMatrix(std::vector<std::vector<int>>& matrix) {
     for (int i(0); i < matrix.size(); i++) {
         for (int j(0); j < matrix.size(); j++)
