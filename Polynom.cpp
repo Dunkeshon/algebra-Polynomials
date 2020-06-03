@@ -155,46 +155,51 @@ Polynom::Polynom(int _p, std::string keys)
         std::cout << "Caught " << e.what() << endl;
         exit(0);
     }
-
     p = _p;
-    int coefficient = 0;
-    bool isCoefficient = true;
-    bool wasPower = false;
-    int currentPower = 0;
-    int currentOutputPower = 0;
-    keys += "+";
-
-    for (int i = 0; i < keys.length(); i++) {
-        char current = keys[i];
-        if (isOperator(current)) {
-            if (coefficient == 0) coefficient = 1;
-            if (wasPower && currentPower != currentOutputPower)
-                while (currentOutputPower != currentPower) {
-                    if (currentOutputPower == 0) head = makeItem(0);
-                    else appendItem(head, makeItem(0));
-                    currentOutputPower++;
-                }
-            if (currentOutputPower == 0) head = makeItem(coefficient);
-            else appendItem(head, makeItem(coefficient));
-            currentPower = 0;
-            coefficient = 0;
-            currentOutputPower++;
-            wasPower = false;
-            isCoefficient = true;
-        }
-        else if (isPower(current)) {
-            isCoefficient = false;
-        } else if (!isalpha(current)) { //number
-            if (isCoefficient) coefficient = coefficient * 10 + (current - '0');
-            else {
-                currentPower = currentPower * 10 + (current - '0');
-                wasPower = true;
-            }
-        } 
+    if (keys == "0") {
+        head = makeItem(0);
+        this->power = 0;
     }
-    this->power = currentOutputPower - 1;
-    makeMod();
-    cutZeroes();
+    else {
+        int coefficient = 0;
+        bool isCoefficient = true;
+        bool wasPower = false;
+        int currentPower = 0;
+        int currentOutputPower = 0;
+        keys += "+";
+        for (int i = 0; i < keys.length(); i++) {
+            char current = keys[i];
+            if (isOperator(current)) {
+                if (coefficient == 0) coefficient = 1;
+                if (wasPower && currentPower != currentOutputPower)
+                    while (currentOutputPower != currentPower) {
+                        if (currentOutputPower == 0) head = makeItem(0);
+                        else appendItem(head, makeItem(0));
+                        currentOutputPower++;
+                    }
+                if (currentOutputPower == 0) head = makeItem(coefficient);
+                else appendItem(head, makeItem(coefficient));
+                currentPower = 0;
+                coefficient = 0;
+                currentOutputPower++;
+                wasPower = false;
+                isCoefficient = true;
+            }
+            else if (isPower(current)) {
+                isCoefficient = false;
+            }
+            else if (!isalpha(current)) { //number
+                if (isCoefficient) coefficient = coefficient * 10 + (current - '0');
+                else {
+                    currentPower = currentPower * 10 + (current - '0');
+                    wasPower = true;
+                }
+            }
+        }
+        this->power = currentOutputPower - 1;
+        makeMod();
+        cutZeroes();
+    }
 }
 
 Polynom::Polynom(const Polynom& other)
