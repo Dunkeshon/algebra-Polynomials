@@ -204,8 +204,10 @@ public slots:
         emit resultChanged(m_result);
     }
     void monic(){
-        resultPol=mainPolynomial.monic(firstOperandPol);
-        m_result = parseToQString(&resultPol);
+       // resultPol= mainPolynomial.monic(firstOperandPol);
+       resultPol= firstOperandPol;
+       resultPol.makeMonic();
+       m_result = parseToQString(&resultPol);
         emit resultChanged(m_result);
     }
     void evaluate(int point){
