@@ -1,5 +1,8 @@
 #include <iostream>
 #include "Field.h"
+#include <sstream>
+#include <algorithm>
+#include <string>
 
 using std::cout;
 using std::cin;
@@ -47,11 +50,6 @@ int main() {
     Polynom rs = f - f;
     cout << "\nf(x) - f(x) = " << rs;
 
-    /*  Polynom bm = g * (f * ((f * g / g - f + f) / f) - g + g) / g;
-    cout << bm;
-    cout << (bm + g - g) % f;
-    cout << (bm + g - g) / f;*/
-
     Polynom d = f * g;
     cout << "f(x) * g(x) = " << d;
 
@@ -81,7 +79,7 @@ int main() {
     Polynom div2 = f % g;
     cout << "f(x) % g(x) = " << div2;
 
-    cout << "-------------------------------- GCD ------------------------------\n";
+    cout << "-------------------------------- GCD --------------------------------\n";
 
     Polynom p1(2, 7, { 1, 0, 0, 0, 0, 0, 0, 1 });
     Polynom p2(2, 5, { 1, 1, 0, 1, 0, 1 });
@@ -115,7 +113,7 @@ int main() {
     Polynom gcd2 = GCD(h, g);
     cout << "gcd(h, g) = " << gcd2; // 1
 
-    cout << "--------------------------------------------------------------------\n";
+    cout << "-------------------------------- Is polynom irreducible --------------------------------\n";
 
     Polynom pol1(2, 4, { 1,0,0,1,1 });
     cout << "1) pol1(x) = " << pol1;
@@ -136,7 +134,7 @@ int main() {
     Polynom irred2(3, 2, { 1, 0, 1 });
     Polynom irred3(3, 5, { 1, 0, 1, 1, 1, 3 });
 
-    cout << "\n\n\n";
+    cout << "-------------------------------- Calculating polynom order --------------------------------\n";
 
     cout << "3) irred(x) = " << irred;
     cout << "4) irred2(x) = " << irred2;
@@ -149,7 +147,7 @@ int main() {
 
    
 
-    cout << "--------------------------------Changing field(p)--------------------\n";
+    cout << "-------------------------------- Changing field p --------------------------------\n";
     Polynom first(7, 2, {0,1,4}), second(7, 3, { 0,1,4,1});
 
     cout << first<< second;
@@ -163,7 +161,7 @@ int main() {
     cout << first << second;
     cout << first + second;
 
-    cout << "-----------------------------Order of arbitrary polynomial----------------------\n";
+    cout << "-------------------------------- Order of arbitrary polynomial --------------------------------\n";
 
     //https://planetcalc.com/8332/ here u can do polynomial factorization modulo p
 
@@ -187,7 +185,7 @@ int main() {
     cout << "Order of arbitrary polynomial 5+3x+4x^2+4x^3+ x^5 in field GF(7) = "
     << order3.arbitraryPolynomOrder(irrPols3) << endl << endl;
 
-    cout << "------------------------------------FindRoots----------------------------\n";
+    cout << "-------------------------------- Finding Roots --------------------------------\n";
 
     Polynom root1(5, 2, {1,2,1});
     cout << root1;
@@ -254,8 +252,8 @@ int main() {
     cout << "Number of roots: " << root5.findRootNumber() << endl;
     }
 
-    cout << "---------------------------------FIELD--------------------------------------------------\n\n";
-    cout << "----------------------------Circular polynom----------------------------\n";
+
+    cout << "-------------------------------- Circular polynom --------------------------------\n";
     
     Field fi(5,30);
     cout << "n = 1: ";
@@ -270,7 +268,7 @@ int main() {
     cout << fi.buildCircularPolynom(29) << endl;
 
    
-    cout << "--------------------------------Inverse----------------------------------\n\n";
+    cout << "-------------------------------- Inverse --------------------------------\n";
 
     Polynom field(2, 2, { 1,1,1});
 
@@ -302,7 +300,7 @@ int main() {
     cout << "field = " << field2;
     Polynom inv2 = fi3.inverse(x2);
     cout << "inverse(x, field) = " << inv2;
-    cout << "------------------------------12 task-begin-------------------------------------\n";
+    cout << "-------------------------------- Generating irrecucible polynomials (12) --------------------------------\n";
 
     Polynom F(5, 5, { 1,0,1,0,0,1 });
     Field Fb(F);
@@ -316,9 +314,8 @@ int main() {
     std::vector<Polynom> distvec = dist.distinctDegreeDecomposition();
     for (Polynom ppp : distvec)
         cout << ppp;*/
-    cout << "------------------------------12 task-end-------------------------------------\n";
 
-    cout << "---------------testing------------testing--------------\n";
+    cout << "-------------------------------- Field testing --------------------------------\n";
 
     Polynom Q(5, 4, { 4,4,4,4,1 });
     Field fld(Q);
@@ -331,12 +328,14 @@ int main() {
     cout << fld.gcd(d1,d2);
     cout << fld.inverse(d1);
 
-    cout << "---------------testing------------------testing-----------testing-----------testing-----testing-------------------testing--------------\n";
+    cout << "-------------------------------- Generating irrecucible polynomials (12) --------------------------------\n";
+
     std::vector<Polynom> resvec = fld.generateIrrpols(2,4);
     for (int i(0); i < resvec.size();i++) {
     cout << resvec[i];
     }
-    cout << "---------------------------------RING--------------------------------------------------------\n\n";
+
+    cout << "-------------------------------- Ring testing --------------------------------\n";
     Ring rng;
 
     Polynom rng1(3, 2, { 0,1,2 }), rng2(3, 1, {1,1});
@@ -345,7 +344,7 @@ int main() {
     cout << rng.mult(rng1, rng2);
     cout << rng.subtr(rng1, rng2);
 
-    cout << "------------------------------Berlekamp--------------------------------------\n";
+    cout << "-------------------------------- Berlekamp's algorithms to find factors --------------------------------\n";
     Polynom berlkmp(2, "1+x^3+x^4+x^6+x^8");
     cout << "Berlekamp's test for polynomial: " << berlkmp;
     std::vector<Polynom> berl = getFactors(berlkmp);
@@ -353,22 +352,18 @@ int main() {
         cout << item;
     }
 
-    /*cout << "------------------------------Square free factorization----";
-    Polynom sqfree(13, "1+3x+5x^2+7x^3+7x^4+5x^5+3x^6+x^7");
-    cout << sqfree;
-    std::vector<Polynom> items = getSquareFreeFactors(sqfree);
-    for (auto item : items) {
-        cout << item;
-    }*/
-
-    cout << "------------------------------SquareFreeFactor--------------------------------------\n";
+    cout << "-------------------------------- Using square-free factorization --------------------------------\n";
 
     std::vector<std::pair<Polynom, int>> vres;
     Polynom kk(3, "1+2x^2+2x^3+x^5+x^6+2x^8+2x^9+x^11");
     getSquareFreeFactors(kk, vres);
     cout << "Pol: ";
     for (auto p : vres) {
-        cout << "(" << p.first << ")^" << p.second << " ";
+        std::stringstream o;
+        o << p.first;
+        std::string out = o.str();
+        out.erase(std::remove(out.begin(), out.end(), '\n'), out.end());
+        cout << "(" << out << ")^" << p.second << " ";
     }
     vres.clear();
     cout << endl;
@@ -376,7 +371,11 @@ int main() {
     getSquareFreeFactors(rr, vres);
     cout << "Pol 1: ";
     for (auto p : vres) {
-        cout << "(" << p.first << ")^" << p.second << " ";
+        std::stringstream o;
+        o << p.first;
+        std::string out = o.str();
+        out.erase(std::remove(out.begin(), out.end(), '\n'), out.end());
+        cout << "(" << out << ")^" << p.second << " ";
     }
     vres.clear();
     cout << endl;
@@ -384,7 +383,11 @@ int main() {
     getSquareFreeFactors(pp, vres);
     cout << "Pol 2: ";
     for (auto p : vres) {
-        cout << "(" << p.first << ")^" << p.second << " ";
+        std::stringstream o;
+        o << p.first;
+        std::string out = o.str();
+        out.erase(std::remove(out.begin(), out.end(), '\n'), out.end());
+        cout << "(" << out << ")^" << p.second << " ";
     }
     vres.clear();
     cout << endl;
@@ -392,7 +395,11 @@ int main() {
     getSquareFreeFactors(ff, vres);
     cout << "Pol 3: ";
     for (auto p : vres) {
-        cout << "(" << p.first << ")^" << p.second << " ";
+        std::stringstream o;
+        o << p.first;
+        std::string out = o.str();
+        out.erase(std::remove(out.begin(), out.end(), '\n'), out.end());
+        cout << "(" << out << ")^" << p.second << " ";
     }
     vres.clear();
     cout << endl;
@@ -400,7 +407,11 @@ int main() {
     getSquareFreeFactors(ii, vres);
     cout << "Pol 4: ";
     for (auto p : vres) {
-        cout << "(" << p.first << ")^" << p.second << " ";
+        std::stringstream o;
+        o << p.first;
+        std::string out = o.str();
+        out.erase(std::remove(out.begin(), out.end(), '\n'), out.end());
+        cout << "(" << out << ")^" << p.second << " ";
     }
     vres.clear();
     cout << endl;

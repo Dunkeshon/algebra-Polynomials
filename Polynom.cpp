@@ -1066,7 +1066,7 @@ std::ostream& operator<<(std::ostream& stream, Polynom& polynomial)
             i++;
             continue;
         }
-        if (!isFirst) cout << "+";
+        if (!isFirst) stream << "+";
         else isFirst = false;
         if (tmp->key != 1 || i == 0)
             stream << tmp->key;
