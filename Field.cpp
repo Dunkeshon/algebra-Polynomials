@@ -445,7 +445,7 @@ std::vector<Polynom> Field::generateIrrpols(int _p, int _q) {
         case 1:
             return std::vector<Polynom> {Polynom(5, 1, { 0,1 }), Polynom(5, 1, { 1,1 }), Polynom(5, 1, { 2,1 }) };
         case 2:
-            return std::vector<Polynom> {Polynom(5, 2, { 2,0,1 }), Polynom(5, 2, { 3,1,1 }), Polynom(5, 2, { 1,1,1 })};
+            return std::vector<Polynom> {Polynom(5, 2, { 2,0,1 }), Polynom(5, 2, { 3,0,1 }), Polynom(5, 2, { 1,1,1 })};
         case 3:
             return std::vector<Polynom> {Polynom(5, 3, { 1,1,0,1 }), Polynom(5, 3, { 4,1,0,1 }), Polynom(5, 3, { 1,2,0,1 })};
         case 4:
