@@ -31,6 +31,10 @@
 class Polynom;
 //forward declaration
 
+int root_calc(int num, int n);
+Polynom nth_root(Polynom i_polynom, int n);
+Polynom getSquareFreeFactors(Polynom p, std::vector<std::pair<Polynom, int>>& res);
+
 class Polynom {
 private:
 
@@ -139,6 +143,7 @@ public:
 
     //!Calculates the order of the arbitrary polynomial by its decomposition to irreducibles
     int arbitraryPolynomOrder(std::vector<std::pair<Polynom, int>> polDecomposition);
+    int arbitraryPolynomOrder2();
 
     //!LCM of given vector numbers
     int LCM(std::vector<int> numbers);

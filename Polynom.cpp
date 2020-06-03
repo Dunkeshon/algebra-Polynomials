@@ -587,6 +587,98 @@ int Polynom::irrPolynomOrder()
     }
 }
 
+int root_calc(int num, int n)
+{
+    int temp_num;
+    for (int i = 2; i <= num / 2; ++i)
+    {
+        temp_num = 1;
+        for (int j = 1; j <= n; ++j)
+            temp_num *= i;
+        if (temp_num == num)
+            return i;
+    }
+    return -1;
+}
+
+Polynom nth_root(Polynom i_polynom, int n) {
+    /*
+     Function which computes the square root of a polynom.
+     */
+
+     // Initialization of the square root the input polynom
+    std::vector<int> square_coeffs;
+    for (int i = 0; i < (i_polynom.getPower() / n) + 1; i++) {
+        square_coeffs.push_back(0);
+    }
+
+    // Computation of the derivation in F2
+    for (int i = 0; i < (i_polynom.getPower() / n) + 1; i++) {
+        square_coeffs[i] = i_polynom.getCoefficient(n * i);
+    }
+
+    return Polynom(i_polynom.p, root_calc(i_polynom.getPower(), n), square_coeffs);
+}
+
+Polynom getSquareFreeFactors(Polynom f, std::vector<std::pair<Polynom, int>>& res)
+{
+
+    int head_koef = f.getLastCoefficient();
+    f.makeMonic();
+    int r = 1;
+    Polynom c = GCD(f, derivative(f));
+    Polynom w = f / c;
+    Polynom R = Polynom(f.p, "1");
+    int i = 1;
+    while (w != Polynom(f.p, "1")) {
+        Polynom y = GCD(w, c);
+        Polynom z = w / y;
+        Polynom z_tmp = z;
+        for (int k = 1; k < i; k++) { z = z * z_tmp; }
+        if (z != Polynom(f.p, "1")) { res.push_back({ z_tmp, i }); }
+        R = R * z;
+        w = y;
+        c = c / y;
+        i++;
+    }
+    if (c != Polynom(f.p, "1")) {
+        c = nth_root(c, f.p);
+        std::vector<std::pair<Polynom, int>> musor;
+        Polynom m = getSquareFreeFactors(c, musor);
+        res.push_back({ m, f.p });
+        Polynom m_tmp = m;
+        for (int j = 1; j < f.p; j++) {
+            m = m * m_tmp;
+        }
+    }
+
+    return R * Polynom(R.p, std::to_string(head_koef));
+}
+
+int Polynom::arbitraryPolynomOrder2() {
+    if (this->evaluate(0) == 0)
+        return -1;
+
+    if (this->isIrreducible())
+        return this->irrPolynomOrder();
+
+    int max = 1;
+    std::vector<std::pair<Polynom, int>> polDecomposition;
+    getSquareFreeFactors(*this, polDecomposition);
+    std::vector<int> ords;
+    for (auto irrPol : polDecomposition) {
+        ords.push_back((irrPol.first).irrPolynomOrder());
+        if (irrPol.second > max) max = irrPol.second;
+    }
+
+    int t = 0;
+    for (; std::pow(this->p, t) < max; t++);
+
+    int koef = std::pow(this->p, t);
+
+    return koef * LCM(ords);
+}
+
 
 int Polynom::arbitraryPolynomOrder(std::vector<std::pair<Polynom, int>> polDecomposition) {
     if (this->evaluate(0) == 0)
@@ -595,7 +687,7 @@ int Polynom::arbitraryPolynomOrder(std::vector<std::pair<Polynom, int>> polDecom
     if (this->isIrreducible())
         return this->irrPolynomOrder();
 
-    int max = 0;
+    int max = 1;
     // Yaroslav should to do function (getFactors)
     //std::vector<std::pair<Polynom, int>> polDecomposition = getFactors(Polynom(*this));
     std::vector<int> ords;

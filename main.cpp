@@ -361,5 +361,50 @@ int main() {
         cout << item;
     }*/
 
+    cout << "------------------------------SquareFreeFactor--------------------------------------\n";
+
+    std::vector<std::pair<Polynom, int>> vres;
+    Polynom kk(3, "1+2x^2+2x^3+x^5+x^6+2x^8+2x^9+x^11");
+    getSquareFreeFactors(kk, vres);
+    cout << "Pol: ";
+    for (auto p : vres) {
+        cout << "(" << p.first << ")^" << p.second << " ";
+    }
+    vres.clear();
+    cout << endl;
+    Polynom rr(2, "1+x^2+x^3+x^4+x^5+x^6");
+    getSquareFreeFactors(rr, vres);
+    cout << "Pol 1: ";
+    for (auto p : vres) {
+        cout << "(" << p.first << ")^" << p.second << " ";
+    }
+    vres.clear();
+    cout << endl;
+    Polynom pp(3, "2+x+2x^3+x^4+2x^5+2x^6+2x^7");
+    getSquareFreeFactors(pp, vres);
+    cout << "Pol 2: ";
+    for (auto p : vres) {
+        cout << "(" << p.first << ")^" << p.second << " ";
+    }
+    vres.clear();
+    cout << endl;
+    Polynom ff(3, "2+x^2+x^6+2x^8");
+    getSquareFreeFactors(ff, vres);
+    cout << "Pol 3: ";
+    for (auto p : vres) {
+        cout << "(" << p.first << ")^" << p.second << " ";
+    }
+    vres.clear();
+    cout << endl;
+    Polynom ii(7, "5+3x+4x^2+4x^3+x^5");
+    getSquareFreeFactors(ii, vres);
+    cout << "Pol 4: ";
+    for (auto p : vres) {
+        cout << "(" << p.first << ")^" << p.second << " ";
+    }
+    vres.clear();
+    cout << endl;
+
+
     return 0;
 }
