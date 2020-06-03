@@ -354,5 +354,19 @@ TEST(Operator_quot, test4)
 	EXPECT_TRUE(quot == Polynom(5, 3, { 2,2,3,1 }));
 }
 
+TEST(derPolynomOrder, test1) {
+	Polynom order1(2, "1+x^2+x^3+x^9+x^10");
+	EXPECT_EQ(order1.arbitraryPolynomOrder2(), 60);
 
+}
+
+TEST(derPolynomOrder, test2) {
+	Polynom order2(2, "1+x+x^2+x^4");
+	EXPECT_EQ(order2.arbitraryPolynomOrder2(), 7);
+}
+
+TEST(derPolynomOrder, test3) {
+	Polynom order3(7, "5+3x+4x^2+4x^3+x^5");
+	EXPECT_EQ(order3.arbitraryPolynomOrder2(), 336);
+}
 
