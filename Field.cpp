@@ -350,7 +350,7 @@ Polynom Field::derivate(Polynom& _p) {
 Polynom Field::monic(Polynom& _p) {
     handleException(_p);
     Polynom res; _p.makeMonic();
-    res = p;
+    res = _p;
     res = res % Q;
     return res;
 }
