@@ -421,6 +421,58 @@ std::vector<Polynom> Field::generateIrrpols(int _p, int _q) {
         switch (_q) {
         case 1: 
             return std::vector<Polynom> { Polynom(3, 1, { 0,1 }), Polynom(3, 1, { 1,1 }), Polynom(3, 1, { 2,1 }) };
+        case 2:
+            return std::vector<Polynom> {Polynom(3, 2, {1,0,1 }), Polynom(3, 2, { 2,1,1 }), Polynom(3, 2, { 2,2,1 })};
+        case 3:
+            return std::vector<Polynom> {Polynom(3, 3, { 1,2,0,1 }), Polynom(3, 3, { 2,2,0,1 }), Polynom(3, 3, { 2,0,1,1 })};
+        case 4:
+            return std::vector<Polynom> {Polynom(3, 4, { 2,1,0,0,1 }), Polynom(3, 4, { 2,2,0,0,1 }), Polynom(3, 4, { 2,0,1,0,1 })};
+        case 5:
+            return std::vector<Polynom> {Polynom(3, 5, {1,2,0,0,0,1 }), Polynom(3, 5, { 2,2,0,0,0,1 }), Polynom(3, 5, { 2,1,1,0,0,1 })};
+        case 6:
+            return std::vector<Polynom> {Polynom(3, 6, { 2,1,0,0,0,0,1 }), Polynom(3, 6, { 2,2,0,0,0,0,1 }),
+                Polynom(3, 6, { 1,1,1,0,0,0,1 })};
+        case 7:
+            return std::vector<Polynom> {Polynom(3, 7, { 2,0,1,0,0,0,0,1 }), Polynom(3, 7, { 1,2,1,0,0,0,0,1 }), 
+                Polynom(3, 7, { 1,0,2,0,0,0,0,1 })};
+        default:
+            return std::vector<Polynom> {Polynom(3, 0, { 1 })};
+           
         }
     }
-}
+    else if (_p == 5) {
+        switch (_q) {
+        case 1:
+            return std::vector<Polynom> {Polynom(5, 1, { 0,1 }), Polynom(5, 1, { 1,1 }), Polynom(5, 1, { 2,1 }) };
+        case 2:
+            return std::vector<Polynom> {Polynom(5, 2, { 2,0,1 }), Polynom(5, 2, { 3,1,1 }), Polynom(5, 2, { 1,1,1 })};
+        case 3:
+            return std::vector<Polynom> {Polynom(5, 3, { 1,1,0,1 }), Polynom(5, 3, { 4,1,0,1 }), Polynom(5, 3, { 1,2,0,1 })};
+        case 4:
+            return std::vector<Polynom> {Polynom(5, 4, { 2,0,0,0,1 }), Polynom(5, 4, { 3,0,0,0,1 }), Polynom(5, 4, { 4,1,0,0,1 })};
+        case 5:
+            return std::vector<Polynom> {Polynom(5, 5, { 1,4,0,0,0,1 }), Polynom(5, 5, { 2,4,0,0,0,1 }), Polynom(5, 5, { 3,4,0,0,0,1 })};
+  
+        default:
+            return std::vector<Polynom> {Polynom(5, 0, { 1 })};
+
+        }
+     }
+    else if (_p == 7) {
+        switch (_q) {
+        case 1:
+            return std::vector<Polynom> {Polynom(7, 1, { 0,1 }), Polynom(7, 1, { 1,1 }), Polynom(7, 1, { 2,1 }) };
+        case 2:
+            return std::vector<Polynom> {Polynom(7, 2, { 2,0,1 }), Polynom(7, 2, { 1,0,1 }), Polynom(7, 2, { 4,1,1 })};
+        case 3:
+            return std::vector<Polynom> {Polynom(7, 3, { 2,0,0,1 }), Polynom(7, 3, { 3,0,0,1 }), Polynom(7, 3, { 4,0,0,1 })};
+        case 4:
+            return std::vector<Polynom> {Polynom(7, 4, { 1,1,0,0,1 }), Polynom(7, 4, { 2,1,0,0,1 }), Polynom(7, 4, { 4,1,0,0,1 })};
+
+        default:
+            return std::vector<Polynom> {Polynom(7, 0, { 1 })};
+
+        }
+    }
+  }
+
