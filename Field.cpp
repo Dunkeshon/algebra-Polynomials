@@ -42,14 +42,16 @@ std::vector<Polynom> Field::genIrrPolynomials(int p, int q){
     Polynom circular;
 
     int num = pow(p, q) - 1;
-    for (int m = 1; m <= num; ++m) {
+    for (int m = 1; m <= num; m++) {
         if ((num % m) == 0) {
             circular = buildCircularPolynom(m);
-            if (circular.power < q) continue;
-            temp = getFactors(circular);
-            for (auto& ir : temp) {
-                if (ir.power == q) {
-                    result.push_back(ir);
+            std::cout << circular;
+            if (circular.power >= q) {
+                temp = circular.distinctDegreeDecomposition();
+                for (auto& ir : temp) {
+                    if (ir.power == q) {
+                        result.push_back(ir);
+                    }
                 }
             }
         }

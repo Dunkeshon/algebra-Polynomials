@@ -258,8 +258,12 @@ int main() {
     cout << "----------------------------Circular polynom----------------------------\n";
     
     Field fi(5,30);
-    cout << "n = 6: ";
-    cout << fi.buildCircularPolynom(6) << endl;
+    cout << "n = 1: ";
+    cout << fi.buildCircularPolynom(1) << endl;
+    cout << "n = 2: ";
+    cout << fi.buildCircularPolynom(2) << endl;
+    cout << "n = 3: ";
+    cout << fi.buildCircularPolynom(3) << endl;
     cout << "n = 12: ";
     cout << fi.buildCircularPolynom(12) << endl;
     cout << "n = 29: ";
@@ -299,12 +303,19 @@ int main() {
     Polynom inv2 = fi3.inverse(x2);
     cout << "inverse(x, field) = " << inv2;
     cout << "------------------------------12 task-begin-------------------------------------\n";
-    Polynom F(5, 5, {1,0,1,0,0,1});
+
+    Polynom F(5, 5, { 1,0,1,0,0,1 });
     Field Fb(F);
     std::vector<Polynom>task = Fb.genIrrPolynomials(5, 3);
 
     for (Polynom it : task) cout << it;
 
+
+  /*  Polynom dist(5, 30, {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1});
+    cout << dist;
+    std::vector<Polynom> distvec = dist.distinctDegreeDecomposition();
+    for (Polynom ppp : distvec)
+        cout << ppp;*/
     cout << "------------------------------12 task-end-------------------------------------\n";
 
     cout << "---------------testing------------testing--------------\n";

@@ -864,6 +864,31 @@ std::vector<Polynom> getFactors(Polynom p)
 }
 
 
+std::vector<Polynom> Polynom::distinctDegreeDecomposition() {
+    std::vector<Polynom> res;
+    Polynom w(p, 1, { 0,1 }), x(w), tmp(*this);//x
+    int d(0);
+    while (d + 1 <= (tmp.power) / 2) {
+        Polynom pw(p, 0, { 1 });
+        for (int i(0); i < p; i++) {
+            pw = pw * w;
+        }
+        w = pw % tmp;
+        Polynom gcd_ = GCD(w - x, tmp);
+        if (gcd_ != Polynom(p, 0, { 1 })) {
+            res.push_back(gcd_);
+            d = gcd_.power;
+            tmp = tmp / gcd_;
+            w = w % tmp;
+
+        }
+
+    }
+    if (tmp != Polynom(p, 0, { 1 })) res.push_back(tmp);
+    return res;
+
+}
+
 std::vector<Polynom> getSquareFreeFactors(Polynom p)
 {
     std::vector<Polynom> result;

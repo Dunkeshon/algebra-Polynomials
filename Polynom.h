@@ -148,6 +148,8 @@ public:
     //!Find the quotient and remainder A = Q * B + R
     void quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R);
 
+    std::vector<Polynom>distinctDegreeDecomposition();
+
     /** Polynomial greatest common divisor.
      * Calculate and return a polynomial which is the greatest common divisor of two polynomials.
      *
