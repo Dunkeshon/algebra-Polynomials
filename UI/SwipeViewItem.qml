@@ -46,6 +46,7 @@ Item {
                 return 300
             return 50
         }
+        selectByMouse: true
         placeholderText: firstFieldPlaceholder
         anchors.left: firstoperation.right
         anchors.verticalCenter: firstoperation.verticalCenter
@@ -84,6 +85,7 @@ Item {
     }
     TextField {
         id: secondField
+        selectByMouse: true
         background: Rectangle{
             color: "#ece9ec"
         }
