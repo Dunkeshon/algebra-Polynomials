@@ -250,6 +250,15 @@ Item {
             operatorUse: false
             secondOperationUse: false
             firstOperationName: "RED_POL_ORDER"
+            calculate.onClicked:{
+                if(!checkFields())
+                    return
+                UiController.inputPolynomials(ff.text)
+                UiController.arbitaryPolynomOrder()
+                UiController.updateHistory("ReduciblePolOrder(" + ff.text + ") = " + UiController.result)
+            }
+
+
         }
     }
 

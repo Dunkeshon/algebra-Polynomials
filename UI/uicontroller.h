@@ -90,6 +90,8 @@ public slots:
 
     // functions to call from js
 
+
+
     void clearIrreducibles(){
         m_irreducibleStrings.clear();
         irreduciblesList.clear();
@@ -240,6 +242,10 @@ public slots:
     }
     void irrPolOrder(){
         m_result = QString::number(mainPolynomial.irrPolOrder(firstOperandPol));
+        emit resultChanged(m_result);
+    }
+    void arbitaryPolynomOrder(){
+        m_result = QString::number(firstOperandPol.arbitraryPolynomOrder2());
         emit resultChanged(m_result);
     }
 
