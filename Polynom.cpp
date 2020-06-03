@@ -669,19 +669,22 @@ int Polynom::arbitraryPolynomOrder2() {
 
     int max = 1;
     std::vector<std::pair<Polynom, int>> polDecomposition;
+    std::vector<std::pair<Polynom, int>> res;
     getSquareFreeFactors(*this, polDecomposition);
     std::vector<int> ords;
     for (auto irrPol : polDecomposition) {
-        ords.push_back((irrPol.first).irrPolynomOrder());
-        if (irrPol.second > max) max = irrPol.second;
+        if (irrPol.first.irrPolynomOrder() == -1) {
+            std::vector<Polynom> n = irrPol.first.distinctDegreeDecomposition();
+            for (auto pol : n) {
+                res.push_back({ pol, 1 });
+            }
+        }
+        else {
+            res.push_back(irrPol);
+        }
     }
 
-    int t = 0;
-    for (; std::pow(this->p, t) < max; t++);
-
-    int koef = std::pow(this->p, t);
-
-    return koef * LCM(ords);
+    return arbitraryPolynomOrder(res);
 }
 
 
